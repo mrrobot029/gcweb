@@ -1,0 +1,68 @@
+body{
+	font-family: Segoe, 'Segoe UI'; 
+	font-size:16px;
+}
+.margin-1{
+	margin-top: -20px;
+}
+.margin-2{
+	margin-top: -15px;
+}
+.margin-3{
+	margin-top: -20px;
+	margin-bottom: -20px;
+}
+.header{
+	width: 100%;
+	padding:0px;
+}
+.header-left{
+	float:left;
+	width: auto !important;
+	height: auto;
+}
+.header-right{
+	margin-top: -10px;
+	margin-left: 10px;
+	float:left;
+	width: auto !important;
+	height: auto;
+}
+.center{
+	text-align: center;
+}
+.right{
+	text-align: right;
+}
+.left{
+	text-align: left;
+}
+.txt{
+	font-size:14px;
+}
+.table-body{
+	border-collapse: collapse;
+}
+.border-thin {
+    border: 1px solid black;
+    padding:1px;
+
+}
+.header-td{
+	width:33.3%;
+}
+
+p{
+	font-size:14px;
+} 
+.txt-box{
+	border:none;
+	border-bottom:1px solid;
+}
+td{
+	padding-left: 5px;
+}
+
+.darken{
+	background-color:#DDDDDD;
+}

@@ -1,0 +1,11 @@
+<form>
+    <form class="navbar-form">
+        <div class="input-group no-border">
+            <select class="form-control" [(ngModel)]=department (change)="selectDept()">
+              <option></option>
+              <option *ngFor="let department of departments;let i = index" [ngValue]="department.co_dept">{{department.co_dept}}</option>
+            </select>
+        </div>
+    </form>
+    <a href="http://ccslab213-016/gordoncollegeweb/print/reports/index.php?department={{selectedDept}}" class="btn btn-info btn-sm" target="_blank">Print Evaluation</a>
+</form>

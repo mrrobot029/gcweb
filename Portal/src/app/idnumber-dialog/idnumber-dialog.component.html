@@ -1,0 +1,15 @@
+<form [formGroup]="firstFormGroup">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+        <mat-form-field fxFlex="50" class="animated fadeInUp">
+          <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[9]}"  matInput placeholder="Old ID" formControlName="idnumberold" required  readonly>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+        <mat-form-field fxFlex="50" class="animated fadeInUp">
+          <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[9]}"  matInput placeholder="New ID" formControlName="idnumbernew" required  autofocus>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button (click)="submit()" style="background-color:#2196f3; color: white;">Submit</button>
+    </div>
+</form>

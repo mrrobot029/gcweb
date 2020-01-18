@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-12">
         <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#addModal">
           Add Subject
         </button>
@@ -9,14 +9,14 @@
           Upload Subjects
         </button>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-4">
         <select class="form-control" (click)="getCY($event)" [(ngModel)]="selectSubject">
           <option></option>
           <option *ngFor="let course of courses.data">{{ course.co_name }}</option>
         </select>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-lg-4">
         <select class="form-control" (change)="getSubjects($event)" [(ngModel)]="subjectCY">
           <option></option>
           <option *ngFor="let cy of curriculumYear.data">{{ cy.su_cy }}</option>

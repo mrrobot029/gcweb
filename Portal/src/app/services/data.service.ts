@@ -13,8 +13,9 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   sendRequest(method, data) {
-    return this.http.post<any>(this.apiLink + method, btoa(JSON.stringify(data)));
+    return this.http.post<any>(this.apiLink + method, btoa(unescape(encodeURIComponent((JSON.stringify(data))))));
   }
+
 
   sendRequestWithFile(method, data) {
     return this.http.post<any>(this.apiLink + method, data);

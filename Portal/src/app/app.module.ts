@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
@@ -37,7 +37,7 @@ import { StudentDialogComponent } from './student-dialog/student-dialog.componen
 import { MatDialogModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort'
+import { MatSortModule } from '@angular/material/sort';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import {MatStepperModule} from '@angular/material/stepper';

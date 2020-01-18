@@ -53,89 +53,28 @@
               <p class="card-category">Curriculum Year <strong>{{ prospectusInfo.syCy }}</strong></p>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
-              <table class="table table-striped">
-                <thead class=" text-primary">
-                  <th>No.</th>
-                  <th>Subject Code</th>
-                  <th>Subject Description</th>
-                  <th>Lab Units</th>
-                  <th>Lec Units</th>
-                  <th>RLE Units</th>
-                  <th>Semester</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let subject of subjects.data; let i = index">
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ i+1 }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_code }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_description }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_labunits }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_lecunits }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_rleunits }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_sem }}</td>
-                    <td *ngIf="subject.su_yrlevel=='1'">
-                      <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
-                      <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div class="row">
-      <div class="col-md-12">
-          <div class="card">
-              <div class="card-header card-header-success">
-                <h4 class="card-title ">List of Subjects for <strong>{{ prospectusInfo.courseName }}</strong>  2nd Year</h4>
-                <p class="card-category">Curriculum Year <strong>{{ prospectusInfo.syCy }}</strong></p>
-              </div>
-              <div class="card-body">
-                  <div class="table-responsive">
-                      <table class="table table-striped">
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st" role="tab" aria-controls="pills-1st" aria-selected="true">1st Year</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd" role="tab" aria-controls="pills-2nd" aria-selected="false">2nd Year</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd" role="tab" aria-controls="pills-3rd" aria-selected="false">3rd Year</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="pills-4th-tab" data-toggle="pill" href="#pills-4th" role="tab" aria-controls="pills-4th" aria-selected="false">4th Year</a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-1st" role="tabpanel" aria-labelledby="pills-1st-tab">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
                           <thead class=" text-primary">
-                              <th>No.</th>
-                              <th>Subject Code</th>
-                              <th>Subject Description</th>
-                              <th>Lab Units</th>
-                              <th>Lec Units</th>
-                              <th>RLE Units</th>
-                              <th>Semester</th>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let subject of subjects.data; let i = index">
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ i+1 }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_code }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_description }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_labunits }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_lecunits }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_rleunits }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_sem }}</td>
-                                <td *ngIf="subject.su_yrlevel=='2'">
-                                    <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
-                                    <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
-                                </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header card-header-success">
-              <h4 class="card-title ">List of Subjects for <strong>{{ prospectusInfo.courseName }}</strong>  3rd Year</h4>
-              <p class="card-category">Curriculum Year <strong>{{ prospectusInfo.syCy }}</strong></p>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead class=" text-primary">
                             <th>No.</th>
                             <th>Subject Code</th>
                             <th>Subject Description</th>
@@ -143,8 +82,68 @@
                             <th>Lec Units</th>
                             <th>RLE Units</th>
                             <th>Semester</th>
-                        </thead>
-                        <tbody>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let subject of subjects.data; let i = index">
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ i+1 }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_code }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_description }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_labunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_lecunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_rleunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">{{ subject.su_sem }}</td>
+                              <td *ngIf="subject.su_yrlevel=='1'">
+                                <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
+                                <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-2nd" role="tabpanel" aria-labelledby="pills-2nd-tab">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead class=" text-primary">
+                            <th>No.</th>
+                            <th>Subject Code</th>
+                            <th>Subject Description</th>
+                            <th>Lab Units</th>
+                            <th>Lec Units</th>
+                            <th>RLE Units</th>
+                            <th>Semester</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let subject of subjects.data; let i = index">
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ i+1 }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_code }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_description }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_labunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_lecunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_rleunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">{{ subject.su_sem }}</td>
+                              <td *ngIf="subject.su_yrlevel=='2'">
+                                  <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
+                                  <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-3rd" role="tabpanel" aria-labelledby="pills-3rd-tab">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead class=" text-primary">
+                            <th>No.</th>
+                            <th>Subject Code</th>
+                            <th>Subject Description</th>
+                            <th>Lab Units</th>
+                            <th>Lec Units</th>
+                            <th>RLE Units</th>
+                            <th>Semester</th>
+                          </thead>
+                          <tbody>
                             <tr *ngFor="let subject of subjects.data; let i = index">
                               <td *ngIf="subject.su_yrlevel=='3'">{{ i+1 }}</td>
                               <td *ngIf="subject.su_yrlevel=='3'">{{ subject.su_code }}</td>
@@ -154,57 +153,51 @@
                               <td *ngIf="subject.su_yrlevel=='3'">{{ subject.su_rleunits }}</td>
                               <td *ngIf="subject.su_yrlevel=='3'">{{ subject.su_sem }}</td>
                               <td *ngIf="subject.su_yrlevel=='3'">
-                                  <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
-                                  <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
-                              </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-      <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Subjects for <strong>{{ prospectusInfo.courseName }}</strong>  4th Year</h4>
-            <p class="card-category">Curriculum Year <strong>{{ prospectusInfo.syCy }}</strong></p>
-          </div>
-          <div class="card-body">
-              <div class="table-responsive">
-                  <table class="table table-striped">
-                      <thead class=" text-primary">
-                          <th>No.</th>
-                          <th>Subject Code</th>
-                          <th>Subject Description</th>
-                          <th>Lab Units</th>
-                          <th>Lec Units</th>
-                          <th>RLE Units</th>
-                          <th>Semester</th>
-                      </thead>
-                      <tbody>
-                          <tr *ngFor="let subject of subjects.data; let i = index">
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ i+1 }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_code }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_description }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_labunits }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_lecunits }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_rleunits }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_sem }}</td>
-                            <td *ngIf="subject.su_yrlevel=='4'">
                                 <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
                                 <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
-                            </td>
-                          </tr>
-                      </tbody>
-                  </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-4th" role="tabpanel" aria-labelledby="pills-4th-tab">
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead class=" text-primary">
+                            <th>No.</th>
+                            <th>Subject Code</th>
+                            <th>Subject Description</th>
+                            <th>Lab Units</th>
+                            <th>Lec Units</th>
+                            <th>RLE Units</th>
+                            <th>Semester</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let subject of subjects.data; let i = index">
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ i+1 }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_code }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_description }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_labunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_lecunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_rleunits }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">{{ subject.su_sem }}</td>
+                              <td *ngIf="subject.su_yrlevel=='4'">
+                                <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editSubject(subject)>Edit</button>
+                                <button class="btn btn-danger btn-sm btn-round" (click)=delProspectus(subject)>Delete</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-</div>
     </div>
   </div>
 </div>
@@ -350,5 +343,3 @@
     </div>
   </div>
 </div>
-
-

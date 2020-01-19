@@ -16,7 +16,7 @@ export class FacultyMystudentsComponent implements OnInit {
   credFaculty: any = {};
   settings: any = {};
 
-  displayedColumns: string[] = ['si_idnumber', 'si_fullname', 'si_course', 'si_block', 'si_department'];
+  displayedColumns: string[] = ['si_idnumber', 'si_fullname', 'si_yrlevel', 'si_sem', 'si_course', 'si_block', 'si_department'];
   dataSource: any;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;

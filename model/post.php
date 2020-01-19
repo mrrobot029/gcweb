@@ -344,7 +344,7 @@
         }
 
         function students($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course from tbl_studentinfo WHERE si_department='$d->department' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
+            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_department='$d->department' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
         }
 
         function students1($d){
@@ -352,7 +352,7 @@
         }
 
         function students2($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
+            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
         }
 
         function getClassStudents($d){

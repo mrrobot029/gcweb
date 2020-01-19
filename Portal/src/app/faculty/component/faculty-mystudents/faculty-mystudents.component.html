@@ -24,6 +24,16 @@
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Full Name </th>
                             <td mat-cell *matCellDef="let element"> {{element.si_fullname}} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="si_yrlevel">
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Year </th>
+                            <td mat-cell *matCellDef="let element"> {{element.si_yrlevel}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="si_sem">
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Semester </th>
+                            <td mat-cell *matCellDef="let element"> {{element.si_sem}} </td>
+                        </ng-container>
         
                         <ng-container matColumnDef="si_course">
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Course </th>
@@ -31,7 +41,7 @@
                         </ng-container>
 
                         <ng-container matColumnDef="si_block">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Department </th>
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Block </th>
                             <td mat-cell *matCellDef="let element"> {{element.si_block}} </td>
                         </ng-container>
         

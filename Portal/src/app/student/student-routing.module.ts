@@ -6,7 +6,7 @@ import { StudentProfileComponent } from './component/student-profile/student-pro
 
 
 const routes: Routes = [
-  { path : '' , redirectTo: 'myclasses', pathMatch: 'full'},
+  { path : '' , redirectTo: 'myprofile', pathMatch: 'full'},
   { path : 'myclasses', component: StudentSchedComponent },
   { path : 'myprospectus', component: StudentProspectusComponent },
   { path : 'myprofile', component: StudentProfileComponent },

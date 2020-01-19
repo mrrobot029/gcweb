@@ -8,7 +8,52 @@
                         <p class="card-category">My Profile</p>
                     </div>
                     <div class="card-body">
-                        
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Student Id No.</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_idnumber}}</td>
+                                    <td>
+                                      <strong class="text-success">Program</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_course}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Full Name</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_firstname}} {{ credStud.data[0].si_midname}} {{ credStud.data[0].si_lastname}} {{ credStud.data[0].si_extname}}</td>
+                                    <td>
+                                      <strong class="text-success">Year</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_yrlevel}}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Address</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_address }}</td>
+                                    <td>
+                                      <strong class="text-success">Sem</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_sem }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">E-mail Address</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_email }}</td>
+                                    <td>
+                                      <strong class="text-success">Contact Number</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_mobile }}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

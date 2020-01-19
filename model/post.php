@@ -253,7 +253,7 @@
             return $this->executeWithRes("SELECT * FROM tbl_subjects WHERE su_course='$d->si_course' ORDER BY su_yrlevel ASC, su_sem ASC");
         }
         function getProspectusCopyF($d){
-            return $this->executeWithRes("SELECT * FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_enrolledyear WHERE tbl_subjects.su_course='$d->si_course' AND tbl_subjects.su_yrlevel=$d->year AND tbl_subjects.su_sem=$d->sem");
+            return $this->executeWithRes("SELECT * FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_cy WHERE tbl_subjects.su_course='$d->si_course' AND tbl_subjects.su_yrlevel=$d->year AND tbl_subjects.su_sem=$d->sem AND tbl_studentinfo.si_idnumber=$d->$si_idnumber");
         }
         
         // students/grades

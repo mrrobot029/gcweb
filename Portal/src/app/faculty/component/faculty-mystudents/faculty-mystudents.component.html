@@ -13,7 +13,7 @@
                         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search ...">
                     </mat-form-field>
                     <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>
-                    <table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-striped">
+                    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-striped">
         
                         <ng-container matColumnDef="si_idnumber">
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success">ID Number </th>

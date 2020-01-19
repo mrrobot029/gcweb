@@ -62,12 +62,14 @@
           <p>My Class Schedule</p>
         </a>
     </li>
+    <ng-container *ngIf="prog == 1 || prog == 2">
     <li routerLinkActive="active" class="nav-item">
       <a class="nav-link" [routerLink]="['mystudents']">
         <i class="material-icons">subject</i>
-        <p>My Students</p>
+        <p>Students</p>
       </a>
     </li>
+    </ng-container>
     <li routerLinkActive="active" class="nav-item">
       <a class="nav-link" [routerLink]="['myprofile']">
         <i class="material-icons">book</i>

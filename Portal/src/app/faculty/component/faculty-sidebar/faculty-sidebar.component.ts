@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FacultySidebarComponent implements OnInit {
 
+  FacultyInfo: any = {};
+  prog: any
+
   constructor() { }
 
   ngOnInit() {
+    this.FacultyInfo = JSON.parse(localStorage.getItem('gcweb_faculty'));
+    this.prog = this.FacultyInfo.data[0].fa_accounttype;
   }
 
 }

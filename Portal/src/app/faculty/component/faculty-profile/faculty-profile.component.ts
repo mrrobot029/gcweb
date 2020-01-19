@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FacultyProfileComponent implements OnInit {
 
+  credAdmin: any = {};
+
   constructor() { }
 
   ngOnInit() {
+    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_faculty'));
   }
 
 }

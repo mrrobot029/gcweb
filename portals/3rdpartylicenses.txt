@@ -87,8 +87,6 @@ THE SOFTWARE.
 
 @angular/material/button
 
-@angular/material/checkbox
-
 @angular/material/core
 
 @angular/material/datepicker
@@ -101,13 +99,19 @@ THE SOFTWARE.
 
 @angular/material/list
 
+@angular/material/paginator
+
 @angular/material/radio
 
 @angular/material/select
 
 @angular/material/snack-bar
 
+@angular/material/sort
+
 @angular/material/stepper
+
+@angular/material/table
 
 @angular/material/tooltip
 

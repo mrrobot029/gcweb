@@ -336,7 +336,7 @@
         }
 
         function myclassf($d){
-            return $this->executeWithRes("SELECT * from tbl_classes WHERE cl_facultyid='".$d->data[0]->fa_empnumber."' and cl_isnormal='$d->type'");
+            return $this->executeWithRes("SELECT * from tbl_classes WHERE cl_facultyid='".$d->data[0]->fa_empnumber."' and cl_isnormal=$d->type");
         }
 
         function classFiles($d){

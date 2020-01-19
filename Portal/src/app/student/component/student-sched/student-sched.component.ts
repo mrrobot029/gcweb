@@ -20,6 +20,7 @@ export class StudentSchedComponent implements OnInit {
     this.ds.sendRequest('getStudentSchedule', this.classId).subscribe((res) => {
       this.classStud = res;
       console.log(this.classStud);
+      console.log(res)
     });
   }
 

@@ -29,6 +29,11 @@
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Course </th>
                             <td mat-cell *matCellDef="let element"> {{element.si_course}} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="si_block">
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Department </th>
+                            <td mat-cell *matCellDef="let element"> {{element.si_block}} </td>
+                        </ng-container>
         
                         <ng-container matColumnDef="si_department">
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="text-success"> Department </th>

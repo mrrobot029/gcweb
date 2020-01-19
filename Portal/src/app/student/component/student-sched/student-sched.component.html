@@ -1,1 +1,41 @@
-<p>student-sched works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title ">Class Schedule</h4>
+                        <p class="card-category">Academic Year {{ credStud.data[0].si_schoolyear }}</p>
+                        <p class="card-category">{{ credStud.data[0].si_block }}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class=" text-primary">
+                                    <th>No.</th>
+                                    <th>Class Code</th>
+                                    <th>Subject Code</th>
+                                    <th>Day</th>
+                                    <th>Time</th>
+                                    <th>Room</th>
+                                    <th>Instructor</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let class of classStud.data; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ class.cl_code }}</td>
+                                        <td>{{ class.cl_sucode }}</td>
+                                        <td>{{ class.cl_day }}</td>
+                                        <td>{{ class.cl_stime + '-' + class.cl_etime}}</td>
+                                        <td>{{ class.cl_room }}</td>
+                                        <td>{{ class.fa_lname + ', ' + class.fa_fname + ' ' + class.fa_mname }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -196,6 +196,11 @@
                     echo json_encode($post->students($d));
                 break;
 
+                case 'coordstudents':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->students2($d));
+                break;
+
                 case 'allstudents':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->students1($d));

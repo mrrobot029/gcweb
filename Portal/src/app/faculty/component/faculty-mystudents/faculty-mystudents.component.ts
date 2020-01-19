@@ -52,7 +52,7 @@ export class FacultyMystudentsComponent implements OnInit {
 
   getCoordProgram(){
     this.FacultyInfo['program'] = this.credFaculty.data[0].fa_program;
-    this.ds.sendRequest('students2', this.FacultyInfo).subscribe((res) => {
+    this.ds.sendRequest('coordstudents', this.FacultyInfo).subscribe((res) => {
       this.students = res;
       this.dataSource = new MatTableDataSource(this.students.data);
       this.dataSource.paginator = this.paginator;

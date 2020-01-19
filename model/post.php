@@ -351,8 +351,12 @@
             return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname, si_block, si_course, si_department from tbl_studentinfo WHERE (si_idnumber LIKE '%$d->searchClass%' or si_lastname LIKE '%$d->searchClass%' or si_firstname LIKE '%$d->searchClass%' or si_midname LIKE '%$d->searchClass%' or si_block LIKE '%$d->searchClass%' or si_department LIKE '%$d->searchClass%' or si_course LIKE '%$d->searchClass%') ORDER BY si_idnumber ASC ");
         }
 
+        function students2($d){
+            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
+        }
+
         function getClassStudents($d){
-            return $this->executeWithRes("SELECT si.si_idnumber,CONCAT(si.si_lastname,', ',si.si_firstname,' ',si.si_midname,' ',si.si_extname) as si_fullname,es.es_mgrade from tbl_studentinfo as si INNER JOIN tbl_enrolledsubjects as es on es.es_idnumber = si.si_idnumber INNER JOIN tbl_classes as cl on cl.cl_code = es.es_clcode WHERE cl.cl_code = 32122 ORDER BY si.si_lastname ASC");
+            return $this->executeWithRes("SELECT si.si_idnumber,CONCAT(si.si_lastname,', ',si.si_firstname,' ',si.si_midname,' ',si.si_extname) as si_fullname,es.es_mgrade from tbl_studentinfo as si INNER JOIN tbl_enrolledsubjects as es on es.es_idnumber = si.si_idnumber INNER JOIN tbl_classes as cl on cl.cl_code = es.es_clcode WHERE cl.cl_code=$d->classId ORDER BY si.si_lastname ASC");
         }
 
 

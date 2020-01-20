@@ -17,9 +17,13 @@
                                     </td>
                                     <td>{{ credStud.data[0].si_idnumber}}</td>
                                     <td>
-                                      <strong class="text-success">Program</strong>
+                                      <strong class="text-success">Program</strong> {{ credStud.data[0].si_course }}
                                     </td>
-                                    <td>{{ credStud.data[0].si_course}}</td>
+                                    <td><strong class="text-success">Year</strong>  {{ credStud.data[0].si_yrlevel }}
+                                    </td>
+                                    <td>
+                                      <strong class="text-success">Sem</strong> {{ credStud.data[0].si_sem }}
+                                    </td>
                                   </tr>
                                   <tr>
                                     <td>
@@ -27,9 +31,9 @@
                                     </td>
                                     <td>{{ credStud.data[0].si_firstname}} {{ credStud.data[0].si_midname}} {{ credStud.data[0].si_lastname}} {{ credStud.data[0].si_extname}}</td>
                                     <td>
-                                      <strong class="text-success">Year</strong>
+                                      <strong class="text-success">Gender</strong>
                                     </td>
-                                    <td>{{ credStud.data[0].si_yrlevel}}</td>
+                                    <td>{{ credStud.data[0].si_gender }}</td>
                                   </tr>
                                   <tr>
                                     <td>
@@ -37,9 +41,19 @@
                                     </td>
                                     <td>{{ credStud.data[0].si_address }}</td>
                                     <td>
-                                      <strong class="text-success">Sem</strong>
+                                      <strong class="text-success">Zip Code</strong>
                                     </td>
-                                    <td>{{ credStud.data[0].si_sem }}</td>
+                                    <td>{{ credStud.data[0].si_zipcode }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Birtdate</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_bday }}</td>
+                                    <td>
+                                      <strong class="text-success">Age</strong>
+                                    </td>
+                                    <td>{{ age }}</td>
                                   </tr>
                                   <tr>
                                     <td>

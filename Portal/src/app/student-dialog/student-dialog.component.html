@@ -31,7 +31,7 @@
           <td>{{student.si_block}}</td>
           <td>{{student.si_department}}</td>        
           <td>
-            <button class="btn btn-warning btn-sm" (click)="edit(student.si_idnumber)" style="width: 150px; margin-right: 20px;">Edit Details</button>
+            <button class="btn btn-warning btn-sm" (click)="edit(student.si_idnumber, student.si_recno)" style="width: 150px; margin-right: 20px;">Edit Details</button>
             <button *ngIf="student.si_idnumber.length<=7" class="btn btn-success btn-sm" (click)="enroll(student.si_idnumber)" style="width: 150px;">Mark Enrolled</button>
           </td>
         </tr>

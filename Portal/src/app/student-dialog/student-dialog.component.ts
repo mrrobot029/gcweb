@@ -10,6 +10,8 @@ import { IdnumberDialogComponent } from '../idnumber-dialog/idnumber-dialog.comp
 export interface DialogData {
   animal: string;
   name: string;
+  id;
+  recno;
 }
 
 
@@ -42,16 +44,24 @@ export class StudentDialogComponent {
   getStudents() {
     this.ds.sendRequest('allstudents', this.searchInfo).subscribe((res) => {
       this.students = res;
+      console.log(this.students)
     });
   }
 
-  edit(id){
+  edit(id, recno){
     const dialogRef = this.dialog.open(EditDialogComponent, {
       width: '100vw',
       height: '95vh',
-      data: { id: id },
+      data: { id: id,
+              recno: recno
+            },
     });
+    dialogRef.afterClosed().subscribe(() => {
+      // Do stuff after the dialog has closed
+      this.dialog.closeAll()
+  });
   }
+
 
   enroll(id){
     const dialogRef = this.dialog.open(IdnumberDialogComponent, {

@@ -1,4 +1,5 @@
 export class studentClass{
+    recno;
     idnumber;
     lname;
     fname;

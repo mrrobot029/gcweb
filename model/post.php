@@ -348,7 +348,7 @@
         }
 
         function students1($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname, si_block, si_course, si_department from tbl_studentinfo WHERE (si_idnumber LIKE '%$d->searchClass%' or si_lastname LIKE '%$d->searchClass%' or si_firstname LIKE '%$d->searchClass%' or si_midname LIKE '%$d->searchClass%' or si_block LIKE '%$d->searchClass%' or si_department LIKE '%$d->searchClass%' or si_course LIKE '%$d->searchClass%') ORDER BY si_idnumber ASC ");
+            return $this->executeWithRes("SELECT si_recno, si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname, si_block, si_course, si_department from tbl_studentinfo WHERE (si_idnumber LIKE '%$d->searchClass%' or si_lastname LIKE '%$d->searchClass%' or si_firstname LIKE '%$d->searchClass%' or si_midname LIKE '%$d->searchClass%' or si_block LIKE '%$d->searchClass%' or si_department LIKE '%$d->searchClass%' or si_course LIKE '%$d->searchClass%') ORDER BY si_idnumber ASC ");
         }
 
         function students2($d){
@@ -359,6 +359,19 @@
             return $this->executeWithRes("SELECT si.si_idnumber,CONCAT(si.si_lastname,', ',si.si_firstname,' ',si.si_midname,' ',si.si_extname) as si_fullname,es.es_mgrade from tbl_studentinfo as si INNER JOIN tbl_enrolledsubjects as es on es.es_idnumber = si.si_idnumber INNER JOIN tbl_classes as cl on cl.cl_code = es.es_clcode WHERE cl.cl_code=$d->classId ORDER BY si.si_lastname ASC");
         }
 
+        // profily/enlistment
+
+        function getProvinces($d){
+            return $this->executeWithRes("SELECT * FROM provinces");
+        }
+
+        function getCities($d){
+            return $this->executeWithRes("SELECT * FROM cities WHERE province_id =$d->provinceId");
+        }
+        
+        function getCity($d){
+            return $this->executeWithRes("SELECT * FROM cities WHERE id = '$d->cityName'");
+        }
 
         // faculty/profiley
             function getStudent($d) {
@@ -417,7 +430,7 @@
             }
 
             function getCourseBlocks($d) {
-                return $this->executeWithRes("SELECT DISTINCT cl_block from tbl_classes WHERE cl_block LIKE '%$d->si_course%'");
+                return $this->executeWithRes("SELECT DISTINCT cl_block from tbl_classes WHERE cl_block LIKE '%$d->si_course%' AND cl_sem = $d->actSem and cl_schoolyear = '$d->actSY'");
             }
 
             function getDept($d) {
@@ -600,22 +613,24 @@
                 $civilstatus = $d->civilstatus;
                 $age = $d->age;
                 $year = $d->year;
+                $cy = $d->cy;
+                $type = $d->type;
             
                 // $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype) 
                 // VALUES ('$lname', '$fname', '$mname', '$extname', '$address',  '$gender', '$bday', '$email', '$contact', '$course', '$course2', '$course3', '$reason', '$siblings', '$mother', '$father', '$emergencynumber', '$devices', '$entrancescore', '$highschool', '$highschoolgpa', '$transferee', '$transferschool', '$reasongc', '$scholartype', '$sponsor', '$sponsoroccupation', '$honors', '$orgs', '$competitions', '$interests', '$talents', '$yearenrolled', '$regular', 1,'$sem','$yearenrolled',0, 1, '$sport', '$motheroccupation', '$fatheroccupation', '$lrn', '$strand', '$guardname', '$guardrel', '$guardadd', '$govproj','$govprojother','$famincome','$disabled','$disability', '$household', '$zipcode', '$momcontact', '$dadcontact', '$spouse', '$spousecontact', '$department', '$pob', '$civilstatus', '$age', 'old')";
 
 
-                $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype, si_religion) 
-                VALUES ('$lname', '$fname', '$mname', '$extname', '$address',  '$gender', '$bday', '$email', '$contact', '$course', '$course2', '$course3', '$reason', '$siblings', '$mother', '$father', '$emergencynumber', '$devices', '$entrancescore', '$highschool', '$highschoolgpa', '$transferee', '$transferschool', '$reasongc', '$scholartype', '$sponsor', '$sponsoroccupation', '$honors', '$orgs', '$competitions', '$interests', '$talents', '$yearenrolled', '$regular', '$year','$sem','$yearenrolled',0, 1, '$sport', '$motheroccupation', '$fatheroccupation', '$lrn', '$strand', '$guardname', '$guardrel', '$guardadd', '$govproj','$govprojother','$famincome','$disabled','$disability', '$household', '$zipcode', '$momcontact', '$dadcontact', '$spouse', '$spousecontact', '$department', '$pob', '$civilstatus', '$age', 'old', '$religion')";
+                $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype, si_religion, si_cy) 
+                VALUES ('$lname', '$fname', '$mname', '$extname', '$address',  '$gender', '$bday', '$email', '$contact', '$course', '$course2', '$course3', '$reason', '$siblings', '$mother', '$father', '$emergencynumber', '$devices', '$entrancescore', '$highschool', '$highschoolgpa', '$transferee', '$transferschool', '$reasongc', '$scholartype', '$sponsor', '$sponsoroccupation', '$honors', '$orgs', '$competitions', '$interests', '$talents', '$yearenrolled', '$regular', '$year','$sem','$yearenrolled',0, 1, '$sport', '$motheroccupation', '$fatheroccupation', '$lrn', '$strand', '$guardname', '$guardrel', '$guardadd', '$govproj','$govprojother','$famincome','$disabled','$disability', '$household', '$zipcode', '$momcontact', '$dadcontact', '$spouse', '$spousecontact', '$department', '$pob', '$civilstatus', '$age', '$type', '$religion', '$cy')";
 
                 if($this->conn->query($insertNewStudent)){
                     $insertid = $this->conn->insert_id;
 			        $tempid = $insertid + 190000;
-                    $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$d->idnumber' where si_recno = '$insertid'";
+                    $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$tempid' where si_recno = '$insertid'";
                     if($this->conn->query($sqlid)){
                         $valid[0]='success';
-                        $valid[1]='Registration Successful';
-                        $valid[2]='Please proceed to the enlistment admin for your printed form.';
+                        $valid[1]=$tempid;
+                        $valid[2]='Please save/take note of this temporary ID number to be presented to your course coordinator.';
                         return $valid;
                     } else{
                         return $this->conn->error;
@@ -630,6 +645,7 @@
 
 
             function updateStudentInfo($d){
+                $recno = $d->recno;
                 $lname = $d->lname;
                 $fname = $d->fname;
                 $mname = $d->mname;
@@ -799,9 +815,25 @@
                 $civilstatus = $d->civilstatus;
                 $age = $d->age;
                 $year = $d->year;
+                $type = $d->type;
+                if(isset($d->recno)){
+                    $updateStudent = "UPDATE tbl_studentinfo SET si_idnumber = '$d->idnumber', si_lastname = '$lname', si_firstname = '$fname', si_midname = '$mname', si_extname = '$extname', si_address = '$address',  si_gender = '$gender', si_bday = '$bday', si_email = '$email', si_mobile = '$contact', si_course = '$course', si_coursechoice = '$course2', si_coursechoice2 = '$course3', si_reason = '$reason', si_siblings = '$siblings', si_momname = '$mother', si_dadname = '$father', si_emergencycontact = '$emergencynumber', si_device = '$devices', si_entranceexam = '$entrancescore', si_lastschool = '$highschool', si_average = '$highschoolgpa', si_istransferee = '$transferee', si_transfercourselevel = '$transferschool', si_reasonstudy = '$reasongc', si_scholartype = '$scholartype', si_support = '$sponsor', si_supportoccupation = '$sponsoroccupation', si_specialaward = '$honors', si_organization = '$orgs', si_competition = '$competitions', si_interest = '$interests', si_talent = '$talents',si_schoolyear = '$yearenrolled',si_isregular = '$regular', si_yrlevel = '$year', si_sem = '$sem', si_enrolledyear = '$yearenrolled', si_isenrolled = 0, si_isenlisted = 1, si_sport = '$sport', si_momoccupation = '$motheroccupation', si_dadoccupation = '$fatheroccupation', si_lrn = '$lrn', si_strand = '$strand', si_guardname = '$guardname', si_guardrel = '$guardrel', si_guardadd = '$guardadd', si_govproj = '$govproj', si_govprojothers = '$govprojother', si_famincome = '$famincome', si_isdisabled = '$disabled', si_disability = '$disability', si_householdno = '$household', si_zipcode = '$zipcode', si_momcontact = '$momcontact', si_dadcontact = '$dadcontact', si_spouse = '$spouse', si_spousecontact = '$spousecontact', si_department = '$department', si_pob = '$pob', si_civilstatus = '$civilstatus', si_age = '$age', si_studenttype = '$type', si_religion = '$religion' WHERE si_recno = '$d->recno'";
 
+                    if($this->conn->query($updateStudent)){
+                        $valid[0]='success';
+                        $valid[1]='Successfully Updated';
+                        $valid[2]='';
+                        return $valid;
+                    }else{
+                        $valid[0]='error';
+                        $valid[1]=$this->conn->error;
+                        $valid[2]=$this->conn->error;
+                        return $valid;
+                    }    
+
+                } else{
                 $verify = "SELECT * FROM tbl_studentinfo WHERE si_idnumber='$d->idnumber'";
-                $updateStudent = "UPDATE tbl_studentinfo SET si_lastname = '$lname', si_firstname = '$fname', si_midname = '$mname', si_extname = '$extname', si_address = '$address',  si_gender = '$gender', si_bday = '$bday', si_email = '$email', si_mobile = '$contact', si_course = '$course', si_coursechoice = '$course2', si_coursechoice2 = '$course3', si_reason = '$reason', si_siblings = '$siblings', si_momname = '$mother', si_dadname = '$father', si_emergencycontact = '$emergencynumber', si_device = '$devices', si_entranceexam = '$entrancescore', si_lastschool = '$highschool', si_average = '$highschoolgpa', si_istransferee = '$transferee', si_transfercourselevel = '$transferschool', si_reasonstudy = '$reasongc', si_scholartype = '$scholartype', si_support = '$sponsor', si_supportoccupation = '$sponsoroccupation', si_specialaward = '$honors', si_organization = '$orgs', si_competition = '$competitions', si_interest = '$interests', si_talent = '$talents',si_schoolyear = '$yearenrolled',si_isregular = '$regular', si_yrlevel = '$year', si_sem = '$sem', si_enrolledyear = '$yearenrolled', si_isenrolled = 0, si_isenlisted = 1, si_sport = '$sport', si_momoccupation = '$motheroccupation', si_dadoccupation = '$fatheroccupation', si_lrn = '$lrn', si_strand = '$strand', si_guardname = '$guardname', si_guardrel = '$guardrel', si_guardadd = '$guardadd', si_govproj = '$govproj', si_govprojothers = '$govprojother', si_famincome = '$famincome', si_isdisabled = '$disabled', si_disability = '$disability', si_householdno = '$household', si_zipcode = '$zipcode', si_momcontact = '$momcontact', si_dadcontact = '$dadcontact', si_spouse = '$spouse', si_spousecontact = '$spousecontact', si_department = '$department', si_pob = '$pob', si_civilstatus = '$civilstatus', si_age = '$age', si_studenttype = 'old', si_religion = '$religion' WHERE si_idnumber = '$d->idnumber'";
+                $updateStudent = "UPDATE tbl_studentinfo SET si_lastname = '$lname', si_firstname = '$fname', si_midname = '$mname', si_extname = '$extname', si_address = '$address',  si_gender = '$gender', si_bday = '$bday', si_email = '$email', si_mobile = '$contact', si_course = '$course', si_coursechoice = '$course2', si_coursechoice2 = '$course3', si_reason = '$reason', si_siblings = '$siblings', si_momname = '$mother', si_dadname = '$father', si_emergencycontact = '$emergencynumber', si_device = '$devices', si_entranceexam = '$entrancescore', si_lastschool = '$highschool', si_average = '$highschoolgpa', si_istransferee = '$transferee', si_transfercourselevel = '$transferschool', si_reasonstudy = '$reasongc', si_scholartype = '$scholartype', si_support = '$sponsor', si_supportoccupation = '$sponsoroccupation', si_specialaward = '$honors', si_organization = '$orgs', si_competition = '$competitions', si_interest = '$interests', si_talent = '$talents',si_schoolyear = '$yearenrolled',si_isregular = '$regular', si_yrlevel = '$year', si_sem = '$sem', si_enrolledyear = '$yearenrolled', si_isenrolled = 0, si_isenlisted = 1, si_sport = '$sport', si_momoccupation = '$motheroccupation', si_dadoccupation = '$fatheroccupation', si_lrn = '$lrn', si_strand = '$strand', si_guardname = '$guardname', si_guardrel = '$guardrel', si_guardadd = '$guardadd', si_govproj = '$govproj', si_govprojothers = '$govprojother', si_famincome = '$famincome', si_isdisabled = '$disabled', si_disability = '$disability', si_householdno = '$household', si_zipcode = '$zipcode', si_momcontact = '$momcontact', si_dadcontact = '$dadcontact', si_spouse = '$spouse', si_spousecontact = '$spousecontact', si_department = '$department', si_pob = '$pob', si_civilstatus = '$civilstatus', si_age = '$age', si_studenttype = '$type', si_religion = '$religion' WHERE si_idnumber = '$d->idnumber'";
                 $verification = $this->conn->query($verify);
                 $verified = $verification->num_rows;
                 if($verified!=0){
@@ -822,8 +854,9 @@
                         $valid[2]='Please select New Student before filling up the form.';
                         return $valid;
                 }
-            
             }
+            
+        }
 
             function reenlist($d){
                 $idnumber = $d->idnumber;

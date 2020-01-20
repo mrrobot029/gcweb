@@ -260,8 +260,23 @@
                     echo json_encode($post->uploadImageStudent());
                 break;
 
+                //profily/enlistment
 
+                case 'getProvinces':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->getProvinces($d));
+                break;
 
+                case 'getCities':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->getCities($d));
+                break;
+
+                case 'getCity':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->getCity($d));
+                break;
+                
                 // faculty/profiley
                 case 'getStudent':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));

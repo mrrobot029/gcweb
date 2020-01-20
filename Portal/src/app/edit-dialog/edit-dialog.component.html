@@ -1,3 +1,18 @@
+<div style="position:fixed; margin-top:0px">
+  <button mat-raised-button style="background-color:#2196f3; color: white; margin-left:900px; margin-top: 100px" (click)="submit()">Submit</button>
+</div>
+<div class="row mb-2" style="z-index: 100000;margin-top: 20px;">
+  <form [formGroup]="studentTypeFormGroup" autocomplete="off">
+    <mat-radio-group formControlName="studentType">
+      <mat-radio-button type="radio" value="new" style="margin-right:20px">New Student</mat-radio-button>
+      <mat-radio-button type="radio" value="old" style="margin-right:20px">Old Student</mat-radio-button>
+      <mat-radio-button type="radio" value="second" style="margin-right:20px">Second Courser</mat-radio-button>
+      <mat-radio-button type="radio" value="transferee" style="margin-right:20px">Transferee</mat-radio-button>
+      <mat-radio-button type="radio" value="returnee" style="margin-right:20px">Returnee</mat-radio-button>
+    </mat-radio-group>
+  </form>
+  </div>
+<div class="row mb-2">
 <mat-vertical-stepper [linear]="isLinear" #stepper>
   <!-- PERSONAL INFO -->
         <mat-step [stepControl]="firstFormGroup">
@@ -444,8 +459,8 @@
           </div>
           <div>
             <button mat-raised-button matStepperPrevious style="margin-right: 1%;">Back</button>
-            <button mat-raised-button (click)="submit()" style="background-color:#2196f3; color: white;">Submit</button>
           </div>
           </form>
         </mat-step>
       </mat-vertical-stepper>
+    </div>

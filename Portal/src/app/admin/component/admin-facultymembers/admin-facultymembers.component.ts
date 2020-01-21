@@ -38,11 +38,26 @@ export class AdminFacultymembersComponent implements OnInit {
 
   delFac(empNo) {
     this.facInfo.empNo = empNo;
-    this.ds.sendRequest('delFaculty', this.facInfo ).subscribe((res) => {
-      console.log(res);
-      if ( res.status.remarks) {
-        Swal.fire({ title: 'Success!' , text: 'Record deleted.', icon: 'success' }).then(() => {
-          this.getFac();
+
+    Swal.fire({
+      title: 'Delete record?',
+      icon: 'warning',
+      text:
+        'You are about to remove this account.',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText:
+        'Proceed',
+      cancelButtonText:
+        'Cancel'
+    }).then((res) => {
+      if (res.value) {
+        this.ds.sendRequest('delFaculty', this.facInfo ).subscribe((res1) => {
+          if ( res1.status.remarks) {
+            Swal.fire({ title: 'Success!' , text: 'Record deleted.', icon: 'success' }).then(() => {
+              this.getFac();
+            });
+          }
         });
       }
     });

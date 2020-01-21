@@ -107,6 +107,7 @@ export class LoginComponent implements OnInit {
               });
             } else {
               this.failedLogin();
+              console.log(res)
             }
           });
           break;

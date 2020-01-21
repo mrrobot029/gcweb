@@ -10,6 +10,7 @@ import Cleave from 'cleave.js'
 import Swal from 'sweetalert2'
 
 export interface DialogData {
+  recno: any;
   id: any;
   animal: string;
   name: string;
@@ -83,6 +84,7 @@ export class EditDialogComponent{
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() {
+    console.log(this.data)
     this.ds.sendRequest('getSettings', '').subscribe((settings)=>{
       this.acadyear = settings.data[0].en_schoolyear;
       this.sem = settings.data[0].en_sem;
@@ -200,26 +202,28 @@ export class EditDialogComponent{
     });
 
     this.idnum.idNumber = this.data.id
+    this.idnum.idRecno = this.data.recno
     this.ds.sendRequest('getStudent', this.idnum).subscribe((studentinfo)=>{   
       console.log(studentinfo.data[0])
         if(studentinfo.status.remarks==true){
+          this.studentTypeFormGroup.controls.studentType.setValue(studentinfo.data[0].si_studenttype)
           this.firstFormGroup.controls.idnumber.setValue(studentinfo.data[0].si_idnumber)
-          this.firstFormGroup.controls.lname.setValue(studentinfo.data[0].si_lastname)
-          this.firstFormGroup.controls.fname.setValue(studentinfo.data[0].si_firstname)
-          this.firstFormGroup.controls.mname.setValue(studentinfo.data[0].si_midname)
-          this.firstFormGroup.controls.nameext.setValue(studentinfo.data[0].si_extname)
+          this.firstFormGroup.controls.lname.setValue(studentinfo.data[0].si_lastname.toUpperCase())
+          this.firstFormGroup.controls.fname.setValue(studentinfo.data[0].si_firstname.toUpperCase())
+          this.firstFormGroup.controls.mname.setValue(studentinfo.data[0].si_midname.toUpperCase())
+          this.firstFormGroup.controls.nameext.setValue(studentinfo.data[0].si_extname.toUpperCase())
           this.firstFormGroup.controls.email.setValue(studentinfo.data[0].si_email)
           this.firstFormGroup.controls.mobile.setValue(studentinfo.data[0].si_mobile)
-          this.firstFormGroup.controls.fulladdress.setValue(studentinfo.data[0].si_address)
+          this.firstFormGroup.controls.fulladdress.setValue(studentinfo.data[0].si_address.toUpperCase())
           this.firstFormGroup.controls.zipcode.setValue(studentinfo.data[0].si_zipcode)
           this.firstFormGroup.controls.gender.setValue(studentinfo.data[0].si_gender)
           this.firstFormGroup.controls.dob.setValue(studentinfo.data[0].si_bday)
           this.firstFormGroup.controls.age.setValue(studentinfo.data[0].si_age)
           this.computeAge()
-          this.firstFormGroup.controls.civilstatus.setValue(studentinfo.data[0].si_civilstatus)
+          this.firstFormGroup.controls.civilstatus.setValue(studentinfo.data[0].si_civilstatus.toUpperCase())
           this.firstFormGroup.controls.email.setValue(studentinfo.data[0].si_email)
           this.firstFormGroup.controls.mobile.setValue(studentinfo.data[0].si_mobile)
-          this.firstFormGroup.controls.birthplace.setValue(studentinfo.data[0].si_pob)
+          this.firstFormGroup.controls.birthplace.setValue(studentinfo.data[0].si_pob.toUpperCase())
           this.secondFormGroup.controls.yrlevel.setValue(studentinfo.data[0].si_yrlevel)
           this.secondFormGroup.controls.sem.setValue(studentinfo.data[0].si_sem)
           this.secondFormGroup.controls.course.setValue(studentinfo.data[0].si_course)
@@ -241,7 +245,7 @@ export class EditDialogComponent{
                         break;
               default:
                         this.secondFormGroup.controls.reason.setValue('Other')
-                        this.secondFormGroup.controls.reasonother.setValue(studentinfo.data[0].si_reason)
+                        this.secondFormGroup.controls.reasonother.setValue(studentinfo.data[0].si_reason.toUpperCase())
           }
           switch(studentinfo.data[0].si_reasonstudy){
             case 'Parental Preference': 
@@ -258,63 +262,63 @@ export class EditDialogComponent{
                       break;
             default:
                       this.secondFormGroup.controls.reasonstudy.setValue('Other')
-                      this.secondFormGroup.controls.reasonstudyother.setValue(studentinfo.data[0].si_reasonstudy)
+                      this.secondFormGroup.controls.reasonstudyother.setValue(studentinfo.data[0].si_reasonstudy.toUpperCase())
         }
         if(studentinfo.data[0].si_scholartype!='NONE'){
           this.secondFormGroup.controls.scholar.setValue('1')
         } else{
           this.secondFormGroup.controls.scholar.setValue('0')
         }
-          this.secondFormGroup.controls.scholartype.setValue(studentinfo.data[0].si_scholartype)
-          this.secondFormGroup.controls.sponsor.setValue(studentinfo.data[0].si_support)
-          this.secondFormGroup.controls.sponsoroccupation.setValue(studentinfo.data[0].si_supportoccupation)
+          this.secondFormGroup.controls.scholartype.setValue(studentinfo.data[0].si_scholartype.toUpperCase())
+          this.secondFormGroup.controls.sponsor.setValue(studentinfo.data[0].si_support.toUpperCase())
+          this.secondFormGroup.controls.sponsoroccupation.setValue(studentinfo.data[0].si_supportoccupation.toUpperCase())
           this.secondFormGroup.controls.transferee.setValue(studentinfo.data[0].si_istransferee)
-          this.secondFormGroup.controls.transfercourselevel.setValue(studentinfo.data[0].si_transfercourselevel)
-          this.thirdFormGroup.controls.highschool.setValue(studentinfo.data[0].si_lastschool)
-          this.thirdFormGroup.controls.strand.setValue(studentinfo.data[0].si_strand)
+          this.secondFormGroup.controls.transfercourselevel.setValue(studentinfo.data[0].si_transfercourselevel.toUpperCase())
+          this.thirdFormGroup.controls.highschool.setValue(studentinfo.data[0].si_lastschool.toUpperCase())
+          this.thirdFormGroup.controls.strand.setValue(studentinfo.data[0].si_strand.toUpperCase())
           this.thirdFormGroup.controls.lrn.setValue(studentinfo.data[0].si_lrn)
           this.thirdFormGroup.controls.highschoolgpa.setValue(studentinfo.data[0].si_average)
-          this.thirdFormGroup.controls.honors.setValue(studentinfo.data[0].si_specialaward)
-          this.thirdFormGroup.controls.orgs.setValue(studentinfo.data[0].si_organization)
-          this.thirdFormGroup.controls.competitions.setValue(studentinfo.data[0].si_competition)
+          this.thirdFormGroup.controls.honors.setValue(studentinfo.data[0].si_specialaward.toUpperCase())
+          this.thirdFormGroup.controls.orgs.setValue(studentinfo.data[0].si_organization.toUpperCase())
+          this.thirdFormGroup.controls.competitions.setValue(studentinfo.data[0].si_competition.toUpperCase())
           this.thirdFormGroup.controls.interest.setValue(studentinfo.data[0].si_interest.split(', '))
           this.thirdFormGroup.controls.talent.setValue(studentinfo.data[0].si_talent.split(', '))
           this.thirdFormGroup.controls.sport.setValue(studentinfo.data[0].si_sport.split(', '))
 
           this.int = studentinfo.data[0].si_interest.split(', ')
           if(this.int[this.int.length-2]=="Others"){
-            this.thirdFormGroup.controls.interestother.setValue(this.int[this.int.length-1])
+            this.thirdFormGroup.controls.interestother.setValue(this.int[this.int.length-1].toUpperCase())
           }
 
           this.tal = studentinfo.data[0].si_talent.split(', ')
           if(this.tal[this.tal.length-2]=="Others"){
-            this.thirdFormGroup.controls.talentother.setValue(this.tal[this.tal.length-1])
+            this.thirdFormGroup.controls.talentother.setValue(this.tal[this.tal.length-1].toUpperCase())
           }
 
           this.spo = studentinfo.data[0].si_sport.split(', ')
           if(this.int[this.int.length-2]=="Others"){
-            this.thirdFormGroup.controls.sportother.setValue(this.spo[this.spo.length-1])
+            this.thirdFormGroup.controls.sportother.setValue(this.spo[this.spo.length-1].toUpperCase())
           }
 
           this.fourthFormGroup.controls.siblings.setValue(studentinfo.data[0].si_siblings)
-          this.fourthFormGroup.controls.mother.setValue(studentinfo.data[0].si_momname)
-          this.fourthFormGroup.controls.motheroccupation.setValue(studentinfo.data[0].si_momoccupation)
+          this.fourthFormGroup.controls.mother.setValue(studentinfo.data[0].si_momname.toUpperCase())
+          this.fourthFormGroup.controls.motheroccupation.setValue(studentinfo.data[0].si_momoccupation.toUpperCase())
           this.fourthFormGroup.controls.mothercontact.setValue(studentinfo.data[0].si_momcontact)
-          this.fourthFormGroup.controls.father.setValue(studentinfo.data[0].si_dadname)
-          this.fourthFormGroup.controls.fatheroccupation.setValue(studentinfo.data[0].si_dadoccupation)
+          this.fourthFormGroup.controls.father.setValue(studentinfo.data[0].si_dadname.toUpperCase())
+          this.fourthFormGroup.controls.fatheroccupation.setValue(studentinfo.data[0].si_dadoccupation.toUpperCase())
           this.fourthFormGroup.controls.fathercontact.setValue(studentinfo.data[0].si_dadcontact)
-          this.fourthFormGroup.controls.spouse.setValue(studentinfo.data[0].si_spouse)
+          this.fourthFormGroup.controls.spouse.setValue(studentinfo.data[0].si_spouse.toUpperCase())
           this.fourthFormGroup.controls.spousecontact.setValue(studentinfo.data[0].si_spousecontact)
-          this.fourthFormGroup.controls.guardian.setValue(studentinfo.data[0].si_guardname)
-          this.fourthFormGroup.controls.relationship.setValue(studentinfo.data[0].si_guardrel)
-          this.fourthFormGroup.controls.guardianadd.setValue(studentinfo.data[0].si_guardadd)
+          this.fourthFormGroup.controls.guardian.setValue(studentinfo.data[0].si_guardname.toUpperCase())
+          this.fourthFormGroup.controls.relationship.setValue(studentinfo.data[0].si_guardrel.toUpperCase())
+          this.fourthFormGroup.controls.guardianadd.setValue(studentinfo.data[0].si_guardadd.toUpperCase())
           this.fourthFormGroup.controls.emergencynumber.setValue(studentinfo.data[0].si_emergencycontact)
           this.fifthFormGroup.controls.govproj.setValue(studentinfo.data[0].si_govproj.split(', '))
-          this.fifthFormGroup.controls.govprojother.setValue(studentinfo.data[0].si_govprojothers)
-          this.fifthFormGroup.controls.household.setValue(studentinfo.data[0].si_householdno)
+          this.fifthFormGroup.controls.govprojother.setValue(studentinfo.data[0].si_govprojothers.toUpperCase())
+          this.fifthFormGroup.controls.household.setValue(studentinfo.data[0].si_householdno.toUpperCase())
           this.fifthFormGroup.controls.disabled.setValue(studentinfo.data[0].si_isdisabled)
           this.fifthFormGroup.controls.famincome.setValue(studentinfo.data[0].si_famincome)
-          this.fifthFormGroup.controls.disability.setValue(studentinfo.data[0].si_disability) 
+          this.fifthFormGroup.controls.disability.setValue(studentinfo.data[0].si_disability.toUpperCase()) 
     } else{
       alert('error')
     }
@@ -464,6 +468,7 @@ export class EditDialogComponent{
   }
   
   submit(){
+    this.student.recno = this.data.recno
     this.showErrors3=true;
     this.student.idnumber = this.firstFormGroup.value.idnumber
     this.student.lname = this.firstFormGroup.value.lname;

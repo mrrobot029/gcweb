@@ -6,12 +6,34 @@ import { StudentProfileComponent } from './component/student-profile/student-pro
 import { StudentSchedComponent } from './component/student-sched/student-sched.component';
 import { StudentProspectusComponent } from './component/student-prospectus/student-prospectus.component';
 
+import { 
+  MatButtonModule,
+  MatInputModule,
+  MatRippleModule,
+  MatFormFieldModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatTable,
+  MatTableDataSource,
+  MatPaginator,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+ } from '@angular/material';
 
 @NgModule({
   declarations: [StudentProfileComponent, StudentSchedComponent, StudentProspectusComponent],
   imports: [
     CommonModule,
-    StudentRoutingModule
+    StudentRoutingModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class StudentModule { }

@@ -15,11 +15,15 @@ export class FacultySchedComponent implements OnInit {
   students: any = {};
   classIdModal = '';
   fileModal = '';
+  settings: any = {};
 
   constructor(private ds: DataService) { }
 
   ngOnInit() {
-    this.getClassType('normal');
+    this.getClassType(0);
+    this.ds.sendRequest('getSettings', this.userinfo).subscribe((res) => {
+      this.settings = res;
+    });
   }
 
   getClassType(type) {

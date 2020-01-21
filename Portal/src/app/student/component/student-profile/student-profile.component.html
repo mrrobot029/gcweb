@@ -1,1 +1,76 @@
-<p>student-profile works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title "> {{ credStud.data[0].si_firstname + ' ' + credStud.data[0].si_midname + ' ' + credStud.data[0].si_lastname + ' ' + credStud.data[0].si_extname }}</h4>
+                        <p class="card-category">My Profile</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Student Id No.</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_idnumber}}</td>
+                                    <td>
+                                      <strong class="text-success">Program</strong> {{ credStud.data[0].si_course }}
+                                    </td>
+                                    <td><strong class="text-success">Year</strong>  {{ credStud.data[0].si_yrlevel }}
+                                    </td>
+                                    <td>
+                                      <strong class="text-success">Sem</strong> {{ credStud.data[0].si_sem }}
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Full Name</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_firstname}} {{ credStud.data[0].si_midname}} {{ credStud.data[0].si_lastname}} {{ credStud.data[0].si_extname}}</td>
+                                    <td>
+                                      <strong class="text-success">Gender</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_gender }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Address</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_address }}</td>
+                                    <td>
+                                      <strong class="text-success">Zip Code</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_zipcode }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">Birtdate</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_bday }}</td>
+                                    <td>
+                                      <strong class="text-success">Age</strong>
+                                    </td>
+                                    <td>{{ age }}</td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong class="text-success">E-mail Address</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_email }}</td>
+                                    <td>
+                                      <strong class="text-success">Contact Number</strong>
+                                    </td>
+                                    <td>{{ credStud.data[0].si_mobile }}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

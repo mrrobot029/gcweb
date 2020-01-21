@@ -1,1 +1,54 @@
-<p>student-prospectus works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title ">Prospectus</h4>
+                        <p class="card-category">{{ 'Curriculum Year ' + credStud.data[0].si_cy+ ' Year ' + studInfo.year + ' Semester ' + studInfo.sem }}</p>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(1, 1)">First Year</button>
+                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(2, 1)">Second Year</button>
+                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(3, 1)">Third Year</button>
+                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(4, 1)">Fourth Year</button>
+                        <div class="card-body">
+                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 1)">First Semester</button>
+                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 2)">Second Semester</button>
+                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 3)">Midyear</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class=" text-primary">
+                                    <th>Title</th>
+                                    <th>Course Code</th>
+                                    <th>Prerequisite</th>
+                                    <th>Units(LEC)</th>
+                                    <th>Units(LAB)</th>
+                                    <th>Units(RLE)</th>
+                                    <th>Grades</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let prospectus of studProspectus.data; let i = index">
+                                        <td>{{ prospectus.su_description }}</td>
+                                        <td>{{ prospectus.su_code }}</td>
+                                        <td>{{ prospectus.su_prereq }}</td>
+                                        <td>{{ prospectus.su_lecunits }}</td>
+                                        <td>{{ prospectus.su_labunits }}</td>
+                                        <td>{{ prospectus.su_rleunits }}</td>
+                                        <ng-container *ngFor="let grades of studGrades.data; let a = index">
+                                            <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                        </ng-container>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

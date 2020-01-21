@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import Swal from 'sweetalert2';
 import { StudentDialogComponent } from '../../../student-dialog/student-dialog.component';
 import { ReportsDialogComponent } from '../../../reports-dialog/reports-dialog.component';
+import { EditDialogComponent } from '../../../edit-dialog/edit-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-faculty-profiley',
@@ -16,6 +17,7 @@ export class FacultyProfileyComponent implements OnInit {
   actClasses: any = {};
   enClasses: any = {};
   courseBlocks: any = {};
+  searchicon = 'search';
 
 
   constructor(private ds: DataService, public dialog: MatDialog) { }
@@ -56,14 +58,47 @@ export class FacultyProfileyComponent implements OnInit {
         this.studInfo = res.data[0];
         this.getEnrolledClasses();
         this.getCourseBlocks();
+        this.searchicon = 'edit'
       } else {
         Swal.fire({
           icon: 'error',
           title: 'Not Found',
           text: 'Invalid student number.'
-        });
+        }).then(() => {
+          this.searchicon = 'search'
+      });
       }
     });
+  }
+
+  edit(){
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      width: '100vw',
+      height: '95vh',
+      data: { id: this.studInfo.si_idnumber,
+              recno: this.studInfo.si_recno
+            },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      // Do stuff after the dialog has closed
+      this.searchInfo.idNumber = this.studInfo.si_idnumber;
+    this.ds.sendRequest('getStudent', this.searchInfo).subscribe((res) => {
+      if (res.status.remarks) {
+        this.studInfo = res.data[0];
+        this.getEnrolledClasses();
+        this.getCourseBlocks();
+        this.searchicon = 'edit'
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Not Found',
+          text: 'Invalid student number.'
+        }).then(() => {
+          this.searchicon = 'search'
+      });
+      }
+    });
+  });
   }
 
   searchActiveClasses(e) {
@@ -119,8 +154,10 @@ export class FacultyProfileyComponent implements OnInit {
   }
 
   getCourseBlocks() {
-    this.ds.sendRequest('getCourseBlocks', this.studInfo).subscribe((res) => {
+    this.searchInfo.si_course = this.studInfo.si_course
+    this.ds.sendRequest('getCourseBlocks', this.searchInfo).subscribe((res) => {
       this.courseBlocks = res;
+      console.log(res)
     });
   }
 

@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.storage.get('studentToken').then((val) => {
       if (val) {
-        this.credInfo.token = val;
+        this.credInfo.payload = val;
         this.ds.sendrequest('checkStudent', this.credInfo).subscribe(res => {
           this.router.navigate(['/sched']);
         });
@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
     e.preventDefault();
     console.log(e);
 
-    this.credInfo.eId = e.target[0].value;
-    this.credInfo.ePass = e.target[1].value;
+    this.credInfo.username = e.target[0].value;
+    this.credInfo.password = e.target[1].value;
 
     this.ds.sendrequest('loginStudent', this.credInfo).subscribe(res => {
       if (res.status.remarks) {

@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <div class="container">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>
+                  <strong class="text-success">Student Id No.</strong>
+                </td>
+                <td>{{ profile.si_idnumber}}</td>
+                <td>
+                  <strong class="text-success">Program</strong> {{ profile.si_course }}
+                </td>
+                <td><strong class="text-success">Year</strong>  {{ profile.si_yrlevel }}
+                </td>
+                <td>
+                  <strong class="text-success">Sem</strong> {{ profile.si_sem }}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-success">Full Name</strong>
+                </td>
+                <td>{{ profile.si_firstname}} {{ profile.si_midname}} {{ profile.si_lastname}} {{ profile.si_extname}}</td>
+                <td>
+                  <strong class="text-success">Gender</strong>
+                </td>
+                <td>{{ profile.si_gender }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-success">Address</strong>
+                </td>
+                <td>{{ profile.si_address }}</td>
+                <td>
+                  <strong class="text-success">Zip Code</strong>
+                </td>
+                <td>{{ profile.si_zipcode }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-success">Birtdate</strong>
+                </td>
+                <td>{{ profile.si_bday }}</td>
+                <td>
+                  <strong class="text-success">Age</strong>
+                </td>
+                <td>{{ age }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-success">E-mail Address</strong>
+                </td>
+                <td>{{ profile.si_email }}</td>
+                <td>
+                  <strong class="text-success">Contact Number</strong>
+                </td>
+                <td>{{ profile.si_mobile }}</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+<div class="main-content">
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-6 col-sm-6">
+          <div class="pads">
+            <h4 class="card-title">Student Id No.</h4>
+            <p class="card-text">{{ profile.si_idnumber }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title">Full Name</h4>
+            <p class="card-text">{{ profile.si_firstname}} {{ profile.si_midname}} {{ profile.si_lastname}} {{ profile.si_extname}}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title">Address</h4>
+            <p class="card-text">{{ profile.si_address }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Birthdate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gender</h4>
+            <p class="card-text">{{ profile.si_bday }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ age }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ profile.si_gender}}</p>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+          <div class="pads">
+            <h4 class="card-title ">Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Semester</h4>
+          <p class="card-text">{{ profile.si_course }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ profile.si_yrlevel }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Contact Number</h4>
+            <p class="card-text">{{ profile.si_mobile }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Email</h4>
+            <p class="card-text">{{ profile.si_email }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ion-content>

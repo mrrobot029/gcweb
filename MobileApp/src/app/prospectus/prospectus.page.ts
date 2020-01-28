@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 export class ProspectusPage implements OnInit {
 
   studentInfo: any = {};
+  studGrades: any = {};
   prospectus: any = {};
   constructor(private ds: DataService, private storage: Storage) { }
 
@@ -19,10 +20,15 @@ export class ProspectusPage implements OnInit {
 
       this.studentInfo.si_idnumber  = val.si_idnumber;
       this.studentInfo.si_course = val.si_course;
+      this.studentInfo.si_cy = val.si_cy;
 
       this.ds.sendrequest('getProspectusCopy', this.studentInfo).subscribe((res) => {
         this.prospectus = res;
         console.log(this.prospectus);
+      });
+      this.ds.sendrequest('getGrades', this.studentInfo).subscribe((res) => {
+        this.studGrades = res;
+        console.log(this.studGrades);
       });
     });
   }

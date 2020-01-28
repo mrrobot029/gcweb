@@ -17,12 +17,26 @@ export class AdminClassesComponent implements OnInit {
   show = false;
   selectSY: string;
   selectSem: string;
-  selectBlock: string;
+  selectBlock = '';
+  credAdmin: any = {};
+  facultyMembers: any = {};
 
   constructor(private ds: DataService) { }
 
   ngOnInit() {
+    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
+    this.classInfo.department = this.credAdmin.data[0].fa_department;
     this.getSchoolYear();
+
+    this.ds.sendRequest('getFaculty', this.credAdmin).subscribe((res) => {
+      this.facultyMembers = res;
+    });
+
+    this.ds.sendRequest('getSettings', null).subscribe((res) => {
+      console.log(res);
+      this.classInfo.clSY = res.data[0].en_schoolyear;
+      this.classInfo.clSem = res.data[0].en_sem;
+    });
   }
 
   getSchoolYear() {
@@ -54,13 +68,19 @@ export class AdminClassesComponent implements OnInit {
 
   // step 3
   getClass() {
-    this.classInfo.block = this.selectBlock;
-    this.ds.sendRequest('getClass', this.classInfo).subscribe((res) => {
-      if (res.status.remarks) {
-        this.show = true;
-        this.classes = res;
-      }
-    });
+    this.show = false;
+    this.classes = {};
+    if (this.selectBlock !== '') {
+      this.classInfo.block = this.selectBlock;
+      this.ds.sendRequest('getClass', this.classInfo).subscribe((res) => {
+        if (res.status.remarks) {
+          this.show = true;
+          this.classes = res;
+        } else {
+          Swal.fire({title: 'Oops!' , text: 'No result found.' , icon: 'error'});
+        }
+      });
+    }
   }
 
   uploadClass(e) {
@@ -76,11 +96,12 @@ export class AdminClassesComponent implements OnInit {
     });
   }
 
-
-
-
   addClass(e) {
-
+    e.preventDefault();
+    console.log(this.classInfo);
+    this.ds.sendRequest('addClass', this.classInfo).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   delClass(e) {

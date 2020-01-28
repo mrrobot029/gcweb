@@ -71,25 +71,42 @@
     </div>
 </div> -->
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
         <div class="col-xs-6 col-sm-6">
-          <h4 class="card-title ">Student Id No.</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
+          <div class="pads">
+            <h4 class="card-title">Student Id No.</h4>
+            <p class="card-text">{{ profile.si_idnumber }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title">Full Name</h4>
+            <p class="card-text">{{ profile.si_firstname}} {{ profile.si_midname}} {{ profile.si_lastname}} {{ profile.si_extname}}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title">Address</h4>
+            <p class="card-text">{{ profile.si_address }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Birthdate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Age&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gender</h4>
+            <p class="card-text">{{ profile.si_bday }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ age }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ profile.si_gender}}</p>
+          </div>
         </div>
-        <div>
-          <h4 class="card-title ">Program</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
+        <div class="col-xs-6 col-sm-6">
+          <div class="pads">
+            <h4 class="card-title ">Course&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Semester</h4>
+          <p class="card-text">{{ profile.si_course }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ profile.si_yrlevel }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Contact Number</h4>
+            <p class="card-text">{{ profile.si_mobile }}</p>
+          </div>
+          <div class="pads">
+            <h4 class="card-title ">Email</h4>
+            <p class="card-text">{{ profile.si_email }}</p>
+          </div>
         </div>
-          <h4 class="card-title ">Student Id No.</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
-          <h4 class="card-title ">Student Id No.</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
-          <h4 class="card-title ">Student Id No.</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
-          <h4 class="card-title ">Student Id No.</h4>
-          <p class="card-text">{{ profile.si_idnumber }}</p>
-        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -13,21 +13,21 @@
 
       <div class="col-md-3">
         <select class="form-control" [(ngModel)]="selectSY" (change)="getSem()">
-          <option value="">Academic Year</option>
+          <option value="">Select Academic Year</option>
           <option *ngFor="let sy of schoolYear.data">{{ sy.cl_schoolyear }}</option>
         </select>
       </div>
 
       <div class="col-md-3">
         <select class="form-control" [(ngModel)]="selectSem" (change)="getBlocks()">
-          <option value="">Semester</option>
+          <option value="">Select Semester</option>
           <option *ngFor="let Semester of sem.data">{{ Semester.cl_sem }}</option>
         </select>
       </div>
 
       <div class="col-md-3">
         <select class="form-control" [(ngModel)]="selectBlock" (change)="getClass()">
-          <option value="">Blocks</option>
+          <option value="">Select Blocks</option>
           <option *ngFor="let blo of block.data">{{ blo.cl_block }}</option>
         </select>
       </div>
@@ -85,8 +85,12 @@
                     <td>{{ class.cl_etime }}</td>
                     <td>{{ class.cl_day }}</td>
                     <td>
-                      <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editClass(class)>Edit</button>
-                      <button class="btn btn-danger btn-sm btn-round" (click)=delClass(class)>Delete</button>
+                      <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#editModal" (click)=editClass(class)><i class="material-icons">
+                        pageview
+                        </i></button>
+                      <button class="btn btn-danger btn-sm btn-round" (click)=delClass(class)><i class="material-icons">
+                        delete
+                        </i></button>
                     </td>
                   </tr>
                 </tbody>
@@ -119,76 +123,12 @@
     </div>
   </div>
 </div>
-<!--
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="uploadModalLabel">Edit Subjects</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form autocomplete="off" (submit)="updateProspectus($event)">
-          <div class="form-group">
-              <label for="name1">Record Number</label>
-              <input class="form-control" name="name1" type="text" disabled [(ngModel)]="prospectusInfo.recNo" disabled>
-          </div>
-          <div class="form-group">
-              <label for="name2">Subject Code</label>
-              <input class="form-control" name="name2" type="text" required [(ngModel)]="prospectusInfo.suCode">
-          </div>
-          <div class="form-group">
-              <label for="name3">Subject Description</label>
-              <input class="form-control" name="name3" type="text" required [(ngModel)]="prospectusInfo.suDesc">
-          </div>
-          <div class="form-group">
-              <label for="name4">Lecture Units</label>
-              <input class="form-control" name="name4" type="number" required [(ngModel)]="prospectusInfo.suLecu">
-          </div>
-          <div class="form-group">
-              <label for="name5">Lab Units</label>
-              <input class="form-control" name="name5" type="number" required [(ngModel)]="prospectusInfo.suLabu">
-          </div>
-          <div class="form-group">
-              <label for="name6">RLE Units</label>
-              <input class="form-control" name="name6" type="number" required [(ngModel)]="prospectusInfo.suRleu">
-          </div>
-          <div class="form-group">
-              <label for="name7">Prerequisite</label>
-              <input class="form-control" name="name7" type="text" required [(ngModel)]="prospectusInfo.suPre">
-          </div>
-          <div class="form-group">
-              <label for="name8">Semester</label>
-              <input class="form-control" name="name8" type="text" required [(ngModel)]="prospectusInfo.suSem">
-          </div>
-          <div class="form-group">
-              <label for="name9">Year Level</label>
-              <input class="form-control" name="name9" type="text" required [(ngModel)]="prospectusInfo.suYear">
-          </div>
-          <div class="form-group">
-              <label for="name10">Curriculum Year</label>
-              <input class="form-control" name="name10" type="text" required [(ngModel)]="prospectusInfo.suCy">
-          </div>
-          <div class="form-group">
-              <label for="name11">Course/Program</label>
-              <input class="form-control" name="name11" type="text" required [(ngModel)]="prospectusInfo.suCourse">
-          </div>
-          <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="uploadModalLabel">Add Subject</h4>
+        <h4 class="modal-title" id="uploadModalLabel">Add Class</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -196,44 +136,47 @@
       <div class="modal-body">
         <form autocomplete="off" (submit)="addClass($event)">
           <div class="form-group">
-              <label for="name2">Subject Code</label>
-              <input class="form-control" name="name2" type="text" required [(ngModel)]="classInfo.suCode">
+              <label for="name2">Class Code</label>
+              <input class="form-control" name="name2" type="number" required [(ngModel)]="classInfo.clCode">
           </div>
           <div class="form-group">
-              <label for="name3">Subject Description</label>
-              <input class="form-control" name="name3" type="text" required [(ngModel)]="classInfo.suDesc">
+              <label for="name3">Subject Code</label>
+              <input class="form-control" name="name3" type="text" required [(ngModel)]="classInfo.suCode">
           </div>
           <div class="form-group">
-              <label for="name4">Lecture Units</label>
-              <input class="form-control" name="name4" type="number" required [(ngModel)]="classInfo.suLecu">
+              <label for="name4">Class Room</label>
+              <input class="form-control" name="name4" type="text" required [(ngModel)]="classInfo.clRoom">
           </div>
           <div class="form-group">
-              <label for="name5">Lab Units</label>
-              <input class="form-control" name="name5" type="number" required [(ngModel)]="classInfo.suLabu">
+              <label for="name5">Start Time</label>
+              <input class="form-control" name="name5" type="text" required [(ngModel)]="classInfo.stTime">
           </div>
           <div class="form-group">
-              <label for="name6">RLE Units</label>
-              <input class="form-control" name="name6" type="number" required [(ngModel)]="classInfo.suRleu">
+              <label for="name6">End Time</label>
+              <input class="form-control" name="name6" type="text" required [(ngModel)]="classInfo.enTime">
           </div>
           <div class="form-group">
-              <label for="name7">Prerequisite</label>
-              <input class="form-control" name="name7" type="text" required [(ngModel)]="classInfo.suPre">
+              <label for="name7">Day</label>
+              <input class="form-control" name="name7" type="text" required [(ngModel)]="classInfo.clDay">
           </div>
           <div class="form-group">
-              <label for="name8">Semester</label>
-              <input class="form-control" name="name8" type="text" required [(ngModel)]="classInfo.suSem">
+              <label for="name11">Block (COURSE-YEARLEVEL-BLOCKLETTER)</label>
+              <input class="form-control" name="name8" type="text" required [(ngModel)]="classInfo.clBlock">
           </div>
           <div class="form-group">
-              <label for="name9">Year Level</label>
-              <input class="form-control" name="name9" type="text" required [(ngModel)]="classInfo.suYear">
+            <label for="name12">Instructor</label>
+            <select class="form-control" name="name9" [(ngModel)]="classInfo.clFac">
+              <option value="">Select Faculty</option>
+              <option value="{{facultyMember.fa_empnumber}}" *ngFor="let facultyMember of facultyMembers.data">{{ facultyMember.fa_lname }}, {{ facultyMember.fa_fname }} {{ facultyMember.fa_mname }} {{ facultyMember.fa_extname }}</option>
+            </select>
           </div>
           <div class="form-group">
-              <label for="name10">Curriculum Year</label>
-              <input class="form-control" name="name10" type="text" required [(ngModel)]="classInfo.suCy">
+            <label for="name11">School Year</label>
+            <input class="form-control" name="name10" type="text" required [(ngModel)]="classInfo.clSY" disabled>
           </div>
           <div class="form-group">
-              <label for="name11">Course/Program</label>
-              <input class="form-control" name="name11" type="text" required [(ngModel)]="classInfo.suCourse">
+            <label for="name11">Semester</label>
+            <input class="form-control" name="name11" type="text" required [(ngModel)]="classInfo.clSem" disabled>
           </div>
           <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
         </form>

@@ -20,7 +20,10 @@
         case 'POST':
 
             switch ($req[0]) {
-                // authentication related cases
+
+
+
+                    // authentication related cases
                     case 'register':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($auth->registeruser($d));
@@ -57,7 +60,8 @@
                     break;
                 
 
-                // admin/facultymembers
+
+                    // admin/facultymembers
                     case 'getFaculty':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($post->getFaculty($d)); 
@@ -79,7 +83,7 @@
 
                     
                 
-                // admin/subjectprospectus
+                    // admin/subjectprospectus
                     case 'getProspectus':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($post->getProspectus($d)); 
@@ -104,23 +108,27 @@
                         echo json_encode($post->delProspectus($d)); 
                     break;
                     
-                    // options in selects in admin/subjectprospectus
-                    case 'getProspectusCourse':
-                        $d = json_decode( base64_decode( file_get_contents('php://input')));
-                        echo json_encode($post->getProspectusCourse($d)); 
-                    break;
-                    case 'getProspectusCy':
-                        $d = json_decode( base64_decode( file_get_contents('php://input')));
-                        echo json_encode($post->getProspectusCy($d)); 
-                    break;
+                            // options in selects in admin/subjectprospectus
+                            case 'getProspectusCourse':
+                                $d = json_decode( base64_decode( file_get_contents('php://input')));
+                                echo json_encode($post->getProspectusCourse($d)); 
+                            break;
+                            case 'getProspectusCy':
+                                $d = json_decode( base64_decode( file_get_contents('php://input')));
+                                echo json_encode($post->getProspectusCy($d)); 
+                            break;
 
 
 
                     // admin/classes
-
                     case 'getClass':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($post->getClass($d)); 
+                    break;
+
+                    case 'addClass':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->addClass($d)); 
                     break;
 
                     case 'delClass':
@@ -132,29 +140,27 @@
                         echo json_encode($post->uploadClass()); 
                     break;
 
-                    // options in select in admin/classes
-                    case 'getSchoolYear':
-                        echo json_encode($post->getSchoolYear()); 
-                    break;
+                    // NOTE again: getSettings is share function from faculty/profiley (page)
 
-                    case 'getSem':
-                        $d = json_decode( base64_decode( file_get_contents('php://input')));
-                        echo json_encode($post->getSem($d)); 
-                    break;
+                            // options in select in admin/classes
+                            case 'getSchoolYear':
+                                echo json_encode($post->getSchoolYear()); 
+                            break;
 
-                    case 'getBlocks':
-                        $d = json_decode( base64_decode( file_get_contents('php://input')));
-                        echo json_encode($post->getBlocks($d)); 
-                    break;
+                            case 'getSem':
+                                $d = json_decode( base64_decode( file_get_contents('php://input')));
+                                echo json_encode($post->getSem($d)); 
+                            break;
 
-                    case 'getDept':
-                        $d = json_decode( base64_decode( file_get_contents('php://input')));
-                        echo json_encode($post->getDept($d)); 
-                    break;
+                            case 'getBlocks':
+                                $d = json_decode( base64_decode( file_get_contents('php://input')));
+                                echo json_encode($post->getBlocks($d)); 
+                            break;
 
-
-
-
+                            case 'getDept':
+                                $d = json_decode( base64_decode( file_get_contents('php://input')));
+                                echo json_encode($post->getDept($d)); 
+                            break;
 
 
 
@@ -172,7 +178,11 @@
 
 
 
-                
+
+
+
+
+
 
                 // data pulling related cases
 

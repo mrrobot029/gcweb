@@ -11,7 +11,9 @@
             $this->conn = $db;
         }
 
-        // admin/facultymembers (page)
+
+
+        // NOTE: This is all the functions for admin/facultymembers (page) 
                 function getFaculty($d){
                     return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='".$d->data[0]->fa_department."' ORDER BY fa_lname,fa_fname,fa_mname,fa_extname ASC");
                 }
@@ -24,7 +26,9 @@
                     return $this->executeWithoutRes("DELETE from tbl_faculty WHERE fa_empnumber='$d->empNo'");
                 }
 
-        // admin/subjectprospectus (page)
+
+
+        // NOTE: This is all the functions for admin/subjectprospectus (page)
                 function getProspectus($d){
                     return $this->executeWithRes("SELECT * from tbl_subjects WHERE su_course='$d->courseName'AND su_cy='$d->syCy' ORDER BY su_yrlevel, su_sem ASC");
                 }
@@ -118,21 +122,20 @@
             
                 }
 
-                // admin/filters
-                function getProspectusCourse($d){
-                    return $this->executeWithRes("SELECT DISTINCT co_name from tbl_courses WHERE co_dept = '$d->deptName'");
-                }
-                function getProspectusCy($d){
-                    return $this->executeWithRes("SELECT DISTINCT su_cy from tbl_subjects WHERE su_course = '$d->courseName'");
-                }
+                        // admin/subjectprospectus (filters)
+                        function getProspectusCourse($d){
+                            return $this->executeWithRes("SELECT DISTINCT co_name from tbl_courses WHERE co_dept = '$d->deptName'");
+                        }
+                        
+                        function getProspectusCy($d){
+                            return $this->executeWithRes("SELECT DISTINCT su_cy from tbl_subjects WHERE su_course = '$d->courseName'");
+                        }
 
 
 
-                // admin/classes (page)
-
-                
+                // NOTE: This is all the functions for admin/classes (page)
                 function getClass($d) {
-                    return $this->executeWithRes("SELECT * from tbl_classes WHERE (cl_sem = '$d->sem' and cl_schoolyear='$d->SY') and cl_block LIKE '%$d->block%'");                    
+                    return $this->executeWithRes("SELECT DISTINCT * from tbl_classes as cl INNER JOIN tbl_subjects as su on su.su_code = cl.cl_sucode WHERE (cl.cl_sem = '$d->sem' and cl.cl_schoolyear='$d->SY') and cl.cl_block LIKE '%$d->block%' GROUP BY cl.cl_code");                    
                 }
 
                 function uploadClass(){
@@ -179,7 +182,7 @@
                                     cl_schoolyear,
                                     cl_sem,
                                     cl_isnormal)
-                                    VALUES('$a','$b','$c','$d','$e','$f','$g','$h','$i','$j','normal')";
+                                    VALUES('$a','$b','$c','$d','$e','$f','$g','$h','$i','$j','1')";
                                     
                                     $this->conn->query($query);
             
@@ -222,22 +225,27 @@
             
                 }
 
+                function addClass($d) {
+                    return $this->executeWithoutRes("INSERT INTO tbl_classes(cl_code,cl_sucode,cl_room,cl_stime,cl_etime,cl_day,cl_block,cl_facultyid,cl_schoolyear,cl_sem,cl_isnormal)VALUES('$d->clCode','$d->suCode','$d->clRoom','$d->stTime','$d->enTime','$d->clDay','$d->clBlock','$d->clFac','$d->clSY','$d->clSem','1')");
+                }
+
                 function delClass($d) {
                     return $this->executeWithoutRes("DELETE from tbl_classes WHERE cl_recno='$d->cl_recno'");
                 }
 
-                // options in select in admin/classes
-                function getSchoolYear() {
-                    return $this->executeWithRes("SELECT DISTINCT cl_schoolyear from tbl_classes GROUP BY cl_schoolyear");                    
-                }
+                        // admin/classes (filters)
+                        function getSchoolYear() {
+                            return $this->executeWithRes("SELECT DISTINCT cl_schoolyear from tbl_classes GROUP BY cl_schoolyear");                    
+                        }
 
-                function getSem() {
-                    return $this->executeWithRes("SELECT DISTINCT cl_sem from tbl_classes GROUP BY cl_sem");                    
-                }
+                        function getSem() {
+                            return $this->executeWithRes("SELECT DISTINCT cl_sem from tbl_classes GROUP BY cl_sem");                    
+                        }
 
-                function getBlocks($d) {
-                    return $this->executeWithRes("SELECT DISTINCT cl_block from tbl_classes WHERE cl_sem = '$d->sem' and cl_schoolyear='$d->SY' GROUP BY cl_block"); 
-                }
+                        function getBlocks($d) {
+                            return $this->executeWithRes("SELECT DISTINCT cl_block FROM tbl_classes as cl Inner JOIN tbl_courses as co ON cl.cl_block LIKE CONCAT('%', co.co_name , '%') WHERE co.co_dept = '$d->department' AND cl.cl_sem = '$d->sem' AND cl.cl_schoolyear='$d->SY' ORDER BY cl.cl_block"); 
+                        }
+
 
 
         // students/schedule
@@ -250,7 +258,7 @@
 
         // students/prospectus
         function getProspectusCopy($d){
-            return $this->executeWithRes("SELECT * FROM tbl_subjects WHERE su_course='$d->si_course' ORDER BY su_yrlevel ASC, su_sem ASC");
+            return $this->executeWithRes("SELECT * FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_cy WHERE su_course='$d->si_course' AND tbl_studentinfo.si_idnumber='$d->si_idnumber' ORDER BY su_yrlevel ASC, su_sem ASC");
         }
         function getProspectusCopyF($d){
             return $this->executeWithRes("SELECT * FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_cy WHERE tbl_subjects.su_course='$d->si_course' AND tbl_subjects.su_yrlevel=$d->year AND tbl_subjects.su_sem=$d->sem AND tbl_studentinfo.si_idnumber='$d->si_idnumber'");

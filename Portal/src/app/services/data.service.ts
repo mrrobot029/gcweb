@@ -13,6 +13,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   sendRequest(method, data) {
+    // console.log(btoa(unescape(encodeURIComponent((JSON.stringify(data))))))
     return this.http.post<any>(this.apiLink + method, btoa(unescape(encodeURIComponent((JSON.stringify(data))))));
   }
 

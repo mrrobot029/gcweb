@@ -11,14 +11,14 @@
       </div>
       <div class="col-lg-4">
         <select class="form-control" (click)="getCY($event)" [(ngModel)]="selectSubject">
-          <option></option>
+          <option value="">Select Course</option>
           <option *ngFor="let course of courses.data">{{ course.co_name }}</option>
         </select>
       </div>
 
       <div class="col-lg-4">
         <select class="form-control" (change)="getSubjects($event)" [(ngModel)]="subjectCY">
-          <option></option>
+          <option value="">Select Curriculum Year</option>
           <option *ngFor="let cy of curriculumYear.data">{{ cy.su_cy }}</option>
         </select>
       </div>

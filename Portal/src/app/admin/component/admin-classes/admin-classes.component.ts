@@ -18,11 +18,22 @@ export class AdminClassesComponent implements OnInit {
   selectSY: string;
   selectSem: string;
   selectBlock: string;
+  credAdmin: any = {};
+  facultyMembers: any = {};
 
   constructor(private ds: DataService) { }
 
   ngOnInit() {
+    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
+    this.classInfo.department = this.credAdmin.data[0].fa_department;
+    console.log(this.classInfo);
+    console.log(this.credAdmin);
     this.getSchoolYear();
+
+    this.ds.sendRequest('getFaculty', this.credAdmin).subscribe((res) => {
+      this.facultyMembers = res;
+      console.log(this.facultyMembers);
+    });
   }
 
   getSchoolYear() {

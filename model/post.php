@@ -122,6 +122,7 @@
                 function getProspectusCourse($d){
                     return $this->executeWithRes("SELECT DISTINCT co_name from tbl_courses WHERE co_dept = '$d->deptName'");
                 }
+                
                 function getProspectusCy($d){
                     return $this->executeWithRes("SELECT DISTINCT su_cy from tbl_subjects WHERE su_course = '$d->courseName'");
                 }
@@ -130,9 +131,8 @@
 
                 // admin/classes (page)
 
-                
                 function getClass($d) {
-                    return $this->executeWithRes("SELECT * from tbl_classes WHERE (cl_sem = '$d->sem' and cl_schoolyear='$d->SY') and cl_block LIKE '%$d->block%'");                    
+                    return $this->executeWithRes("SELECT DISTINCT * from tbl_classes as cl INNER JOIN tbl_subjects as su on su.su_code = cl.cl_sucode WHERE (cl.cl_sem = '$d->sem' and cl.cl_schoolyear='$d->SY') and cl.cl_block LIKE '%$d->block%' GROUP BY cl.cl_code");                    
                 }
 
                 function uploadClass(){
@@ -236,7 +236,9 @@
                 }
 
                 function getBlocks($d) {
-                    return $this->executeWithRes("SELECT DISTINCT cl_block from tbl_classes WHERE cl_sem = '$d->sem' and cl_schoolyear='$d->SY' GROUP BY cl_block"); 
+                    
+                    // echo "SELECT DISTINCT cl_block from tbl_classes as cl INNER JOIN tbl_subjects as su on su.su_code = cl.cl_sucode INNER JOIN tbl_courses as co ON su.su_course = co.co_name WHERE cl.cl_sem = '$d->sem' and cl.cl_schoolyear='$d->SY' and co.co_dept = '$d->department' GROUP BY cl.cl_block";
+                    return $this->executeWithRes("SELECT DISTINCT cl_block FROM tbl_classes as cl Inner JOIN tbl_courses as co ON cl.cl_block LIKE CONCAT('%', co.co_name , '%') WHERE co.co_dept = '$d->department' AND cl.cl_sem = '$d->sem' AND cl.cl_schoolyear='$d->SY' ORDER BY cl.cl_block"); 
                 }
 
 

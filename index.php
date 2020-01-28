@@ -20,6 +20,7 @@
         case 'POST':
 
             switch ($req[0]) {
+
                 // authentication related cases
                     case 'register':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
@@ -56,7 +57,6 @@
                         echo json_encode($auth->checkStudent($d));
                     break;
                 
-
                 // admin/facultymembers
                     case 'getFaculty':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
@@ -117,7 +117,6 @@
 
 
                     // admin/classes
-
                     case 'getClass':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($post->getClass($d)); 
@@ -154,25 +153,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
 
                 // data pulling related cases
 

@@ -21,6 +21,7 @@ export class AdminFacultymembersComponent implements OnInit {
 
   ngOnInit() {
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
+    console.log(this.credAdmin);
     this.getFac();
     this.getCourse();
     this.accountType = 0;
@@ -38,29 +39,37 @@ export class AdminFacultymembersComponent implements OnInit {
 
   delFac(empNo) {
     this.facInfo.empNo = empNo;
+    if (empNo !== this.credAdmin.data[0].fa_empnumber) {
+      Swal.fire({
+        title: 'Delete record?',
+        icon: 'warning',
+        text:
+          'You are about to remove this account.',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText:
+          'Proceed',
+        cancelButtonText:
+          'Cancel'
+      }).then((res) => {
+        if (res.value) {
+          this.ds.sendRequest('delFaculty', this.facInfo ).subscribe((res1) => {
+            if ( res1.status.remarks) {
+              Swal.fire({ title: 'Success!' , text: 'Record deleted.', icon: 'success' }).then(() => {
+                this.getFac();
+              });
+            }
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Account Removing Failed',
+        icon: 'error',
+        text: 'You are not allowed to remove your own account.'
+      });
+    }
 
-    Swal.fire({
-      title: 'Delete record?',
-      icon: 'warning',
-      text:
-        'You are about to remove this account.',
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText:
-        'Proceed',
-      cancelButtonText:
-        'Cancel'
-    }).then((res) => {
-      if (res.value) {
-        this.ds.sendRequest('delFaculty', this.facInfo ).subscribe((res1) => {
-          if ( res1.status.remarks) {
-            Swal.fire({ title: 'Success!' , text: 'Record deleted.', icon: 'success' }).then(() => {
-              this.getFac();
-            });
-          }
-        });
-      }
-    });
   }
 
   addFac(e) {

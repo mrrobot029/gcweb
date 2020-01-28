@@ -29,8 +29,8 @@
 ion-toolbar{
     --background: linear-gradient(60deg, #66bb6a, #43a047);
     --color: white;
-    .button-native{
-       color: white;
+    ion-menu-button{
+       --color: white;
     }
 }
 

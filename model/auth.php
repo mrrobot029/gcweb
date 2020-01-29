@@ -35,6 +35,8 @@ class Auth{
 		}
 	}
 
+	
+
 	function uploadFaculty(){
 		if(isset($_FILES['file'])){
 
@@ -403,6 +405,28 @@ class Auth{
 					'message'=>'Invalid session.'),
 				'timestamp'=>date_create(),
 				'prepared_by'=>'F-Society' );
+		}
+	}
+
+	function updatePassword($d){
+		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_recno='$d->fa_recno' LIMIT 1");
+
+        if ($this->result->num_rows>0) {
+            while($res = $this->result->fetch_assoc()){
+                array_push($this->data,$res);
+                $empNo = $res['fa_empnumber'];
+				$existingHash = $res['fa_password'];
+            }
+		}
+
+		$pCheck = $this->pwordCheck($d->oldPass,$existingHash);
+
+		if ($pCheck) {
+			$pass = $this->encryptPassword($d->newPass);
+			$this->conn->query("UPDATE tbl_faculty SET fa_password='$pass' WHERE fa_recno='$d->fa_recno'");
+			return $this->info = array('status'=>array('remarks'=>true, 'message'=>'Successfully updated.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
+		} else {
+			return $this->info = array('status'=>array('remarks'=>false, 'message'=>'Invalid old password.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
 		}
 	}
 

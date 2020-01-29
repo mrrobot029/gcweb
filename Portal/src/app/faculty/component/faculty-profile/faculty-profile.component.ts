@@ -15,6 +15,7 @@ export class FacultyProfileComponent implements OnInit {
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
+  userInfo: any = {};
 
   constructor(private ds: DataService) { }
 
@@ -30,7 +31,16 @@ export class FacultyProfileComponent implements OnInit {
   }
 
   updatePassword(e) {
+    e.preventDefault();
+    this.userInfo.fa_recno = this.accInfo.data[0].fa_recno;
 
+    this.ds.sendRequest('updatePassword', this.userInfo).subscribe((res) => {
+      if (res.status.remarks) {
+        Swal.fire({ title: 'Success!' , text: res.status.message , icon: 'success' });
+      } else {
+        Swal.fire({ title: 'Failed!' , text: res.status.message , icon: 'error' });
+      }
+    });
 
   }
 

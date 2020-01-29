@@ -29,7 +29,6 @@ export class LoginPage implements OnInit {
 
   login(e) {
     e.preventDefault();
-    console.log(e);
 
     this.credInfo.username = e.target[0].value;
     this.credInfo.password = e.target[1].value;
@@ -37,12 +36,13 @@ export class LoginPage implements OnInit {
     this.ds.sendrequest('loginStudent', this.credInfo).subscribe(res => {
       if (res.status.remarks) {
         Swal.fire({ title: 'Success', text: 'Student Verified', icon: 'success'}).then(() => {
+          this.storage.set('studentInfo', res.data[0]);
           this.authservice.login(res.payload);
           this.router.navigate(['/sched']);
-          this.storage.set('studentInfo', res.data[0]);
         });
+      } else {
+        Swal.fire({ title: 'Login Failed!', text: 'Invalid user credentials.', icon: 'error'});
       }
-      console.log(res);
     });
 
   }

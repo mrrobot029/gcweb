@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class FacultySidebarComponent implements OnInit {
 
   FacultyInfo: any = {};
-  prog: any
+  prog: any;
 
   constructor() { }
 

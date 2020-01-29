@@ -7,12 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FacultyProfileComponent implements OnInit {
 
-  credAdmin: any = {};
+  accInfo: any = {};
+  accounttype = '';
 
   constructor() { }
 
   ngOnInit() {
-    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_faculty'));
+    this.accInfo = JSON.parse(localStorage.getItem('gcweb_faculty'));
+    if (this.accInfo.data[0].fa_accounttype === '0') {
+      this.accounttype = 'Faculty Member';
+    } else if (this.accInfo.data[0].fa_accounttype === '1') {
+      this.accounttype = 'Admin';
+    } else if (this.accInfo.data[0].fa_accounttype === '2') {
+      this.accounttype = 'Coordinator';
+    }
   }
 
 }

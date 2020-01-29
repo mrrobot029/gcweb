@@ -20,7 +20,7 @@ export class FacultyMystudentsComponent implements OnInit {
   dataSource: any;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private ds: DataService) { }
 
@@ -29,35 +29,40 @@ export class FacultyMystudentsComponent implements OnInit {
     this.ds.sendRequest('getSettings', this.FacultyInfo).subscribe((res) => {
       this.settings = res;
     });
-    this.checktype()
+    this.checktype();
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  checktype(){
-    if(this.credFaculty.data[0].fa_accounttype == 2){
-      this.getCoordProgram()
-    }else{
-      this.FacultyInfo['department'] = this.credFaculty.data[0].fa_department;
-      this.ds.sendRequest('students', this.FacultyInfo).subscribe((res) => {
-      this.students = res;
-      this.dataSource = new MatTableDataSource(this.students.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
-    }
-  }
+  checktype() {
 
-  getCoordProgram(){
-    this.FacultyInfo['program'] = this.credFaculty.data[0].fa_program;
-    this.ds.sendRequest('coordstudents', this.FacultyInfo).subscribe((res) => {
-      this.students = res;
-      this.dataSource = new MatTableDataSource(this.students.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    if (this.credFaculty.data[0].fa_accounttype === '0') {
+        this.FacultyInfo.facId = this.credFaculty.data[0].fa_empnumber;
+        this.ds.sendRequest('getFacStudents', this.FacultyInfo).subscribe((res) => {
+            this.students = res;
+            this.dataSource = new MatTableDataSource(this.students.data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
+    } else if (this.credFaculty.data[0].fa_accounttype ===  '1') {
+        this.FacultyInfo.department = this.credFaculty.data[0].fa_department;
+        this.ds.sendRequest('getAdminStudents', this.FacultyInfo).subscribe((res) => {
+            this.students = res;
+            this.dataSource = new MatTableDataSource(this.students.data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
+    } else if (this.credFaculty.data[0].fa_accounttype === '2') {
+      this.FacultyInfo.program = this.credFaculty.data[0].fa_program;
+      this.ds.sendRequest('getCoordinatorStudents', this.FacultyInfo).subscribe((res) => {
+          this.students = res;
+          this.dataSource = new MatTableDataSource(this.students.data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+      });
+    }
   }
 
 }

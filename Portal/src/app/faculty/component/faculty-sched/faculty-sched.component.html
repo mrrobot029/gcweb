@@ -1,48 +1,92 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-success">
-                      <h4 class="card-title ">List Class Schedules</h4>
-                      <p class="card-category">Academic Year {{ settings.data[0].en_schoolyear }}</p>
-                  </div>
-                  <div class="card-body">
-                      <button class="btn btn-info btn-sm" (click)="getClassType(0)">Normal Load</button>
-                      <button class="btn btn-info btn-sm" (click)="getClassType(1)">Extended Load</button>
-                  </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-striped">
-                              <thead class=" text-primary">
-                                  <th>No.</th>
-                                  <th>Class Code</th>
-                                  <th>Subject Code</th>
-                                  <th>Time</th>
-                                  <th>Day</th>
-                                  <th>Room</th>
-                                  <th>Action</th>
-                              </thead>
-                              <tbody>
-                                  <tr *ngFor="let class of classes.data; let i = index">
-                                      <td>{{ i+1 }}</td>
-                                      <td>{{ class.cl_code }}</td>
-                                      <td>{{ class.cl_sucode }}</td>
-                                      <td>{{ class.cl_day }}</td>
-                                      <td>{{ class.cl_time }}</td>
-                                      <td>{{ 'Rm ' + class.cl_room }}</td>
-                                      <td><button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#exampleModal" (click)="getClassStudents(class.cl_code)">View Students</button></td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">List Class Schedules</h4>
+            <p class="card-category">Academic Year {{ sy }}</p>
           </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st" role="tab" aria-controls="pills-1st" aria-selected="true">Normal Load</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd" role="tab" aria-controls="pills-2nd" aria-selected="false">Extended Load</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-1st" role="tabpanel" aria-labelledby="pills-1st-tab">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead class=" text-primary">
+                          <th>No.</th>
+                          <th>Class Code</th>
+                          <th>Subject Code</th>
+                          <th>Time</th>
+                          <th>Day</th>
+                          <th>Room</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let class of classes.data; let i = index">
+                            <td *ngIf="class.cl_isnormal=='1'">{{ i+1 }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">{{ class.cl_code }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">{{ class.cl_sucode }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">{{ class.cl_stime }} - {{ class.cl_etime }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">{{ class.cl_day }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">{{ class.cl_room }}</td>
+                            <td *ngIf="class.cl_isnormal=='1'">
+                              <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#exampleModal" (click)="getClassStudents(class.cl_code)">View Students</button>
+                              <button class="btn btn-info btn-sm btn-round" (click)="updateIsNormal(class.cl_code,0)">Mark as Extended</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-2nd" role="tabpanel" aria-labelledby="pills-2nd-tab">
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead class=" text-primary">
+                          <th>No.</th>
+                          <th>Class Code</th>
+                          <th>Subject Code</th>
+                          <th>Time</th>
+                          <th>Day</th>
+                          <th>Room</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let class of classes.data; let i = index">
+                            <td *ngIf="class.cl_isnormal=='0'">{{ i+1 }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">{{ class.cl_code }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">{{ class.cl_sucode }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">{{ class.cl_stime }} - {{ class.cl_etime }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">{{ class.cl_day }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">{{ class.cl_room }}</td>
+                            <td *ngIf="class.cl_isnormal=='0'">
+                              <button class="btn btn-info btn-sm btn-round" data-toggle="modal" data-target="#exampleModal" (click)="getClassStudents(class.cl_code)">View Students</button>
+                              <button class="btn btn-info btn-sm btn-round" (click)="updateIsNormal(class.cl_code,1)">Mark as Normal</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>
-
 
 
 <!-- Modal -->
@@ -68,8 +112,6 @@
                       </div>
                   </div>
               </form>
-
-
               <hr>
               <div class="table-responsive">
                   <table class="table table-striped">

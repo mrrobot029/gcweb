@@ -1,17 +1,67 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-success">
-                        <h4 class="card-title ">{{ credAdmin.data[0].fa_fname + ' ' + credAdmin.data[0].fa_mname + ' ' + credAdmin.data[0].fa_lname + ' ' + credAdmin.data[0].fa_extname}}</h4>
-                        <p class="card-category">Profile</p>
+        <div class="card">
+            <div class="card-header card-header-success">
+                <h4 class="card-title ">My Profile</h4>
+                <p class="card-category">Account Information and Settings</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                      <br>
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <a href="javascript:void(0)">
+                                    <img class="img" src="./assets/img/faces/marc.jpg" />
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title ">{{ accInfo.data[0].fa_fname + ' ' + accInfo.data[0].fa_mname + ' ' + accInfo.data[0].fa_lname + ' ' + accInfo.data[0].fa_extname}}</h4>
+                                <p class="card-category">Profile</p>
+
+                                <a href="javascript:void(0)" class="btn btn-info btn-sm btn-round">Change Password</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                      
+                    <div class="col-md-8">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                              <tr>
+                                <th>Employee Number</th>
+                              </tr>
+                              <tr>
+                                <td>{{ accInfo.data[0].fa_empnumber}}</td>
+                              </tr>
+                              <tr>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Ext Name</th>
+                              </tr>
+                              <tr>
+                                <td>{{ accInfo.data[0].fa_fname }}</td>
+                                <td>{{ accInfo.data[0].fa_mname }}</td>
+                                <td>{{ accInfo.data[0].fa_lname }}</td>
+                                <td>{{ accInfo.data[0].fa_extname }}</td>
+                              </tr>
+                              <tr>
+                                <th>Department</th>
+                                <th>Account Type</th>
+                                <th>Program</th>
+                              </tr>
+                              <tr>
+                                <td>{{ accInfo.data[0].fa_department }}</td>
+                                <td>{{ accounttype }}</td>
+                                <td>{{ accInfo.data[0].fa_program }}</td>
+                              </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+

@@ -35,8 +35,6 @@ class Auth{
 		}
 	}
 
-	
-
 	function uploadFaculty(){
 		if(isset($_FILES['file'])){
 
@@ -123,7 +121,6 @@ class Auth{
 
 	}
 
-
 	function generateToken($empNo) {
 		$this->header = $this->generateHeader();
 		$this->payload = $this->generatePayload($empNo);
@@ -132,20 +129,13 @@ class Auth{
 	}
 
 	function generateHeader() {
-		$h = [
-			'alg'  => 'HS256',
-			'typ' => 'jwt'
-		];
-
+		$h = ['alg'  => 'HS256','typ' => 'jwt'];
 		$h = str_replace(['+','/','-','='],['-','_',''], base64_encode(json_encode($h)));
 		return $h;
 	}
 
 	function generatePayload($empNo){
-		$p = [
-			'eno' => $empNo
-		];
-
+		$p = ['eno' => $empNo];
 		$p = str_replace(['+','/','-','='],['-','_',''],  base64_encode(json_encode($p)));
 		return $p;
 	}
@@ -176,7 +166,6 @@ class Auth{
 		$hash = crypt($pword,$existingHash);
 		if($hash === $existingHash){ return true; }else{ return false; }
 	}
-
 
 	//register account
 	function registeruser($d) {
@@ -429,8 +418,7 @@ class Auth{
 			return $this->info = array('status'=>array('remarks'=>false, 'message'=>'Invalid old password.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
 		}
 	}
-
-
+	
 }
 
 ?>

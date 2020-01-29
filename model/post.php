@@ -250,8 +250,7 @@
 
         // students/schedule
         function getStudentSchedule($d){
-            return $this->executeWithRes("SELECT * from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode 
-            INNER JOIN tbl_studentinfo ON tbl_enrolledsubjects.es_idnumber = tbl_studentinfo.si_idnumber 
+            return $this->executeWithRes("SELECT * from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode
             INNER JOIN tbl_faculty ON tbl_classes.cl_facultyid = tbl_faculty.fa_empnumber INNER JOIN tbl_subjects ON tbl_classes.cl_sucode = tbl_subjects.su_code 
             WHERE tbl_enrolledsubjects.es_idnumber=$d->si_idnumber group by es_clcode");
         }

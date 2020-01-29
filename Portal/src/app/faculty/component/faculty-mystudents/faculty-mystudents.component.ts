@@ -15,6 +15,7 @@ export class FacultyMystudentsComponent implements OnInit {
   FacultyInfo: any = {};
   credFaculty: any = {};
   settings: any = {};
+  AY = '';
 
   displayedColumns: string[] = ['si_idnumber', 'si_fullname', 'si_yrlevel', 'si_sem', 'si_course', 'si_block', 'si_department'];
   dataSource: any;
@@ -28,6 +29,7 @@ export class FacultyMystudentsComponent implements OnInit {
     this.credFaculty = JSON.parse(localStorage.getItem('gcweb_faculty'));
     this.ds.sendRequest('getSettings', this.FacultyInfo).subscribe((res) => {
       this.settings = res;
+      this.AY = this.settings.data[0].en_schoolyear;
     });
     this.checktype();
   }

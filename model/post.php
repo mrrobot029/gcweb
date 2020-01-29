@@ -350,49 +350,14 @@
         }
 
 
-        function students1($d){
-            return $this->executeWithRes("SELECT si_recno, si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname, si_block, si_course, si_department from tbl_studentinfo WHERE (si_idnumber LIKE '%$d->searchClass%' or si_lastname LIKE '%$d->searchClass%' or si_firstname LIKE '%$d->searchClass%' or si_midname LIKE '%$d->searchClass%' or si_block LIKE '%$d->searchClass%' or si_department LIKE '%$d->searchClass%' or si_course LIKE '%$d->searchClass%') ORDER BY si_idnumber ASC ");
+
+
+
+        
+        // NOTE: This is all the functions for faculty/mystudents (page)
+        function updateDP($d){
+            return $this->executeWithoutRes("UPDATE tbl_faculty set fa_picture='$d->image' WHERE fa_recno='$d->recno'");
         }
-
-        function students2($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -6,7 +6,7 @@
                 <div class="card-header card-header-success">
                     <h4 class="card-title" *ngIf="credFaculty.data[0].fa_accounttype == 1">List of Students</h4>
                     <h4 class="card-title" *ngIf="credFaculty.data[0].fa_accounttype == 2">List of {{ credFaculty.data[0].fa_program }} Students</h4>
-                    <p class="card-category">Academic Year {{ settings.data[0].en_schoolyear }}</p>
+                    <p class="card-category">Academic Year {{ AY }}</p>
                 </div>
                 <div class="card-body">
                     <mat-form-field>

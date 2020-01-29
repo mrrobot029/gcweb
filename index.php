@@ -195,8 +195,12 @@
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
                         echo json_encode($post->getCoordinatorStudents($d));
                     break;
-
-                    // faculty/students
+                    
+                    // faculty/profile
+                    case 'updateDP':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->updateDP($d));
+                    break;
 
 
 

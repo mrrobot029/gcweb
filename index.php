@@ -166,6 +166,46 @@
 
 
 
+                    // all funtions for faculty pages
+
+
+                    // faculty/myclasses
+                    case 'getMyClass':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->getMyClass($d));
+                    break;
+
+                    case 'updateIsNormal':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->updateIsNormal($d));
+                    break;
+
+                    // faculty/students
+                    case 'getFacStudents':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->getFacStudents($d));
+                    break;
+
+                    case 'getAdminStudents':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->getAdminStudents($d));
+                    break;
+
+                    case 'getCoordinatorStudents':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->getCoordinatorStudents($d));
+                    break;
+
+                    // faculty/profile
+                    case 'updateDP':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($post->updateDP($d));
+                    break;
+
+                    case 'updatePassword':
+                        $d = json_decode( base64_decode( file_get_contents('php://input')));
+                        echo json_encode($auth->updatePassword($d));
+                    break;
 
 
 
@@ -174,17 +214,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-                // data pulling related cases
 
                 case 'getclass':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
@@ -201,10 +230,6 @@
                     echo json_encode($post->classFiles($d));
                 break;
 
-                case 'students':
-                    $d = json_decode( base64_decode( file_get_contents('php://input')));
-                    echo json_encode($post->students($d));
-                break;
 
                 case 'coordstudents':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));

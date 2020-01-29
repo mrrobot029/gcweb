@@ -5,6 +5,7 @@ import { FacultySchedComponent } from './component/faculty-sched/faculty-sched.c
 import { FacultyMystudentsComponent } from './component/faculty-mystudents/faculty-mystudents.component';
 import { FacultyProfileComponent } from './component/faculty-profile/faculty-profile.component';
 import { FacultyProfileyComponent } from './component/faculty-profiley/faculty-profiley.component';
+import { FormsModule } from '@angular/forms';
 
 import {
   MatButtonModule,
@@ -34,7 +35,8 @@ import { SearchDialogComponent } from './component/search-dialog/search-dialog.c
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule
   ]
 })
 export class FacultyModule { }

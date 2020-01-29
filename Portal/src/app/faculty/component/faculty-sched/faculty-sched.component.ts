@@ -13,23 +13,36 @@ export class FacultySchedComponent implements OnInit {
   classinfo: any = {};
   classes: any = {};
   students: any = {};
+  settings: any = {};
   classIdModal = '';
   fileModal = '';
-  settings: any = {};
+  sy = '';
+
 
   constructor(private ds: DataService) { }
 
   ngOnInit() {
-    this.getClassType(0);
     this.ds.sendRequest('getSettings', this.userinfo).subscribe((res) => {
       this.settings = res;
+      this.sy = this.settings.data[0].en_schoolyear;
+      this.getMyClass();
     });
   }
 
-  getClassType(type) {
-    this.userinfo.type = type;
-    this.ds.sendRequest('getclassf', this.userinfo).subscribe((res) => {
+  getMyClass() {
+    this.userinfo.clSY = this.settings.data[0].en_schoolyear;
+    this.userinfo.clSem = this.settings.data[0].en_sem;
+    console.log(this.userinfo);
+    this.ds.sendRequest('getMyClass', this.userinfo).subscribe((res) => {
       this.classes = res;
+    });
+  }
+
+  updateIsNormal(a, b) {
+    this.userinfo.a = a;
+    this.userinfo.b = b;
+    this.ds.sendRequest('updateIsNormal', this.userinfo ).subscribe((res) => {
+      this.getMyClass();
     });
   }
 
@@ -38,7 +51,6 @@ export class FacultySchedComponent implements OnInit {
     this.classinfo.classId = classId;
     this.ds.sendRequest('getClassStudents', this.classinfo).subscribe((res) => {
       this.students = res;
-      console.log(res);
     });
   }
 

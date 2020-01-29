@@ -248,6 +248,121 @@
 
 
 
+
+        // all function for faculty side of the system
+
+
+        // NOTE: This is all the functions for faculty/myclasses (page)
+        function getMyClass($d){
+            return $this->executeWithRes("SELECT * from tbl_classes WHERE cl_facultyid='". $d->data[0]->fa_empnumber ."' and cl_schoolyear='$d->clSY' and cl_sem = '$d->clSem'");
+        }
+
+        function updateIsNormal($d){
+            return $this->executeWithoutRes("UPDATE tbl_classes SET cl_isnormal='$d->b' WHERE cl_code='$d->a'");
+        }
+
+        function getClassStudents($d){
+            return $this->executeWithRes("SELECT *,CONCAT(si.si_lastname,', ',si.si_firstname,' ',si.si_midname,' ',si.si_extname) as si_fullname from tbl_studentinfo as si INNER JOIN tbl_enrolledsubjects as es on es.es_idnumber = si.si_idnumber INNER JOIN tbl_classes as cl on cl.cl_code = es.es_clcode WHERE cl.cl_code=$d->classId ORDER BY si.si_lastname ASC");
+        }
+
+        function uploadGrade(){
+            if(isset($_FILES['file'])){
+
+                $classId = $_POST['classId'];
+                $file_name = $_FILES['file']['name'];
+                $target_dir = "../filesFP/".$file_name;
+                $file_explodedname = explode('.', $file_name);
+                $file_ext = strtolower(end($file_explodedname) );
+
+                $extensions = array("xlsx");
+
+                if(in_array($file_ext,$extensions)){ // check if file is excel
+
+                    if(move_uploaded_file($_FILES['file']['tmp_name'], $target_dir)){
+
+                        require_once "Classes/PHPExcel.php";
+                        
+                        $excelReader = PHPExcel_IOFactory::createReaderForFile($target_dir);
+                        $excelObj = $excelReader->load($target_dir);
+                        $worksheet = $excelObj->getSheet(0);
+                        $lastRow = $worksheet->getHighestRow();
+
+                        for ($row = 4; $row <= $lastRow; $row++) {
+
+                            $idnumber = $worksheet->getCell('B'.$row)->getValue();
+                            $grade = $worksheet->getCell('D'.$row)->getValue();
+
+                            if(is_numeric($idnumber)){
+                                $query = "UPDATE tbl_enrolledsubjects SET es_mgrade = $grade WHERE es_idnumber=$idnumber and es_clcode = $classId";
+                                $this->executeWithoutRes($query);
+                            }
+
+                        }
+                        
+                        return $this->info = array(
+                            'status'=>array(
+                                'remarks'=>true,
+                                'message'=>'Uploading success.'
+                            ),
+                            'data' =>$this->data,
+                            'timestamp'=>date_create(),
+                            'prepared_by'=>'F-Society'
+                        );
+
+                    }else{
+                        return $this->info = array('status'=>array(
+                            'remarks'=>false,
+                            'message'=>'Uploading failed.'),
+                        'timestamp'=>date_create(),
+                        'prepared_by'=>'F-Society' );
+                    }
+
+                }else{
+                    return $this->info = array('status'=>array(
+                        'remarks'=>false,
+                        'message'=>'Invalid file for uploading grades.'),
+                    'timestamp'=>date_create(),
+                    'prepared_by'=>'F-Society' );
+                }
+                
+                
+            }else{
+                return $this->info = array('status'=>array(
+                    'remarks'=>false,
+                    'message'=>'No file uploaded.'),
+                'timestamp'=>date_create(),
+                'prepared_by'=>'F-Society' );
+            }
+
+        }
+
+        // NOTE: This is all the functions for faculty/mystudents (page)
+        function getFacStudents($d){
+            return $this->executeWithRes("SELECT DISTINCT *, CONCAT(stud.si_lastname,', ',stud.si_firstname,' ',stud.si_midname,' ',stud.si_extname)  as si_fullname from tbl_studentinfo as stud INNER JOIN tbl_enrolledsubjects as es on stud.si_idnumber = es.es_idnumber INNER JOIN tbl_classes as cl on es.es_clcode = cl.cl_code WHERE cl.cl_facultyid='$d->facId' GROUP BY stud.si_idnumber  ORDER BY stud.si_lastname ASC");
+        }
+
+        function getAdminStudents($d){
+            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_department='$d->department' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
+        }
+
+        function getCoordinatorStudents($d){
+            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
+        }
+
+
+
+
+
+        
+        // NOTE: This is all the functions for faculty/mystudents (page)
+        function updateDP($d){
+            return $this->executeWithoutRes("UPDATE tbl_faculty set fa_picture='$d->image' WHERE fa_recno='$d->recno'");
+        }
+
+
+
+
+
         // students/schedule
         function getStudentSchedule($d){
             return $this->executeWithRes("SELECT * from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode
@@ -337,34 +452,7 @@
 
         }
 
-        // faculty
-        function myclass($d){
-            return $this->executeWithRes("SELECT * from tbl_classes WHERE cl_facultyid=$d->fa_empnumber");
-        }
 
-        function myclassf($d){
-            return $this->executeWithRes("SELECT * from tbl_classes WHERE cl_facultyid='".$d->data[0]->fa_empnumber."' and cl_isnormal=$d->type");
-        }
-
-        function classFiles($d){
-            return $this->executeWithRes("SELECT * from tbl_files WHERE fi_clcode=$d->classId");
-        }
-
-        function students($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_department='$d->department' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
-        }
-
-        function students1($d){
-            return $this->executeWithRes("SELECT si_recno, si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname, si_block, si_course, si_department from tbl_studentinfo WHERE (si_idnumber LIKE '%$d->searchClass%' or si_lastname LIKE '%$d->searchClass%' or si_firstname LIKE '%$d->searchClass%' or si_midname LIKE '%$d->searchClass%' or si_block LIKE '%$d->searchClass%' or si_department LIKE '%$d->searchClass%' or si_course LIKE '%$d->searchClass%') ORDER BY si_idnumber ASC ");
-        }
-
-        function students2($d){
-            return $this->executeWithRes("SELECT si_idnumber,CONCAT(si_lastname,', ',si_firstname,' ',si_extname,', ',si_midname) as si_fullname,si_department,si_course,si_block,si_yrlevel,si_sem from tbl_studentinfo WHERE si_course='$d->program' ORDER BY si_lastname,si_firstname,si_midname,si_extname DESC");
-        }
-
-        function getClassStudents($d){
-            return $this->executeWithRes("SELECT si.si_idnumber,CONCAT(si.si_lastname,', ',si.si_firstname,' ',si.si_midname,' ',si.si_extname) as si_fullname,es.es_mgrade from tbl_studentinfo as si INNER JOIN tbl_enrolledsubjects as es on es.es_idnumber = si.si_idnumber INNER JOIN tbl_classes as cl on cl.cl_code = es.es_clcode WHERE cl.cl_code=$d->classId ORDER BY si.si_lastname ASC");
-        }
 
         // profily/enlistment
 
@@ -907,133 +995,6 @@
             }                
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // all push method
-        // function addfile(){
-
-        //     if(isset($_FILES['file'])){
-
-        //         $classId = $_POST['classId'];
-
-        //         $errors= array();
-        //         $target_dir = "../filesFP/".$classId;
-        //         $file_name = $_FILES['file']['name'];
-        //         $file_tmp =$_FILES['file']['tmp_name'];
-        //         $file_size =$_FILES['file']['size'];
-
-        //         if (!file_exists($target_dir)) {
-        //             mkdir($target_dir);
-        //         }
-
-        //         if(move_uploaded_file($file_tmp,"../filesFP/".$_POST['classId']."/".$file_name)){
-        //             return $this->executePushing("INSERT INTO tbl_files(fi_name,fi_path,fi_clcode) VALUES('$file_name','http://localhost/filesFP/$classId/$file_name','$classId')");
-        //         }else{
-        //             return $this->info = array('status'=>array(
-        //                 'remarks'=>false,
-        //                 'message'=>'Uploading failed.'),
-        //             'timestamp'=>date_create(),
-        //             'prepared_by'=>'F-Society  ' );
-        //         }
-                
-        //     }else{
-        //         return $this->info = array('status'=>array(
-        //             'remarks'=>false,
-        //             'message'=>'No file uploaded.'),
-        //         'timestamp'=>date_create(),
-        //         'prepared_by'=>'F-Society' );
-        //     }
-            
-
-        // }
-
-        function uploadGrade(){
-            if(isset($_FILES['file'])){
-
-                $classId = $_POST['classId'];
-                $file_name = $_FILES['file']['name'];
-                $target_dir = "../filesFP/".$file_name;
-                $file_explodedname = explode('.', $file_name);
-                $file_ext = strtolower(end($file_explodedname) );
-
-                $extensions = array("xlsx");
-
-                if(in_array($file_ext,$extensions)){ // check if file is excel
-
-                    if(move_uploaded_file($_FILES['file']['tmp_name'], $target_dir)){
-
-                        require_once "Classes/PHPExcel.php";
-                        
-                        $excelReader = PHPExcel_IOFactory::createReaderForFile($target_dir);
-                        $excelObj = $excelReader->load($target_dir);
-                        $worksheet = $excelObj->getSheet(0);
-                        $lastRow = $worksheet->getHighestRow();
-
-                        for ($row = 4; $row <= $lastRow; $row++) {
-
-                            $idnumber = $worksheet->getCell('B'.$row)->getValue();
-                            $grade = $worksheet->getCell('D'.$row)->getValue();
-
-                            if(is_numeric($idnumber)){
-                                $query = "UPDATE tbl_enrolledsubjects SET es_mgrade = $grade WHERE es_idnumber=$idnumber and es_clcode = $classId";
-                                $this->executeWithoutRes($query);
-                            }
-
-                        }
-                        
-                        return $this->info = array(
-                            'status'=>array(
-                                'remarks'=>true,
-                                'message'=>'Uploading success.'
-                            ),
-                            'data' =>$this->data,
-                            'timestamp'=>date_create(),
-                            'prepared_by'=>'F-Society'
-                        );
-
-                    }else{
-                        return $this->info = array('status'=>array(
-                            'remarks'=>false,
-                            'message'=>'Uploading failed.'),
-                        'timestamp'=>date_create(),
-                        'prepared_by'=>'F-Society' );
-                    }
-
-                }else{
-                    return $this->info = array('status'=>array(
-                        'remarks'=>false,
-                        'message'=>'Invalid file for uploading grades.'),
-                    'timestamp'=>date_create(),
-                    'prepared_by'=>'F-Society' );
-                }
-                
-                
-            }else{
-                return $this->info = array('status'=>array(
-                    'remarks'=>false,
-                    'message'=>'No file uploaded.'),
-                'timestamp'=>date_create(),
-                'prepared_by'=>'F-Society' );
-            }
-
-        }
 
 
 

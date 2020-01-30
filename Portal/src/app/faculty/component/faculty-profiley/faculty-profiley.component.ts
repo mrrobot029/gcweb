@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { StudentDialogComponent } from '../../../student-dialog/student-dialog.component';
 import { ReportsDialogComponent } from '../../../reports-dialog/reports-dialog.component';
 import { EditDialogComponent } from '../../../edit-dialog/edit-dialog.component';
+import { SettingsDialogComponent } from '../../../settings-dialog/settings-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-faculty-profiley',
@@ -36,6 +37,13 @@ export class FacultyProfileyComponent implements OnInit {
 
  reports(){
     const dialogRef = this.dialog.open(ReportsDialogComponent, {
+      width: '80vw',
+      height: '90vh'
+    });
+  }
+
+  settings(){
+    const dialogRef = this.dialog.open(SettingsDialogComponent, {
       width: '80vw',
       height: '90vh'
     });

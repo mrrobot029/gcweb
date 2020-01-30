@@ -474,7 +474,7 @@
             }
 
             function getStudents($d) {
-                return $this->executeWithRes("SELECT * from tbl_studentinfo");
+                return $this->executeWithRes("SELECT * from tbl_studentinfo ORDER BY si_idnumber ASC");
             }
 
             function getActiveClasses($d) {
@@ -483,6 +483,10 @@
 
             function getSettings($d) {
                 return $this->executeWithRes("SELECT * from tbl_enlistment WHERE en_isactive = 'ACTIVE'");
+            }
+
+            function updateSettings($d) {
+                return $this->executeWithoutRes("UPDATE tbl_enlistment SET en_cystart = '$d->en_cystart', en_cyend = '$d->en_cyend', en_schoolyear = '$d->en_schoolyear', en_cy = '$d->en_cy', en_sem = '$d->en_sem', en_enstart = '$d->en_enstart', en_enend = '$d->en_enend' where en_recno = '$d->en_recno'");
             }
 
             function getEnrolledClasses($d) {

@@ -238,7 +238,7 @@
 
                 case 'allstudents':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
-                    echo json_encode($post->students1($d));
+                    echo json_encode($post->getStudents($d));
                 break;
 
                 case 'reenlist':
@@ -326,6 +326,11 @@
                 case 'getSettings':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->getSettings($d));
+                break;
+
+                case 'updateSettings':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->updateSettings($d));
                 break;
 
                 case 'getEnrolledClasses':

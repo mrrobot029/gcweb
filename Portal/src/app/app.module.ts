@@ -69,6 +69,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { IdnumberDialogComponent } from './idnumber-dialog/idnumber-dialog.component';
 import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 
 
 
@@ -93,6 +94,7 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     EditDialogComponent,
     IdnumberDialogComponent,
     ReportsDialogComponent,
+    SettingsDialogComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -148,7 +150,7 @@ import { ReportsDialogComponent } from './reports-dialog/reports-dialog.componen
     MatPaginatorModule
   ],
   providers: [],
-  entryComponents: [ StudentDialogComponent, EditDialogComponent, IdnumberDialogComponent, ReportsDialogComponent ],
+  entryComponents: [ StudentDialogComponent, EditDialogComponent, IdnumberDialogComponent, ReportsDialogComponent, SettingsDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

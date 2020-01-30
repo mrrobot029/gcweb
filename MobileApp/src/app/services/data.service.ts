@@ -7,8 +7,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataService {
 
-  // apiLink = 'http://192.168.100.129/gcweb_api/';
-  apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
+
+  apiLink = 'http://localhost/gordoncollegeweb/';
+  // apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
 
   constructor(private http: HttpClient) {}
 

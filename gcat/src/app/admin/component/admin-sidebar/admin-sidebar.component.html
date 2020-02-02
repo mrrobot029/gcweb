@@ -1,0 +1,44 @@
+<div class="logo text-center">
+  <a href="https://www.facebook.com/GordonCollegeOfficial/" target="_blank" class="simple-text">
+      <div class="logo-img">
+          <img src="assets/img/gc-log.png"/>
+      </div>
+      Gordon College
+  </a>
+  <h6>Admin Portal</h6>
+</div>
+<div class="sidebar-wrapper">
+  <ul class="nav">
+    <li routerLinkActive="active" class="nav-item" >
+        <a class="nav-link" [routerLink]="['page1']">
+          <i class="material-icons">supervised_user_circle</i>
+          <p>Page 1</p>
+        </a>
+    </li>
+    <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" [routerLink]="['page2']">
+          <i class="material-icons">subject</i>
+          <p>Page 2</p>
+        </a>
+    </li>
+    <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" [routerLink]="['page3']">
+          <i class="material-icons">book</i>
+          <p>Page 3</p>
+        </a>
+    </li>
+  </ul>
+
+  <div>
+    <ul class="nav navbar-nav nav-mobile-menu">
+        <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">
+              <i class="fa fa-sign-out"></i>
+                <p>
+                    <span class="d-lg-none d-md-block">Log Out</span>
+                </p>
+            </a>
+        </li>
+    </ul>
+  </div>
+</div>

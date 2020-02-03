@@ -981,6 +981,8 @@
 
 
 
+
+
             function updateId($d){
                 $oldid = $d->idNumber;
                 $newid = $d->newId;
@@ -1002,6 +1004,32 @@
 
 
 
+            // gcat/users
+            function getGCATmembers() {
+                return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='GCAT' ORDER BY fa_lname,fa_fname,fa_mname,fa_extname ASC");
+            }
+
+            function deleteGCATmember($d) {
+                return $this->executeWithoutRes("DELETE from tbl_faculty WHERE fa_recno='$d->empRecno'");
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
         // code for execution of sql queries
         function executeWithRes($query){
 

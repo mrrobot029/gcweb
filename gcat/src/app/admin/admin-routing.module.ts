@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminPage1Component } from './component/admin-page1/admin-page1.component';
 import { AdminPage2Component } from './component/admin-page2/admin-page2.component';
 import { AdminPage3Component } from './component/admin-page3/admin-page3.component';
+import { UsersComponent } from './component/users/users.component';
 
 
 const routes: Routes = [
-  { path : '' , redirectTo: 'page1', pathMatch: 'full'},
+  { path : '' , redirectTo: 'users', pathMatch: 'full'},
+  { path : 'users', component: UsersComponent },
   { path : 'page1', component: AdminPage1Component },
   { path : 'page2', component: AdminPage2Component },
   { path : 'page3', component: AdminPage3Component },

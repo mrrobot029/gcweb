@@ -4,18 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SchedPageRoutingModule } from './sched-routing.module';
+import { NavbarPageRoutingModule } from './navbar-routing.module';
 
-import { SchedPage } from './sched.page';
-import { NavbarPage } from '../navbar/navbar.page';
+import { NavbarPage } from './navbar.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SchedPageRoutingModule
+    NavbarPageRoutingModule
   ],
-  declarations: [SchedPage, NavbarPage]
+  declarations: [NavbarPage],
+  exports: [NavbarPage]
 })
-export class SchedPageModule {}
+export class NavbarPageModule {}

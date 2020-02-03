@@ -21,8 +21,6 @@
 
             switch ($req[0]) {
 
-
-
                     // authentication related cases
                     case 'register':
                         $d = json_decode( base64_decode( file_get_contents('php://input')));
@@ -391,6 +389,18 @@
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->deleteGCATmember($d));
                 break;
+
+                case 'loginGCATmember':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($auth->loginGCATmember($d));
+                break;
+
+                case 'checkGCATmember':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($auth->checkGCATmember($d));
+                break;
+
+
 
 
 

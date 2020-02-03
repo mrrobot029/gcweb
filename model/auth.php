@@ -395,8 +395,70 @@ class Auth{
 		}
 	}
 
-	function editGCATmember($d) {
-		
+	function loginGCATmember($d) {
+		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->username' and fa_department='GCAT' LIMIT 1");
+
+        if ($this->result->num_rows>0) {
+            while($res = $this->result->fetch_assoc()){
+                array_push($this->data,$res);
+                $empNo = $res['fa_empnumber'];
+				$existingHash = $res['fa_password'];
+            }
+
+            $pCheck = $this->pwordCheck($d->password,$existingHash);
+
+            if ($pCheck) {
+            	$token = $this->generateToken($empNo);
+            	$this->conn->query("UPDATE tbl_faculty set fa_token='$token' where fa_empnumber=$empNo");
+ 				return $this->info = array(
+					'status'=>array(
+						'remarks'=>true,
+						'message'=>'Login success.'
+					),
+					'payload'=>$token,
+					'data' =>$this->data,
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society'
+				);
+            } else {
+            	return $this->info = array(
+					'status'=>array('remarks'=>false,
+					'message'=>'Invalid employee number or password.'),
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society' );
+			}
+			
+        } else {
+			return $this->info = array('status'=>array(
+					'remarks'=>false,
+					'message'=>'Invalid employee number or password.'),
+				'timestamp'=>date_create(),
+				'prepared_by'=>'F-Society' );
+		}
+	}
+
+	function checkGCATmember($d) {
+		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_token='$d->payload' LIMIT 1");
+        if ($this->result->num_rows>0) {
+			while($res = $this->result->fetch_assoc()) {
+                array_push($this->data,$res);
+            }          
+			return $this->info = array(
+				'status'=>array(
+					'remarks'=>true,
+					'message'=>'User successfully verified.'),
+				'payload'=>$d->payload,
+				'data' =>$this->data,
+				'timestamp'=>date_create(),
+				'prepared_by'=>'F-Society'
+			);
+        } else {
+			return $this->info = array('status'=>array(
+					'remarks'=>false,
+					'message'=>'Invalid session.'),
+				'timestamp'=>date_create(),
+				'prepared_by'=>'F-Society' );
+		}
 	}
 	
 

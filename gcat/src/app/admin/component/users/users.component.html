@@ -21,20 +21,16 @@
                 <thead class=" text-primary">
                   <th>No.</th>
                   <th>Employee No.</th>
-                  <th>First Name</th>
-                  <th>Middle Name</th>
-                  <th>Last Name</th>
-                  <th>Extension Name</th>
+                  <th>Full Name</th>
+                  <th>Date Recorded</th>
                   <th>Action</th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let member of gcatmembers; let i = index">
                     <td>{{i+1}}</td>
                     <td>{{member.fa_empnumber}}</td>
-                    <td>{{member.fa_fname}}</td>
-                    <td>{{member.fa_mname}}</td>
-                    <td>{{member.fa_lname}}</td>
-                    <td>{{member.fa_extname}}</td>
+                    <td>{{member.fa_lname}}, {{member.fa_fname}} {{member.fa_mname}} {{member.fa_extname}}</td>
+                    <td>{{member.fa_daterecorded}}</td>
                     <td>
                       <button class="btn btn-sm btn-danger" (click)="deleteGCATmember(i)">
                         <i class="material-icons">

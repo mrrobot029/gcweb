@@ -38,7 +38,7 @@ export class AdminHeaderComponent implements OnInit {
         'Cancel'
     }).then((res) => {
       if (res.value) {
-        localStorage.removeItem('gcweb_admin');
+        localStorage.removeItem('gcweb_GCAT');
         this.router.navigate(['/login']);
       }
     });

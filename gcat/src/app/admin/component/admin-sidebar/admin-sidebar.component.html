@@ -5,10 +5,16 @@
       </div>
       Gordon College
   </a>
-  <h6>Admin Portal</h6>
+  <h6>Admission Portal</h6>
 </div>
 <div class="sidebar-wrapper">
   <ul class="nav">
+    <li routerLinkActive="active" class="nav-item" >
+        <a class="nav-link" [routerLink]="['users']">
+          <i class="material-icons">supervised_user_circle</i>
+          <p>Users</p>
+        </a>
+    </li>
     <li routerLinkActive="active" class="nav-item" >
         <a class="nav-link" [routerLink]="['page1']">
           <i class="material-icons">supervised_user_circle</i>

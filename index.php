@@ -376,6 +376,31 @@
 
 
 
+
+                // gcat/users
+                case 'addGCATmember':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($auth->addGCATmember($d));
+                break;
+
+                case 'getGCATmembers':
+                    echo json_encode($post->getGCATmembers());
+                break;
+
+                case 'deleteGCATmember':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->deleteGCATmember($d));
+                break;
+
+
+
+
+
+
+
+
+
+
                 default:
                     http_response_code(400);
                     echo json_encode(array('status'=>'failed', 'message'=>'Bad request.'));

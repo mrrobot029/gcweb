@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProspectusPageRoutingModule } from './prospectus-routing.module';
 
 import { ProspectusPage } from './prospectus.page';
+import { NavbarPage } from '../navbar/navbar.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ProspectusPage } from './prospectus.page';
     IonicModule,
     ProspectusPageRoutingModule
   ],
-  declarations: [ProspectusPage]
+  declarations: [ProspectusPage, NavbarPage]
 })
 export class ProspectusPageModule {}

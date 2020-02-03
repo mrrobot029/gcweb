@@ -22,7 +22,12 @@ const routes: Routes = [
     {
         path: 'login',
         loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-    }
+    },
+  {
+    path: 'navbar',
+    loadChildren: () => import('./navbar/navbar.module').then( m => m.NavbarPageModule)
+  }
+
 ];
 
 @NgModule({

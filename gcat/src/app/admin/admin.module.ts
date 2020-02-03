@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { AdminPage1Component } from './component/admin-page1/admin-page1.component';
 import { AdminPage2Component } from './component/admin-page2/admin-page2.component';
 import { AdminPage3Component } from './component/admin-page3/admin-page3.component';
+import { UsersComponent } from './component/users/users.component';
 
 @NgModule({
   declarations: [
     AdminPage1Component,
     AdminPage2Component,
     AdminPage3Component,
+    UsersComponent,
   ],
   imports: [
     CommonModule,

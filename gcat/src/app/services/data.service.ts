@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, fromEventPattern } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ import { Observable, fromEventPattern } from 'rxjs';
 export class DataService {
 
 //   apiLink = 'http://192.168.100.12/gcweb/';
-  apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
-
+  // apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
+  apiLink = 'http://localhost/gordoncollegeweb/';
   constructor(private http: HttpClient) { }
 
   sendRequest(method, data) {
@@ -22,4 +23,7 @@ export class DataService {
     return this.http.post<any>(this.apiLink + method, data);
   }
 
+  callSwal(stitle, stext, sicon) {
+    Swal.fire({title: stitle, text: stext, icon: sicon});
+  }
 }

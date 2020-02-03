@@ -1,4 +1,140 @@
 <div class="main-content">
+  <div class="container-fluid">
+      <div class="card">
+          <div class="card-header card-header-success">
+              <h4 class="card-title ">My Profile</h4>
+              <p class="card-category">Account Information and Settings</p>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-4">
+                    <br>
+                      <div class="card card-profile">
+                          <div class="card-avatar">
+                              <a href="javascript:void(0)">
+                                  <img class="img" [src]="credStud.data[0].si_picture" />
+                              </a>
+                          </div>
+                          <div class="card-body">
+                              <h4 class="card-title ">{{ credStud.data[0].si_firstname + ' ' + credStud.data[0].si_midname + ' ' + credStud.data[0].si_lastname + ' ' + credStud.data[0].si_extname}}</h4>
+                              <p class="card-category">{{ credStud.data[0].si_block }}</p>
+                              <p class="card-description">
+                                Excellence | Character | Service
+                              </p>
+                              <a href="javascript:void(0)" data-toggle="modal" data-target="#updateModal" class="btn btn-info btn-sm btn-round">Update</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-8">
+                      <div class="table-responsive">
+                          <table class="table table-striped">
+                            <tr  class=" text-primary">
+                              <th>Student Number</th>
+                              <th>Course</th>
+                              <th>Year</th>
+                              <th>Semester</th>
+                            </tr>
+                            <tr>
+                              <td>{{ credStud.data[0].si_idnumber}}</td>
+                              <td>{{ credStud.data[0].si_course}}</td>
+                              <td>{{ credStud.data[0].si_yrlevel}}</td>
+                              <td>{{ credStud.data[0].si_sem}}</td>
+                            </tr>
+                            <tr  class=" text-primary">
+                              <th>First Name</th>
+                              <th>Middle Name</th>
+                              <th>Last Name</th>
+                              <th>Ext Name</th>
+                            </tr>
+                            <tr >
+                              <td>{{ credStud.data[0].si_firstname }}</td>
+                              <td>{{ credStud.data[0].si_midname }}</td>
+                              <td>{{ credStud.data[0].si_lastname }}</td>
+                              <td>{{ credStud.data[0].si_extname }}</td>
+                            </tr>
+                          </table>
+                          <table class="table table-striped">
+                            <tr  class=" text-primary">
+                              <th>Address</th>
+                              <th>Zip Code</th>
+                            </tr>
+                            <tr>
+                              <td>{{ credStud.data[0].si_address }}</td>
+                              <td>{{ credStud.data[0].si_zipcode }}</td>
+                            </tr>
+                          </table>
+                          <table class="table table-striped">
+                            <tr  class=" text-primary">
+                              <th>Gender</th>
+                              <th>Birthdate</th>
+                              <th>Age</th>
+                            </tr>
+                            <tr>
+                              <td>{{ credStud.data[0].si_gender }}</td>
+                              <td>{{ credStud.data[0].si_bday }}</td>
+                              <td>{{ age }}</td>
+                            </tr>
+                          </table>
+                          <table class="table table-striped">
+                            <tr class="text-primary">
+                              <th>Contact No.</th>
+                              <th>E-mail</th>
+                            </tr>
+                            <tr>
+                              <td>{{ credStud.data[0].si_mobile }}</td>
+                              <td>{{ credStud.data[0].si_email }}</td>
+                            </tr>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="updateModalLabel">Update Account Info</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <h4>Upload Profile Picture</h4>
+          <form autocomplete="off" (submit)="updateDP($event)">
+              <input class="form-control" name="file" type="file" (change)="fileChangeEvent($event)" required>
+              <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
+          </form>
+          <br>
+          <br>
+          <br>
+          <br>
+          <h4>Change Password</h4>
+          <hr>
+          <form autocomplete="off" (submit)="updatePassword($event)">
+            <div class="form-group">
+                <label for="name1">Old Password</label>
+                <input class="form-control" name="name1" type="password" required [(ngModel)]="userInfo.oldPass">
+            </div>
+            <div class="form-group">
+              <label for="name2">New Password</label>
+              <input class="form-control" name="name2" type="password" required [(ngModel)]="userInfo.newPass">
+            </div>
+            <div class="form-group">
+                <label for="name3">Confirm Password</label>
+                <input class="form-control" name="name3" type="password" required [(ngModel)]="userInfo.conPass">
+            </div>
+            <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
+          </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- <div class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -73,4 +209,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

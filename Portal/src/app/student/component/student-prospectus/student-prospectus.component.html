@@ -1,51 +1,469 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="card-header card-header-success">
                         <h4 class="card-title ">Prospectus</h4>
-                        <p class="card-category">{{ 'Curriculum Year ' + credStud.data[0].si_cy+ ' Year ' + studInfo.year + ' Semester ' + studInfo.sem }}</p>
+                        <p class="card-category">{{ 'Curriculum Year ' + credStud.data[0].si_cy }}</p>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(1, 1)">First Year</button>
-                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(2, 1)">Second Year</button>
-                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(3, 1)">Third Year</button>
-                        <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(4, 1)">Fourth Year</button>
-                        <div class="card-body">
-                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 1)">First Semester</button>
-                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 2)">Second Semester</button>
-                            <button class="btn btn-info btn-sm" (click)="getProspectusYrSem(0, 3)">Midyear</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead class=" text-primary">
-                                    <th>Title</th>
-                                    <th>Course Code</th>
-                                    <th>Prerequisite</th>
-                                    <th>Units(LEC)</th>
-                                    <th>Units(LAB)</th>
-                                    <th>Units(RLE)</th>
-                                    <th>Grades</th>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let prospectus of studProspectus.data; let i = index">
-                                        <td>{{ prospectus.su_description }}</td>
-                                        <td>{{ prospectus.su_code }}</td>
-                                        <td>{{ prospectus.su_prereq }}</td>
-                                        <td>{{ prospectus.su_lecunits }}</td>
-                                        <td>{{ prospectus.su_labunits }}</td>
-                                        <td>{{ prospectus.su_rleunits }}</td>
-                                        <ng-container *ngFor="let grades of studGrades.data; let a = index">
-                                            <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
-                                        </ng-container>
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st" role="tab" aria-controls="pills-1st" aria-selected="true">First Year</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd" role="tab" aria-controls="pills-2nd" aria-selected="false">Second Year</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd" role="tab" aria-controls="pills-3rd" aria-selected="false">Third Year</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-4th-tab" data-toggle="pill" href="#pills-4th" role="tab" aria-controls="pills-4th" aria-selected="false">Fourth Year</a>
+                                    </li>
+                                </ul>
+                                <!-- First Year -->
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-1st" role="tapanel" aria-labelledby="pills-1st-tab">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st1" role="tab" aria-controls="pills-1st1" aria-selected="true">First Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd1" role="tab" aria-controls="pills-2nd1" aria-selected="false">Second Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd1" role="tab" aria-controls="pills-3rd1" aria-selected="false">Midyear</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <!-- First Sem -->
+                                            <div class="tab-pane fade show active" id="pills-1st1" role="tapanel" aria-labelledby="pills-1st1-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='1' && prospectus.su_sem==1">
+                                                                    <td>{{ prospectus.su_description }}</td>
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Second Sem -->
+                                            <div class="tab-pane fade" id="pills-2nd1" role="tapanel" aria-labelledby="pills-2nd1-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='1' && prospectus.su_sem==2">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Midyear -->
+                                            <div class="tab-pane fade" id="pills-3rd1" role="tapanel" aria-labelledby="pills-3rd1-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='1' && prospectus.su_sem==3">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Second Year -->
+                                    <div class="tab-pane fade" id="pills-2nd" role="tapanel" aria-labelledby="pills-2nd-tab">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st2" role="tab" aria-controls="pills-1st2" aria-selected="true">First Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd2" role="tab" aria-controls="pills-2nd2" aria-selected="false">Second Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd2" role="tab" aria-controls="pills-3rd2" aria-selected="false">Midyear</a>
+                                            </li>
+                                        </ul>
+                                        <!-- First Sem -->
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-1st2" role="tapanel" aria-labelledby="pills-1st2-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='2' && prospectus.su_sem==1">
+                                                                    <td>{{ prospectus.su_description }}</td>
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Second Sem -->
+                                            <div class="tab-pane fade" id="pills-2nd2" role="tapanel" aria-labelledby="pills-2nd2-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='2' && prospectus.su_sem==2">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Midyear -->
+                                            <div class="tab-pane fade" id="pills-3rd2" role="tapanel" aria-labelledby="pills-3rd2-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='2' && prospectus.su_sem==3">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Third Year -->
+                                    <div class="tab-pane fade" id="pills-3rd" role="tapanel" aria-labelledby="pills-3rd-tab">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st3" role="tab" aria-controls="pills-1st3" aria-selected="true">First Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd3" role="tab" aria-controls="pills-2nd3" aria-selected="false">Second Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd3" role="tab" aria-controls="pills-3rd3" aria-selected="false">Midyear</a>
+                                            </li>
+                                        </ul>
+                                        <!-- First Sem -->
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-1st3" role="tapanel" aria-labelledby="pills-1st3-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='3' && prospectus.su_sem==1">
+                                                                    <td>{{ prospectus.su_description }}</td>
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Second Sem -->
+                                            <div class="tab-pane fade" id="pills-2nd3" role="tapanel" aria-labelledby="pills-2nd3-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='3' && prospectus.su_sem==2">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Midyear -->
+                                            <div class="tab-pane fade" id="pills-3rd3" role="tapanel" aria-labelledby="pills-3rd3-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='3' && prospectus.su_sem==3">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fourth Year -->
+                                    <div class="tab-pane fade" id="pills-4th" role="tapanel" aria-labelledby="pills-4th-tab">
+                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-1st-tab" data-toggle="pill" href="#pills-1st4" role="tab" aria-controls="pills-1st4" aria-selected="true">First Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-2nd-tab" data-toggle="pill" href="#pills-2nd4" role="tab" aria-controls="pills-2nd4" aria-selected="false">Second Semester</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-3rd-tab" data-toggle="pill" href="#pills-3rd4" role="tab" aria-controls="pills-3rd4" aria-selected="false">Midyear</a>
+                                            </li>
+                                        </ul>
+                                        <!-- First Sem -->
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-1st4" role="tapanel" aria-labelledby="pills-1st4-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='4' && prospectus.su_sem==1">
+                                                                    <td>{{ prospectus.su_description }}</td>
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Second Sem -->
+                                            <div class="tab-pane fade" id="pills-2nd4" role="tapanel" aria-labelledby="pills-2nd4-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='4' && prospectus.su_sem==2">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!-- Midyear -->
+                                            <div class="tab-pane fade" id="pills-3rd4" role="tapanel" aria-labelledby="pills-3rd4-tab">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead class="text-primary">
+                                                            <th>Title</th>
+                                                            <th>Course Code</th>
+                                                            <th>Prerequisite</th>
+                                                            <th>Units(LEC)</th>
+                                                            <th>Units(LAB)</th>
+                                                            <th>Units(RLE)</th>
+                                                            <th>Grades</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let prospectus of studProspectus.data">
+                                                                <ng-container *ngIf="prospectus.su_yrlevel=='4' && prospectus.su_sem==3">
+                                                                    <td>{{ prospectus.su_description }}</td >
+                                                                    <td>{{ prospectus.su_code }}</td>
+                                                                    <td>{{ prospectus.su_prereq }}</td>
+                                                                    <td>{{ prospectus.su_lecunits }}</td>
+                                                                    <td>{{ prospectus.su_labunits }}</td>
+                                                                    <td>{{ prospectus.su_rleunits }}</td>
+                                                                    <ng-container *ngFor="let grades of studGrades.data">
+                                                                        <td *ngIf="grades.es_sucode == prospectus.su_code">{{ studGrades.es_fgrade }}</td>
+                                                                    </ng-container>
+                                                                </ng-container>           
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                       </div>
                     </div>
                 </div>
             </div>

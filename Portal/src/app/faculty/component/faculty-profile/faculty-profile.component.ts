@@ -32,6 +32,7 @@ export class FacultyProfileComponent implements OnInit {
 
   updatePassword(e) {
     e.preventDefault();
+    this.userInfo.accType = 0;
     this.userInfo.fa_recno = this.accInfo.data[0].fa_recno;
 
     this.ds.sendRequest('updatePassword', this.userInfo).subscribe((res) => {

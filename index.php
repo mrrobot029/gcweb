@@ -249,6 +249,8 @@
                     echo json_encode($post->getClassStudents($d));
                 break;
 
+                // students
+                // students/prospectus
                 case 'getProspectusCopy':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->getProspectusCopy($d));
@@ -259,14 +261,22 @@
                     echo json_encode($post->getProspectusCopyF($d));
                 break;
 
+                // student/sched
                 case 'getStudentSchedule':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->getStudentSchedule($d));
                 break;
 
+                // student/grade
                 case 'getGrades':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->getGrades($d));
+                break;
+
+                // student/image
+                case 'updateImage':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->updateImage($d));
                 break;
 
                 // data updating cases

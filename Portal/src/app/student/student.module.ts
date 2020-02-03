@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentProfileComponent } from './component/student-profile/student-profile.component';
@@ -33,7 +34,8 @@ import {
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule
   ]
 })
 export class StudentModule { }

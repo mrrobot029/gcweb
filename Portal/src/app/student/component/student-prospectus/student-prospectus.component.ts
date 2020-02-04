@@ -18,25 +18,29 @@ export class StudentProspectusComponent implements OnInit {
 
   ngOnInit() {
     this.credStud = JSON.parse(localStorage.getItem('gcweb_student'));
-    this.studInfo['si_idnumber'] = this.credStud.data[0].si_idnumber
-    this.studInfo['si_course'] = this.credStud.data[0].si_course
-    this.getProspectusYrSem(1, 1) 
+    this.studInfo['si_cy'] = this.credStud.data[0].si_cy;
+    this.studInfo['si_course'] = this.credStud.data[0].si_course;
+    this.studInfo['si_idnumber'] = this.credStud.data[0].si_idnumber;
+    // this.getProspectusYrSem(1, 1) 
+    this.ds.sendRequest('getProspectusCopy', this.studInfo).subscribe((res) => {
+      this.studProspectus = res;
+    });
     this.ds.sendRequest('getGrades', this.studInfo).subscribe((res) => {
       this.studGrades = res;
     });
   }
 
-  getProspectusYrSem(yr, sem){
+  // getProspectusYrSem(yr, sem){
     
-    if(yr != 0){
-      this.studInfo['year'] = yr
-    }
-      this.studInfo['sem'] = sem
-      console.log(this.studInfo)
-      this.ds.sendRequest('getProspectusCopyF', this.studInfo).subscribe((res) => {
-        this.studProspectus = res;
-      });
+  //   if(yr != 0){
+  //     this.studInfo['year'] = yr
+  //   }
+  //     this.studInfo['sem'] = sem
+  //     console.log(this.studInfo)
+  //     this.ds.sendRequest('getProspectusCopyF', this.studInfo).subscribe((res) => {
+  //       this.studProspectus = res;
+  //     });
     
-  }
+  // }
 
 }

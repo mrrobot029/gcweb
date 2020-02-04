@@ -346,31 +346,60 @@ class Auth{
 	}
 
 	function updatePassword($d){
-		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_recno='$d->fa_recno' LIMIT 1");
-        if ($this->result->num_rows>0) {
-            while($res = $this->result->fetch_assoc()){
-                array_push($this->data,$res);
-                $empNo = $res['fa_empnumber'];
-				$existingHash = $res['fa_password'];
-            }
-		}
-		$pCheck = $this->pwordCheck($d->oldPass,$existingHash);
-		if ($pCheck) {
-			$pass = $this->encryptPassword($d->newPass);
-			$this->conn->query("UPDATE tbl_faculty SET fa_password='$pass' WHERE fa_recno='$d->fa_recno'");
-			return $this->info = array(
-				'status' => array(
-					'remarks'=>true,
-					'message'=>'Successfully updated.'),
-				'timestamp'=>date_create(),
-				'prepared_by'=>'F-Society');
-		} else {
-			return $this->info = array(
-				'status'=>array(
-					'remarks'=>false,
-					'message'=>'Invalid old password.'),
-				'timestamp'=>date_create(),
-				'prepared_by'=>'F-Society');
+		if ($d->accType == 0){
+			$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_recno='$d->fa_recno' LIMIT 1");
+			if ($this->result->num_rows>0) {
+				while($res = $this->result->fetch_assoc()){
+					array_push($this->data,$res);
+					$empNo = $res['fa_empnumber'];
+					$existingHash = $res['fa_password'];
+				}
+			}
+			$pCheck = $this->pwordCheck($d->oldPass,$existingHash);
+			if ($pCheck) {
+				$pass = $this->encryptPassword($d->newPass);
+				$this->conn->query("UPDATE tbl_faculty SET fa_password='$pass' WHERE fa_recno='$d->fa_recno'");
+				return $this->info = array(
+					'status' => array(
+						'remarks'=>true,
+						'message'=>'Successfully updated.'),
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society');
+			} else {
+				return $this->info = array(
+					'status'=>array(
+						'remarks'=>false,
+						'message'=>'Invalid old password.'),
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society');
+			}	
+		} elseif ($d->accType == 1){
+			$this->result = $this->conn->query("SELECT * from tbl_studentinfo WHERE si_recno='$d->si_recno' LIMIT 1");
+			if ($this->result->num_rows>0) {
+				while($res = $this->result->fetch_assoc()){
+					array_push($this->data,$res);
+					$empNo = $res['si_idnumber'];
+					$existingHash = $res['si_password'];
+				}
+			}
+			$pCheck = $this->pwordCheck($d->oldPass,$existingHash);
+			if ($pCheck) {
+				$pass = $this->encryptPassword($d->newPass);
+				$this->conn->query("UPDATE tbl_studentinfo SET si_password='$pass' WHERE si_recno='$d->si_recno'");
+				return $this->info = array(
+					'status' => array(
+						'remarks'=>true,
+						'message'=>'Successfully updated.'),
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society');
+			} else {
+				return $this->info = array(
+					'status'=>array(
+						'remarks'=>false,
+						'message'=>'Invalid old password.'),
+					'timestamp'=>date_create(),
+					'prepared_by'=>'F-Society');
+			}
 		}
 	}
 

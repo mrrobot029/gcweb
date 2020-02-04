@@ -8,8 +8,8 @@ import { Observable, fromEventPattern } from 'rxjs';
 export class DataService {
 
   // apiLink = 'http://192.168.100.12/gcweb/';
-  apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
-  // apiLink = 'http://localhost/gordoncollegeweb/';
+  // apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
+  apiLink = 'http://localhost/gordoncollegeweb/';
 
   constructor(private http: HttpClient) { }
 

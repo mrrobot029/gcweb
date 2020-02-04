@@ -365,8 +365,8 @@
 
         // students/schedule
         function getStudentSchedule($d){
-            return $this->executeWithRes("SELECT * from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode
-            INNER JOIN tbl_faculty ON tbl_classes.cl_facultyid = tbl_faculty.fa_empnumber INNER JOIN tbl_subjects ON tbl_classes.cl_sucode = tbl_subjects.su_code 
+            return $this->executeWithRes("SELECT tbl_classes.cl_code, tbl_classes.cl_sucode, tbl_classes.cl_room,tbl_classes.cl_stime,tbl_classes.cl_etime,tbl_classes.cl_day, tbl_faculty.fa_fname, tbl_faculty.fa_mname,tbl_faculty.fa_lname, tbl_faculty.fa_extname from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode
+            INNER JOIN tbl_faculty ON tbl_classes.cl_facultyid = tbl_faculty.fa_empnumber 
             WHERE tbl_enrolledsubjects.es_idnumber=$d->si_idnumber group by es_clcode");
         }
 
@@ -397,60 +397,65 @@
             
         }
 
-        function uploadImageStudent(){
-            if(isset($_FILES['file'])){
-
-                $studId = $_POST['studId'];
-                $file_name = $_FILES['file']['name'];
-                $file_explodedname = explode('.', $file_name);
-                $file_ext = strtolower(end($file_explodedname) );
-                $newfile_name = $studId . '.' . $file_ext;
-                $target_dir = "../imagesFP/".$newfile_name;
-
-                $extensions = array("jpeg", "jpg", "png");
-
-                if(in_array($file_ext,$extensions)){ // check if file is valid
-
-                    if(move_uploaded_file($_FILES['file']['tmp_name'], $target_dir)){
-                        $query = "UPDATE tbl_studentinfo SET si_picture = 'http://localhost/imagesFP/$newfile_name' WHERE si_idnumber=$studId";
-                        $this->executeWithoutRes($query);
-                        
-                        return $this->info = array(
-                            'status'=>array(
-                                'remarks'=>true,
-                                'message'=>'Uploading success.'
-                            ),
-                            'data' =>$this->data,
-                            'timestamp'=>date_create(),
-                            'prepared_by'=>'F-Society'
-                        );
-
-                    }else{
-                        return $this->info = array('status'=>array(
-                            'remarks'=>false,
-                            'message'=>'Uploading failed.'),
-                        'timestamp'=>date_create(),
-                        'prepared_by'=>'F-Society' );
-                    }
-
-                }else{
-                    return $this->info = array('status'=>array(
-                        'remarks'=>false,
-                        'message'=>'Invalid file for uploading grades.'),
-                    'timestamp'=>date_create(),
-                    'prepared_by'=>'F-Society' );
-                }
-                
-                
-            }else{
-                return $this->info = array('status'=>array(
-                    'remarks'=>false,
-                    'message'=>'No file uploaded.'),
-                'timestamp'=>date_create(),
-                'prepared_by'=>'F-Society' );
-            }
-
+        // students/DP
+        function updateImage($d){
+            return $this->executeWithoutRes("UPDATE tbl_studentinfo SET si_picture='$d->image' WHERE si_recno='$d->recno'");
         }
+
+        // function uploadImageStudent(){
+        //     if(isset($_FILES['file'])){
+
+        //         $studId = $_POST['studId'];
+        //         $file_name = $_FILES['file']['name'];
+        //         $file_explodedname = explode('.', $file_name);
+        //         $file_ext = strtolower(end($file_explodedname) );
+        //         $newfile_name = $studId . '.' . $file_ext;
+        //         $target_dir = "../imagesFP/".$newfile_name;
+
+        //         $extensions = array("jpeg", "jpg", "png");
+
+        //         if(in_array($file_ext,$extensions)){ // check if file is valid
+
+        //             if(move_uploaded_file($_FILES['file']['tmp_name'], $target_dir)){
+        //                 $query = "UPDATE tbl_studentinfo SET si_picture = 'http://localhost/imagesFP/$newfile_name' WHERE si_idnumber=$studId";
+        //                 $this->executeWithoutRes($query);
+                        
+        //                 return $this->info = array(
+        //                     'status'=>array(
+        //                         'remarks'=>true,
+        //                         'message'=>'Uploading success.'
+        //                     ),
+        //                     'data' =>$this->data,
+        //                     'timestamp'=>date_create(),
+        //                     'prepared_by'=>'F-Society'
+        //                 );
+
+        //             }else{
+        //                 return $this->info = array('status'=>array(
+        //                     'remarks'=>false,
+        //                     'message'=>'Uploading failed.'),
+        //                 'timestamp'=>date_create(),
+        //                 'prepared_by'=>'F-Society' );
+        //             }
+
+        //         }else{
+        //             return $this->info = array('status'=>array(
+        //                 'remarks'=>false,
+        //                 'message'=>'Invalid file for uploading grades.'),
+        //             'timestamp'=>date_create(),
+        //             'prepared_by'=>'F-Society' );
+        //         }
+                
+                
+        //     }else{
+        //         return $this->info = array('status'=>array(
+        //             'remarks'=>false,
+        //             'message'=>'No file uploaded.'),
+        //         'timestamp'=>date_create(),
+        //         'prepared_by'=>'F-Society' );
+        //     }
+
+        // }
 
 
 

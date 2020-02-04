@@ -410,7 +410,11 @@
                     echo json_encode($auth->checkGCATmember($d));
                 break;
 
-
+                
+                // print
+                case 'printStudentSIS':
+                    echo json_encode($post->printStudentSIS());
+                break;
 
 
 

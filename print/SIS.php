@@ -1,3 +1,97 @@
+<?php
+  require_once '../config/connect.php';
+
+  // get enlistment info
+  $query = mysqli_query($conn, "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'");
+  if(mysqli_num_rows($query)>0){
+      while($res = mysqli_fetch_assoc($query)){
+          $en_schoolyear = $res['en_schoolyear'];
+          $en_sem = $res['en_sem'];
+      }
+  }
+
+  // get student info
+  $id = $_GET['studentnumber'];
+  $query = mysqli_query($conn,"SELECT * FROM tbl_studentinfo WHERE si_idnumber = '$id'");
+  if(mysqli_num_rows($query)>0){
+      while($res = mysqli_fetch_assoc($query)){
+
+
+          $sex = $res['si_gender'];
+          $category =  $res['si_studenttype'];
+          $govprojother =  $res['si_govprojothers'];
+          $govprogs = $res['si_govproj'];
+          $govprog = explode(", ", $govprogs);
+          $lastname = $res['si_lastname'];
+          $firstname = $res['si_firstname'];
+          $extname = $res['si_extname'];
+          $midname = $res['si_midname'];
+          $email = $res['si_email'];
+          $address = $res['si_address'];
+          $zipcode = $res['si_zipcode'];
+          $mobile = $res['si_mobile'];
+          $gender = $res['si_gender'];
+          $bday = $res['si_bday'];
+          $course = $res['si_course'];
+          $course2 = $res['si_coursechoice'];
+          $course3 = $res['si_coursechoice2'];
+          $year = $res['si_yrlevel'];
+          $address = $res['si_address'];
+          $department = $res['si_department'];
+          $lastchool = $res['si_lastschool'];
+
+          if($res['si_junior']!=""){
+              $lastchool = $res['si_junior'];
+          }
+          if($res['si_senior']!=""){
+              $lastchool = $res['si_senior'];
+          }
+
+          $dadname = $res['si_dadname'];
+          $dadoccupation = $res['si_dadoccupation'];
+          $momname = $res['si_momname'];
+          $momoccupation = $res['si_momoccupation'];
+          $dadeduc = $res['si_educationdad'];
+          $momeduc = $res['si_educationmom'];
+
+          $age = $res['si_age'];
+          $pob = $res['si_pob'];
+          $lrn = $res['si_lrn'];
+          $guardianrel = $res['si_guardrel'];
+          $guardadd = $res['si_guardadd'];
+          $emergency = $res['si_emergencycontact'];
+          $govprojother = $res['si_govprojothers'];
+          $famincome = $res['si_famincome'];
+          $isdisabled = $res['si_isdisabled'];
+          $disability = $res['si_disability'];
+          $guardname = $res['si_guardname'];
+          $household = $res['si_householdno'];
+          $studenttype = $res['si_studenttype'];
+          $guardnumber = $res['si_guardiancontact'];
+
+          $elem = $res['si_elem'];
+          $elemyear = $res['si_elemyear'];
+
+          $senior = $res['si_senior'];
+          $senioryear = $res['si_senioryear'];
+          $strand = $res['si_strand'];
+
+          $tertiary = $res['si_tertiary'];
+          $tertiarytertiarycourse = $res['si_tertiarycourse'];
+          $tertiaryyear = $res['si_tertiaryyear'];
+
+          
+          $vocational = $res['si_vocational'];
+          $vocationalcourse = $res['si_vocationalcourse'];
+          $vocationalyear = $res['si_vocationalyear'];
+
+          $award = $res['si_specialaward'];
+      }
+  }
+?>
+
+
+
 <html>
   <head>
     <title>Student Information Sheet</title>
@@ -53,7 +147,7 @@
       <tr class="border-thin">
         
         <td class="border-thin" colspan="3">
-          <strong>ACADEMIC YEAR: </strong>
+          <strong>ACADEMIC YEAR: </strong> <?php echo $en_schoolyear; ?>
         </td>
         <td class="border-thin" colspan="4">
           <strong>Semester: </strong>
@@ -70,11 +164,11 @@
       <tr class="border-thin">
         <td class="border-thin darken" width="166"><strong>COURSE  DESIRED:</strong></td>
         <td class="border-thin " width="166"><strong>1st Choice:</strong></td>
-        <td class="border-thin" width="166"></td>
+        <td class="border-thin" width="166"><?php echo $course; ?></td>
         <td class="border-thin" width="125"><strong>2nd Choice:</strong></td>
-        <td class="border-thin" width="125"></td>
+        <td class="border-thin" width="125"><?php echo $course2; ?></td>
         <td class="border-thin" width="125"><strong>3rd Choice:</strong></td>
-        <td class="border-thin" width="125"></td>
+        <td class="border-thin" width="125"><?php echo $course3; ?></td>
       </tr>
     </tbody>
   </table>
@@ -83,10 +177,10 @@
   <table class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="250" colspan="2">Last Name: </td>
-        <td class="border-thin" width="250"  colspan="2">First Name: </td>
-        <td class="border-thin" width="250"  colspan="2">Middle Name: </td>
-        <td class="border-thin" width="250"  colspan="2">Middle Name: </td>
+        <td class="border-thin" width="250" colspan="2">Last Name: <?php echo $lastname; ?></td>
+        <td class="border-thin" width="250"  colspan="2">First Name: <?php echo $firstname; ?></td>
+        <td class="border-thin" width="250"  colspan="2">Middle Name: <?php echo $midname; ?></td>
+        <td class="border-thin" width="250"  colspan="2">Extension Name: <?php echo $extname; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin" width="1000" colspan="8"><strong><i>Complete Address</strong></i></td>
@@ -119,8 +213,8 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="333" >Contact Number/s: </td>
-        <td class="border-thin" width="333">E-mail Address:</td>
+        <td class="border-thin" width="333" >Contact Number/s: <?php echo $mobile; ?></td>
+        <td class="border-thin" width="333">E-mail Address: <?php echo $email; ?></td>
         <td class="border-thin" width="333" >
           Sex: 
           <input type="checkbox" id="male" >
@@ -136,12 +230,12 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="400" >Date of Birth: </td>
-        <td class="border-thin" width="200" >Age: </td>
+        <td class="border-thin" width="400" >Date of Birth: <?php echo $bday; ?></td>
+        <td class="border-thin" width="200" >Age: <?php echo $age; ?></td>
         <td class="border-thin" width="400" >Citizenship: </td>
       </tr>
       <tr  class="border-thin">
-        <td class="border-thin" width="1000" colspan="3">Place of Birth: </td>
+        <td class="border-thin" width="1000" colspan="3">Place of Birth: <?php echo $pob; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin" width="1000" colspan="3">Civil Status: 
@@ -166,7 +260,7 @@
           <label for="disabilitiesY">Yes</label>
           <input type="checkbox" id="disabilitiesN" >
           <label for="disabilitiesN">No</label></td>
-        <td class="border-thin" width="500" >Type of disability (<i>if applicable</i>): </td>
+        <td class="border-thin" width="500" >Type of disability (<i>if applicable</i>): <?php echo $disability; ?></td>
       </tr>
     </tbody>
   </table>
@@ -225,21 +319,21 @@
       
       <tr  class="border-thin">
         <td class="border-thin" width="200" >Name: </td>
-        <td class="border-thin" width="" ></td>
+        <td class="border-thin" width="" > <?php echo $dadname; ?></td>
         <td class="border-thin" width="200" >Name: </td>
-        <td class="border-thin" width="" > </td>
+        <td class="border-thin" width="" >  <?php echo $momname; ?></td>
       </tr>
       <tr  class="border-thin">
-        <td class="border-thin">Occupation: </td>
-        <td class="border-thin"> </td>
-        <td class="border-thin">Occupation: </td>
-        <td class="border-thin"> </td>
+        <td class="border-thin">Occupation:</td>
+        <td class="border-thin"><?php echo $dadoccupation; ?> </td>
+        <td class="border-thin">Occupation:</td>
+        <td class="border-thin"><?php echo $momoccupation; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin">Educational Attainment:</td>
-        <td class="border-thin"> </td>
+        <td class="border-thin"><?php echo $dadeduc; ?></td>
         <td class="border-thin">Educational Attainment:</td>
-        <td class="border-thin"> </td>
+        <td class="border-thin"><?php echo $momeduc; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin">No. of Brothers: </td>
@@ -249,32 +343,25 @@
       </tr>
     </tbody>
   </table>
-<br>
-
+  <br>
   <h5 class="darken border-thin verticalmargin"> <i>4. Guardian (if any) who supports your study</i> </h5>
-
-
-
-
-
-
- <table class="txt table-body" border="1">
-  <tbody>
-    <tr  class="border-thin">
-      <td class="border-thin" width="214">Name of Guardian: </td>
-      <td class="border-thin" width="200"></td>
-      <td class="border-thin" width="111">Relationship: </td>
-      <td class="border-thin " width="273"></td>
-    </tr>
-    <tr class="border-thin">
-      <td class="border-thin">Address: </td>
-      <td class="border-thin"></td>
-      <td class="border-thin">Contact No. </td>
-      <td class="border-thin"></td>
-    </tr>
-  </tbody>
-</table>
-<br>
+  <table class="txt table-body" border="1">
+    <tbody>
+      <tr  class="border-thin">
+        <td class="border-thin" width="214">Name of Guardian: </td>
+        <td class="border-thin" width="200"><?php echo $guardname; ?></td>
+        <td class="border-thin" width="111">Relationship: </td>
+        <td class="border-thin " width="273"><?php echo $guardianrel; ?></td>
+      </tr>
+      <tr class="border-thin">
+        <td class="border-thin">Address: </td>
+        <td class="border-thin"><?php echo $guardadd; ?></td>
+        <td class="border-thin">Contact No. </td>
+        <td class="border-thin"><?php echo $guardnumber; ?></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
 
 
 <h5 class="darken border-thin verticalmargin"> <i>5. GOVERNMENT PROGRAM/ SCHOLARSHIP GRANT:</i> </h5>
@@ -325,13 +412,13 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="500" >Elementary: </td>
-        <td class="border-thin" width="" >Year Completed:  </td>
+        <td class="border-thin" width="500" >Elementary: <?php echo $elem; ?> </td>
+        <td class="border-thin" width="" >Year Completed:  <?php echo $elemyear; ?></td>
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="" >High School/Senior High School: </td>
-        <td class="border-thin" width="" >Year Completed: </td>
+        <td class="border-thin" width="" >High School/Senior High School: <?php echo $senior; ?></td> </td>
+        <td class="border-thin" width="" >Year Completed: <?php echo $senioryear; ?></td></td></td>
       </tr>
     </tbody>
   </table>
@@ -343,7 +430,7 @@
       
       <tr  class="border-thin">
         <td class="border-thin" width="200" >Senior High School Strand</td>
-        <td class="border-thin" width="" > </td>
+        <td class="border-thin" width="" ><?php echo $strand; ?></td> </td>
       </tr>
     </tbody>
   </table>
@@ -357,29 +444,13 @@
    
       
       <tr  class="border-thin">
-        <td class="border-thin" width="400" >College:</td>
-        <td class="border-thin" width="100" >Course:</td>
-        <td class="border-thin" width="" > Year Completed:</td>
+        <td class="border-thin" width="400" >College: <?php echo $tertiary; ?></td>
+        <td class="border-thin" width="100" >Course: <?php echo $vocationalcourse; ?></td>
+        <td class="border-thin" width="" > Year Completed: <?php echo $tertiaryyear; ?></td>
       </tr>
     </tbody>
   </table>
 
-
-
-  
-  <table  class="txt table-body"  width="1000" border="1">
-    <tbody>
-      <tr  class="border-thin">
-        <td class="border-thin" width="500" >Elementary: </td>
-        <td class="border-thin" width="" >Year Completed:  </td>
-      </tr>
-      
-      <tr  class="border-thin">
-        <td class="border-thin" width="" >High School/Senior High School: </td>
-        <td class="border-thin" width="" >Year Completed: </td>
-      </tr>
-    </tbody>
-  </table>
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
@@ -397,22 +468,23 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="500" >Tech-Voc Course: </td>
-        <td class="border-thin" width="" >Year Completed: </td>
+        <td class="border-thin" width="500" >Tech-Voc Course: <?php echo $vocationalcourse; ?></td>
+        <td class="border-thin" width="" >Year Completed: <?php echo $vocationalyear; ?></td>
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="" >National Certification (NC):  </td>
+        <td class="border-thin" width="" >National Certification (NC): <?php echo $vocational; ?> </td>
         <td class="border-thin" width="" >NC Level: </td>
       </tr>
 
       <tr  class="border-thin">
-        <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):</td>
+        <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):</td> <?php echo $award; ?>
       </tr>
       <tr  class="border-thin center" height="120">
         <td class="border-thin" width="" colspan="2" >
           <p><i>I hereby certify that the above information is true and correct to the best of my knowledge and ability.</i></p>
           <strong>Student's Signature __________________________________ Date: ____________________________</strong>
+          
         </td>
       </tr>
     </tbody>
@@ -426,10 +498,27 @@
 </script>
 
 <script>
-    // $( document ).ready(function(){
-    //     window.print();
-    //     window.onafterprint = function(){
-    //         window.close();
-    //     }
-    // });
+    $( document ).ready(function(){
+
+        sex = "<?php echo $sex; ?>";
+        en_sem = "<?php echo $en_sem; ?>";
+
+        if(sex === 'Male') {
+            $('#male').prop('checked', true);
+        } else { 
+            $('#female').prop('checked', true);
+        }
+
+        if(en_sem === '1') {
+            $('#sem1').prop('checked', true);
+        }else if(en_sem === '2'){
+            $('#sem2').prop('checked', true);
+        }else if(en_sem === 'Mid Year'){
+            $('#semMY').prop('checked', true);
+        }
+
+        window.print();
+        window.close();
+        
+    });
 </script> 

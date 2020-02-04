@@ -1018,6 +1018,10 @@
                 return $this->executeWithoutRes("DELETE from tbl_faculty WHERE fa_recno='$d->empRecno'");
             }
 
+            function printStudentSIS() {
+                $idNumber = $_POST['idNumber'];
+                return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_idnumber = '$idNumber'");
+            }
 
 
 

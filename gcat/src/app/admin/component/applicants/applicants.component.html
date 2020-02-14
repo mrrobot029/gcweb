@@ -1,0 +1,107 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <button class="btn btn-sm btn-info" data-toggle="modal">
+            Add Member
+          </button> -->
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title ">List of All Applicants</h4>
+                <p class="card-category">For GCAT Schedule</p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead class=" text-primary">
+                    <th>No.</th>
+                    <th>ID No.</th>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Course</th>
+                    <th>GPA</th>
+                    <th>English</th>
+                    <th>Math</th>
+                    <th>Science</th>
+                    <th>Registration Time</th>
+                    <th>Exam Date</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let applicant of applicants; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{applicant.gc_idnumber}}</td>
+                      <td>{{applicant.si_fullname}}</td>
+                      <td>{{applicant.gc_dept}}</td>
+                      <td>{{applicant.gc_course}}</td>
+                      <td>{{applicant.gc_gpa}}</td>
+                      <td>{{applicant.gc_english}}</td>
+                      <td>{{applicant.gc_math}}</td>
+                      <td>{{applicant.gc_science}}</td>
+                      <td>{{applicant.gc_regtime}}</td>
+                      <td>{{applicant.gc_examtime}}</td>
+                      <td>
+                        <a href="http://localhost/gordoncollegeweb/print/SIS.php?studentnumber={{applicant.gc_idnumber}}">
+                        <button class="btn btn-sm btn-success">
+                          <i class="material-icons">
+                            remove_red_eye
+                          </i>
+                        </button>
+                        </a>
+                      </td>
+                    </tr>
+                </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="uploadModalLabel">Add Member</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form autocomplete="off">
+            <div class="form-group">
+                <label for="name2">Employee Number</label>
+                <input class="form-control" name="name1" type="number" required>
+            </div>
+            <div class="form-group">
+                <label for="name2">First Name</label>
+                <input class="form-control" name="name1" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="name2">Middle Name</label>
+                <input class="form-control" name="name1" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="name2">Last Name</label>
+                <input class="form-control" name="name1" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="name2">Extension Name</label>
+                <input class="form-control" name="name1" type="text" required>
+            </div>
+            <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

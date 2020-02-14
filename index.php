@@ -6,7 +6,6 @@
     include_once './config/database.php';
     include_once './model/post.php';
     include_once './model/auth.php';
-
     $database = new Database();
     $db = $database->connect();
     $post = new Post($db);
@@ -410,6 +409,10 @@
                     echo json_encode($auth->checkGCATmember($d));
                 break;
 
+                case 'getApplicants':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->getApplicants());
+                break;
                 
                 // print
                 case 'printStudentSIS':

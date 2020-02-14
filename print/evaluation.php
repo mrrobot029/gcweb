@@ -118,7 +118,7 @@
 
 <html> 
   <head> 
-    <link rel="stylesheet" type="text/css" href="evaluationform/style.css">  
+    <link rel="stylesheet" type="text/css" href="style.css">  
     <title>Evaluation Form</title>
     <style>
       body {

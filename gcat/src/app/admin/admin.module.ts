@@ -8,6 +8,7 @@ import { AdminPage1Component } from './component/admin-page1/admin-page1.compone
 import { AdminPage2Component } from './component/admin-page2/admin-page2.component';
 import { AdminPage3Component } from './component/admin-page3/admin-page3.component';
 import { UsersComponent } from './component/users/users.component';
+import { ApplicantsComponent } from './component/applicants/applicants.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { UsersComponent } from './component/users/users.component';
     AdminPage2Component,
     AdminPage3Component,
     UsersComponent,
+    ApplicantsComponent,
   ],
   imports: [
     CommonModule,

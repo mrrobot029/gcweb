@@ -39,6 +39,7 @@
           $address = $res['si_address'];
           $department = $res['si_department'];
           $lastchool = $res['si_lastschool'];
+          $type =$res['si_studenttype'];
 
           if($res['si_junior']!=""){
               $lastchool = $res['si_junior'];
@@ -49,6 +50,8 @@
 
           $dadname = $res['si_dadname'];
           $dadoccupation = $res['si_dadoccupation'];
+          $motherdead = $res['si_momdeceased'];
+          $fatherdead = $res['si_daddeceased'];
           $momname = $res['si_momname'];
           $momoccupation = $res['si_momoccupation'];
           $dadeduc = $res['si_educationdad'];
@@ -67,7 +70,7 @@
           $guardname = $res['si_guardname'];
           $household = $res['si_householdno'];
           $studenttype = $res['si_studenttype'];
-          $guardnumber = $res['si_guardiancontact'];
+          $guardnumber = $res['si_emergencycontact'];
 
           $elem = $res['si_elem'];
           $elemyear = $res['si_elemyear'];
@@ -77,7 +80,7 @@
           $strand = $res['si_strand'];
 
           $tertiary = $res['si_tertiary'];
-          $tertiarytertiarycourse = $res['si_tertiarycourse'];
+          $tertiarycourse = $res['si_tertiarycourse'];
           $tertiaryyear = $res['si_tertiaryyear'];
 
           
@@ -86,6 +89,23 @@
           $vocationalyear = $res['si_vocationalyear'];
 
           $award = $res['si_specialaward'];
+          $houseno = $res['si_houseno'];
+          $brgy = $res['si_brgy'];
+          $city = $res['si_city'];
+          $province = $res['si_province'];
+          $citizenship = $res['si_nationality'];
+          $brothers = $res['si_brothers'];
+          $sisters = $res['si_sisters'];
+          $nc = $res['si_nc'];
+          $nclvl = $res['si_nclvl'];
+          $english = $res['si_english'];
+          $math = $res['si_math'];
+          $science = $res['si_science'];
+          $civilstatus = $res['si_civilstatus'];
+          $highschool = $res['si_lastschool'];
+          $highschoolyear = $res['si_highschoolyear'];
+          $gpa = $res['si_average'];
+          
       }
   }
 ?>
@@ -132,6 +152,7 @@
       </tr>
       <tr>
         <td class="left" width="10%">
+          <p style="text-align:center;"><strong><?php echo $id; ?></strong></p>
           <div class="top-border center">REGISTRATION #</div>
         </td>
         <td></td>
@@ -191,22 +212,22 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="125" colspan="1">House# & Street: </td>
-        <td class="border-thin" width="375" colspan="3"></td>
+        <td class="border-thin" width="125" colspan="1">House# & Street:</td>
+        <td class="border-thin" width="375" colspan="3"> <?php echo $houseno; ?></td>
         <td class="border-thin" width="125" colspan="1">Barangay:</td>
-        <td class="border-thin" width="375" colspan="3"></td>
+        <td class="border-thin" width="375" colspan="3"><?php echo $brgy; ?></td>
       </tr>
     </tbody>
   </table>  
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="133" >City/Municipality: </td>
-        <td class="border-thin" width="200"></td>
+        <td class="border-thin" width="133" >City/Municipality:</td>
+        <td class="border-thin" width="200"><?php echo $city; ?></td>
         <td class="border-thin" width="133" >Province:</td>
-        <td class="border-thin" width="200" ></td>
+        <td class="border-thin" width="200" ><?php echo $province; ?></td>
         <td class="border-thin" width="133">Zip Code:</td>
-        <td class="border-thin" width="200"></td>
+        <td class="border-thin" width="200"><?php echo $zipcode; ?></td>
       </tr>
     </tbody>
   </table>
@@ -232,20 +253,20 @@
       <tr  class="border-thin">
         <td class="border-thin" width="400" >Date of Birth: <?php echo $bday; ?></td>
         <td class="border-thin" width="200" >Age: <?php echo $age; ?></td>
-        <td class="border-thin" width="400" >Citizenship: </td>
+        <td class="border-thin" width="400" >Citizenship: <?php echo $citizenship; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin" width="1000" colspan="3">Place of Birth: <?php echo $pob; ?></td>
       </tr>
       <tr  class="border-thin">
         <td class="border-thin" width="1000" colspan="3">Civil Status: 
-          <input type="checkbox" id="single" >
+          <input type="checkbox" id="SINGLE" >
           <label for="single">Single</label>
-          <input type="checkbox" id="married" >
+          <input type="checkbox" id="MARRIED" >
           <label for="married">Married</label>
-          <input type="checkbox" id="widow" >
+          <input type="checkbox" id="WIDOW" >
           <label for="widow">Widow</label>
-          <input type="checkbox" id="separated" >
+          <input type="checkbox" id="SEPARATED" >
           <label for="separated">Separated</label>
           </td>
       </tr>
@@ -270,22 +291,22 @@
     <tbody>
       <tr  class="border-thin">
         <td class="border-thin center" width="" > 
-          <input type="checkbox" id="freshman" >
+          <input type="checkbox" id="new" >
           <label for="freshman">FRESHMAN</label>
           
           <input type="checkbox" id="shiftee" >
           <label for="shiftee">SHIFTEE</label>
           
-          <input type="checkbox" id="reenrolee" >
+          <input type="checkbox" id="returnee" >
           <label for="reenrolee">RE-ENROLEE</label>
           
           <input type="checkbox" id="transferee" >
           <label for="transferee">TRANSFEREE</label>
           
-          <input type="checkbox" id="secondcourser" >
+          <input type="checkbox" id="second" >
           <label for="secondcourser">SECOND COURSER</label>
           
-          <input type="checkbox" id="crossenrolee" >
+          <input type="checkbox" id="cross" >
           <label for="crossenrolee">CROSS-ENROLEE</label></td>
       </tr>
     </tbody>
@@ -336,10 +357,10 @@
         <td class="border-thin"><?php echo $momeduc; ?></td>
       </tr>
       <tr  class="border-thin">
-        <td class="border-thin">No. of Brothers: </td>
-        <td class="border-thin"> </td>
-        <td class="border-thin">No. of Sisters: </td>
-        <td class="border-thin"></td>
+        <td class="border-thin">No. of Brothers:</td>
+        <td class="border-thin"><?php echo $brothers; ?></td>
+        <td class="border-thin">No. of Sisters:</td>
+        <td class="border-thin"><?php echo $sisters; ?></td>
       </tr>
     </tbody>
   </table>
@@ -371,11 +392,11 @@
         <td class="border-thin" width="500">
           
           <br>
-          <input type="checkbox" id="fourps">
+          <input type="checkbox" id="4ps">
           <label for="fourps" class="m-top">Pantawid Pamilyang Pilipino (4P's)</label>
           <br>
           <input type="checkbox" id="listahan">
-          <label for="listahan" class="m-top">DSWD Listahan 2.0 ( Household No. ___)</label>
+          <label for="listahan" class="m-top">DSWD Listahan 2.0 ( Household No. __<u><?php echo $household; ?></u>__)</label>
           <br>
           <input type="checkbox" id="esgppa">
           <label for="esgppa" class="m-top">ESGPPA Beneficiary</label>
@@ -396,10 +417,10 @@
           
 
           <br>
-          <input type="checkbox" id="other-cc">
-          <label for="other-cc">Others: Please Specify _____________</label>
+          <input type="checkbox" id="Others">
+          <label for="other-cc">Others: Please Specify ______<u><?php echo $govprojother; ?></u>_______</label>
           <br>
-          Net Monthly Family Income (Total Monthly Income Less Expenses) ________________
+          Net Monthly Family Income (Total Monthly Income Less Expenses) ______<u><?php echo $famincome; ?></u>______
          <br>
         </td>
       </tr>
@@ -417,8 +438,8 @@
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="" >High School/Senior High School: <?php echo $senior; ?></td> </td>
-        <td class="border-thin" width="" >Year Completed: <?php echo $senioryear; ?></td></td></td>
+        <td class="border-thin" width="" >High School/Senior High School: <?php echo $highschool; ?></td> </td>
+        <td class="border-thin" width="" >Year Completed: <?php echo $highschoolyear; ?></td></td></td>
       </tr>
     </tbody>
   </table>
@@ -445,7 +466,7 @@
       
       <tr  class="border-thin">
         <td class="border-thin" width="400" >College: <?php echo $tertiary; ?></td>
-        <td class="border-thin" width="100" >Course: <?php echo $vocationalcourse; ?></td>
+        <td class="border-thin" width="100" >Course: <?php echo $tertiarycourse; ?></td>
         <td class="border-thin" width="" > Year Completed: <?php echo $tertiaryyear; ?></td>
       </tr>
     </tbody>
@@ -456,12 +477,11 @@
       <tr  class="border-thin">
         <td class="border-thin" width="200">Last Term Grade (if SHS): </td>
         
-        <td class="border-thin" >English:  </td>
-        <td class="border-thin" >Math:</td>
-        <td class="border-thin" >Science:</td>
-        <td class="border-thin" >GPA:</td>
+        <td class="border-thin" >English: <?php echo $english; ?></td>
+        <td class="border-thin" >Math: <?php echo $math; ?></td>
+        <td class="border-thin" >Science: <?php echo $science; ?></td>
+        <td class="border-thin" >GPA: <?php echo $gpa; ?></td>
       </tr>
-      
     </tbody>
   </table>
   
@@ -473,12 +493,12 @@
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="" >National Certification (NC): <?php echo $vocational; ?> </td>
-        <td class="border-thin" width="" >NC Level: </td>
+        <td class="border-thin" width="" >National Certification (NC): <?php echo $nc; ?> </td>
+        <td class="border-thin" width="" >NC Level: <?php echo $nclvl; ?></td>
       </tr>
 
       <tr  class="border-thin">
-        <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):</td> <?php echo $award; ?>
+        <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):  <?php echo $award; ?></td>
       </tr>
       <tr  class="border-thin center" height="120">
         <td class="border-thin" width="" colspan="2" >
@@ -489,24 +509,50 @@
       </tr>
     </tbody>
   </table>
-
   </body>
 </html> 
 
-<script src="js/jquery.min.js"></script>
-<script>
-</script>
-
+  <script src="js/jquery.min.js"></script>
+  <?php $x=0;
+ while($x<sizeof($govprog)){ 
+   ?>
+            <script>  
+            $( document ).ready(function(){
+              $("#<?php echo $govprog[$x];?>").prop('checked', true);
+            });
+            </script>
+            <?php $x++; } ?>
 <script>
     $( document ).ready(function(){
 
         sex = "<?php echo $sex; ?>";
         en_sem = "<?php echo $en_sem; ?>";
+        momdead = "<?php echo $motherdead; ?>";
+        daddead = "<?php echo $fatherdead; ?>";
+        disabled = "<?php echo $isdisabled; ?>";
 
         if(sex === 'Male') {
             $('#male').prop('checked', true);
         } else { 
             $('#female').prop('checked', true);
+        }
+
+        if(disabled === '1') {
+            $('#disabilitiesY').prop('checked', true);
+        } else { 
+            $('#disabilitiesN').prop('checked', true);
+        }
+
+        if(momdead === '0') {
+            $('#motherdeceased').prop('checked', true);
+        } else { 
+            $('#motherliving').prop('checked', true);
+        }
+
+        if(daddead === '0') {
+            $('#fatherdeceased').prop('checked', true);
+        } else { 
+            $('#fatherliving').prop('checked', true);
         }
 
         if(en_sem === '1') {
@@ -517,8 +563,10 @@
             $('#semMY').prop('checked', true);
         }
 
+        $('#<?php echo $studenttype; ?>').prop('checked', true);
+        $('#<?php echo $civilstatus; ?>').prop('checked', true);
+
         window.print();
-        window.close();
         
     });
 </script> 

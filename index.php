@@ -390,6 +390,26 @@
                     echo json_encode($auth->addGCATmember($d));
                 break;
 
+                case 'validateStudent':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->validateStudent($d));
+                break;
+
+                case 'validateUnenrolled':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->validateUnenrolled($d));
+                break;
+
+                case 'validateEmail':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->validateEmail($d));
+                break;
+
+                case 'updateEmail':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->updateEmail($d));
+                break;
+
                 case 'getGCATmembers':
                     echo json_encode($post->getGCATmembers());
                 break;

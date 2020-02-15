@@ -6,4 +6,5 @@
     define("database", "gcweb");
 
     $conn = new mysqli(host, user, password, database);
+    $conn->set_charset('utf8');
 ?>

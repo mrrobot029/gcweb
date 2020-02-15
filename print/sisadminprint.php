@@ -1,6 +1,15 @@
 <?php
   require_once '../config/connect.php';
+?>
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Student Information Sheet</title>
+    <link rel="stylesheet" type="text/css" href="css/SIS.css">
+  </head>
+  <?php
   // get enlistment info
   $query = mysqli_query($conn, "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'");
   if(mysqli_num_rows($query)>0){
@@ -11,21 +20,8 @@
   }
 
   // get student info
-  
-  $ciphering = "AES-128-CTR"; 
-  $iv_length = openssl_cipher_iv_length($ciphering); 
-  $options = 0; 
-  $id = $_GET['id'];
-  $key = rawurldecode($_GET['key']);
-  $decryption_iv = '1234567891011121'; 
-  
-// Store the decryption key 
-  $decryption_key = "fsociety"; 
-  
-// Use openssl_decrypt() function to decrypt the data 
-  $decryptedkey=openssl_decrypt ($key, $ciphering,  
-              $decryption_key, $options, $decryption_iv); 
-  if($id == $decryptedkey){
+  $id = $_GET['studentnumber'];
+
     $query = mysqli_query($conn,"SELECT * FROM tbl_studentinfo WHERE si_idnumber = '$id'");
     if(mysqli_num_rows($query)>0){
         while($res = mysqli_fetch_assoc($query)){
@@ -119,21 +115,12 @@
             $highschool = $res['si_lastschool'];
             $highschoolyear = $res['si_highschoolyear'];
             $gpa = $res['si_average'];
-            $ipgroup = $res['si_ipgroup'];
+            
         }
     }
 
+ 
 ?>
-
-
-<!DOCTYPE html>
-<html>
-  <head>
-  <script src="js/jquery.min.js"></script>
-  <meta charset="UTF-8">
-    <title>Student Information Sheet</title>
-    <link rel="stylesheet" type="text/css" href="css/SIS.css">
-  </head>
   <body>
 
   <div class="twobytwopic">
@@ -419,7 +406,7 @@
           <label for="esgppa" class="m-top">ESGPPA Beneficiary</label>
           <br>
           <input type="checkbox" id="ips">
-          <label for="ips" class="m-top">Indigenous People (IP) Group: ____<u><?php echo $ipgroup; ?></u>____</label> 
+          <label for="ips" class="m-top">Indigenous People (IP) Group: _________</label> 
           <br>
           <input type="checkbox" id="solo">
           <label for="solo" class="m-top">Solo parent / Child of a Solo Parent</label>
@@ -529,8 +516,7 @@
   </body>
 </html> 
 
-
-<script src="js/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
   <?php $x=0;
  while($x<sizeof($govprog)){ 
    ?>
@@ -588,12 +574,3 @@
         
     });
 </script> 
-
-<?php
-    } else{
-?>
-    <script>
-    window.location.href = "https://gordoncollegeccs.edu.ph/gc/home/";
-    </script>
-<?php
-}?>

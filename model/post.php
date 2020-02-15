@@ -546,87 +546,88 @@
                 return $this->executeWithoutRes("INSERT INTO tbl_enrolledsubjects(es_idnumber,es_clcode,es_sucode,es_block) SELECT '$d->si_idnumber',cl_code,cl_sucode,cl_block from tbl_classes WHERE cl_block = '$d->blockSelected'");
             }
 
+            // GCAT INSERT
             function insertNewStudent($d){
-                $lname = $d->lname;
-                $fname = $d->fname;
-                $mname = $d->mname;
-                $extname = $d->nameext;
-                $address = $d->fulladdress;
+                $lname = $this->conn->real_escape_string($d->lname);
+                $fname = $this->conn->real_escape_string($d->fname);
+                $mname = $this->conn->real_escape_string($d->mname);
+                $extname = $this->conn->real_escape_string($d->nameext);
+                $address = $this->conn->real_escape_string($d->fulladdress);
                 $addressnum = '';
                 if(isset($d->addressnum)){
-                    $addressnum = $d->addressnum;
+                    $addressnum = $this->conn->real_escape_string($d->addressnum);
                 }
                 $addressst = '';
                 if(isset($d->addressst)){
-                    $addressst = $d->addressst;
+                    $addressst = $this->conn->real_escape_string($d->addressst);
                 }
                 $addresscity = '';
                 if(isset($d->addresscity)){
-                    $addresscity = $d->addresscity;
+                    $addresscity = $this->conn->real_escape_string($d->addresscity);
                 }
                 $addressprovince = '';
                 if(isset($d->addressprovince)){
-                    $addressprovince = $d->addressprovince;
+                    $addressprovince = $this->conn->real_escape_string($d->addressprovince);
                 }
-                $zipcode = $d->addresszip;
-                $gender = $d->gender;
-                $bday = $d->dob;
-                $email = $d->email;
-                $contact = $d->mobile;
+                $zipcode = $this->conn->real_escape_string($d->addresszip);
+                $gender = $this->conn->real_escape_string($d->gender);
+                $bday = $this->conn->real_escape_string($d->dob);
+                $email = $this->conn->real_escape_string($d->email);
+                $contact = $this->conn->real_escape_string($d->mobile);
                 $entrancescore = '';
-                $course = $d->course;
+                $course = $this->conn->real_escape_string($d->course);
                 $course2 = '';
                 if(isset($d->course2)){
-                    $course2 = $d->course2;
+                    $course2 = $this->conn->real_escape_string($d->course2);
                 }
                 $course3 = '';
                 if(isset($d->course3)){
-                    $course3 = $d->course3;
+                    $course3 = $this->conn->real_escape_string($d->course3);
                 }
-                $highschool = $d->highschool;
-                $highschoolyear = $d->highschoolyear;
-                $highschoolgpa = $d->highschoolgpa;
-                $english = $d->english;
-                $math = $d->math;
-                $science = $d->science;
-                $tertiary = $d->tertiary;
-                $tertiaryyear = $d->tertiaryyear;
-                $tertiarycourse = $d->tertiarycourse;
-                $vocational = $d->vocational;
-                $vocationalyear = $d->vocationalyear;
-                $vocationalcourse = $d->vocationalcourse;
-                $nc = $d->nc;
-                $nclvl = $d->nclvl;
+                $highschool = $this->conn->real_escape_string($d->highschool);
+                $highschoolyear = $this->conn->real_escape_string($d->highschoolyear);
+                $highschoolgpa = $this->conn->real_escape_string($d->highschoolgpa);
+                $english = $this->conn->real_escape_string($d->english);
+                $math = $this->conn->real_escape_string($d->math);
+                $science = $this->conn->real_escape_string($d->science);
+                $tertiary = $this->conn->real_escape_string($d->tertiary);
+                $tertiaryyear = $this->conn->real_escape_string($d->tertiaryyear);
+                $tertiarycourse = $this->conn->real_escape_string($d->tertiarycourse);
+                $vocational = $this->conn->real_escape_string($d->vocational);
+                $vocationalyear = $this->conn->real_escape_string($d->vocationalyear);
+                $vocationalcourse = $this->conn->real_escape_string($d->vocationalcourse);
+                $nc = $this->conn->real_escape_string($d->nc);
+                $nclvl = $this->conn->real_escape_string($d->nclvl);
                 $honors = '';
                 if(isset($d->honors)){
-                    $honors = $d->honors;
+                    $honors = $this->conn->real_escape_string($d->honors);
                 }
                 $lrn = '';
                 if(isset($d->lrn)){
-                    $lrn = $d->lrn;
+                    $lrn = $this->conn->real_escape_string($d->lrn);
                 }
 
                 $strand = '';
                 if(isset($d->strand)){
-                    $strand = $d->strand;
+                    $strand = $this->conn->real_escape_string($d->strand);
                 }
-                $brothers = $d->brothers;
-                $sisters = $d->sisters;
-                $siblings = $d->siblings;
-                $motherdead = $d->motherdead;
-                $mother = $d->mother;
-                $motheroccupation = $d->motheroccupation;
-                $mothereducation = $d->mothereducation;
-                $momcontact = $d->mothercontact;
-                $fatherdead = $d->fatherdead;
-                $father = $d->father;
-                $fatheroccupation = $d->fatheroccupation;
-                $fathereducation = $d->fathereducation;
-                $dadcontact = $d->fathercontact;
-                $guardname = $d->guardian;
-                $guardrel = $d->relationship;
-                $guardadd = $d->guardianadd;
-                $emergencynumber = $d->emergencynumber;
+                $brothers = $this->conn->real_escape_string($d->brothers);
+                $sisters = $this->conn->real_escape_string($d->sisters);
+                $siblings = $this->conn->real_escape_string($d->siblings);
+                $motherdead = $this->conn->real_escape_string($d->motherdead);
+                $mother = $this->conn->real_escape_string($d->mother);
+                $motheroccupation = $this->conn->real_escape_string($d->motheroccupation);
+                $mothereducation = $this->conn->real_escape_string($d->mothereducation);
+                $momcontact = $this->conn->real_escape_string($d->mothercontact);
+                $fatherdead = $this->conn->real_escape_string($d->fatherdead);
+                $father = $this->conn->real_escape_string($d->father);
+                $fatheroccupation = $this->conn->real_escape_string($d->fatheroccupation);
+                $fathereducation = $this->conn->real_escape_string($d->fathereducation);
+                $dadcontact = $this->conn->real_escape_string($d->fathercontact);
+                $guardname = $this->conn->real_escape_string($d->guardian);
+                $guardrel = $this->conn->real_escape_string($d->relationship);
+                $guardadd = $this->conn->real_escape_string($d->guardianadd);
+                $emergencynumber = $this->conn->real_escape_string($d->emergencynumber);
                 $govprojs = '';
                 $govproj = '';
                 if(isset($d->govproj)){
@@ -639,27 +640,28 @@
                 }
                 $govprojother='';
                 if(isset($d->govprojother)){
-                    $govprojother = $d->govprojother;
+                    $govprojother = $this->conn->real_escape_string($d->govprojother);
                 }
-                $famincome = $d->famincome;
-                $disabled = $d->disabled;
+                $famincome = $this->conn->real_escape_string($d->famincome);
+                $disabled = $this->conn->real_escape_string($d->disabled);
                 $disability ='';
                 if(isset($d->disability)){
-                    $disability = $d->disability;
+                    $disability = $this->conn->real_escape_string($d->disability);
                 }
                 $household='';
                 if(isset($d->household)){
-                    $household = $d->household;
+                    $household = $this->conn->real_escape_string($d->household);
                 }
-                $pob = $d->pob;
-                $civilstatus = $d->civilstatus;
-                $citizenship = $d->citizenship;
-                $age = $d->age;
-                $type = $d->type;
-                $cy = $d->cy;
-                $department = $d->department;
-                $sem = $d->sem;
-                $yearenrolled = $d->schoolyear;
+                $pob = $this->conn->real_escape_string($d->pob);
+                $civilstatus = $this->conn->real_escape_string($d->civilstatus);
+                $citizenship = $this->conn->real_escape_string($d->citizenship);
+                $age = $this->conn->real_escape_string($d->age);
+                $type = $this->conn->real_escape_string($d->type);
+                $cy = $this->conn->real_escape_string($d->cy);
+                $department = $this->conn->real_escape_string($d->department);
+                $sem = $this->conn->real_escape_string($d->sem);
+                $yearenrolled = $this->conn->real_escape_string($d->schoolyear);
+                $ipgroup = $this->conn->real_escape_string($d->ipgroup);
                 $counten=0;
             
                 // $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype) 
@@ -732,7 +734,8 @@
                 si_cy,
                 si_department,
                 si_sem,
-                si_enrolledyear
+                si_enrolledyear,
+                si_ipgroup
                 ) 
                 VALUES
                 ('$lname',
@@ -800,7 +803,8 @@
                 '$cy',
                 '$department',
                 '$sem',
-                '$yearenrolled')";
+                '$yearenrolled',
+                '$ipgroup')";
                  $mail = new PHPMailer(true);
                  $mail->isSMTP();                                            // Send using SMTP
                  $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
@@ -809,7 +813,7 @@
                  $mail->Password   = 'Oznerol21#291';                               // SMTP password
                  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                  $mail->Port       = 587;          
-                 $mail->setFrom('lorenzo.medenilla@gmail.com', 'Mailer');
+                 $mail->setFrom('lorenzo.medenilla@gmail.com', 'Gordon College');
                  $mail->isHTML(true);        
 
                 if($this->conn->query($insertNewStudent)){
@@ -817,16 +821,27 @@
 			        $tempid = $insertid + 200000;
                     $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$tempid' where si_recno = '$insertid'";
                     if($this->conn->query($sqlid)){
-                        $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_dept, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime, gc_examtime, gc_status) 
-                                    VALUES('$tempid', '$department', '$course', '$highschoolgpa', '$english', '$math', '$science', now(), '2020-06-15', 'SCHEDULED')";
+                        $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime, gc_examtime, gc_status) 
+                                    VALUES('$tempid', '$course', '$highschoolgpa', '$english', '$math', '$science', now(), '2020-06-15', 'SCHEDULED')";
                                     if($this->conn->query($sqlgcat)){
+                                        // id encryption
+                                        $simple_string = $tempid; 
+                                        $ciphering = "AES-128-CTR"; 
+                                        $iv_length = openssl_cipher_iv_length($ciphering); 
+                                        $options = 0; 
+                                        $encryption_iv = '1234567891011121'; 
+                                        $encryption_key = "fsociety"; 
+                                        $encryption = openssl_encrypt($simple_string, $ciphering, 
+                                                      $encryption_key, $options, $encryption_iv); 
+                                        $key = rawurlencode($encryption);
+                                        // email
                                         $mail->addAddress($email);
                                         $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
                                         $mail->Body = "Hello <b>{$fname}</b>!<br>";
                                         $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                                         $mail->Body .="This is your temporary id number: <b>{$tempid}</b>.<br><br>";
                                         $mail->Body .="Please visit this link for your printable Form SR01:<br>";
-                                        $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?studentnumber={$tempid}</b><br><br>";
+                                        $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
                                         $mail->Body .="Please secure a printed copy of your Form SR01 to be presented on your examination day on <b>June 15, 2020</b>.<br>";
                                         $mail->Body .="Sincerely,<br>";
                                         $mail->Body .="Gordon College Olongapo";
@@ -858,7 +873,8 @@
                 }
                 
 
-            }
+            }             // /GCAT INSERT END
+
 
 
 
@@ -1139,6 +1155,71 @@
 
             function getApplicants() {
                 return $this->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY gc.gc_regtime ASC");
+            }
+
+            function validateStudent($d) {
+                return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_firstname = '$d->firstname' and si_lastname = '$d->lastname' and si_midname = '$d->midname' and si_extname = '$d->nameext' and si_bday = '$d->bday'");
+            }
+
+            function validateUnenrolled($d) {
+                return $this->executeWithRes("SELECT * from tbl_gcat WHERE gc_idnumber = '$d->idNumber'");
+            }
+
+            function validateEmail($d){
+                return $this->executeWithRes("SELECT si_email from tbl_studentinfo WHERE si_email = '$d->email'");
+            }
+
+            function updateEmail($d){
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = 'lorenzo.medenilla@gmail.com';                     // SMTP username
+                $mail->Password   = 'Oznerol21#291';                               // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port       = 587;          
+                $mail->setFrom('lorenzo.medenilla@gmail.com', 'Gordon College');
+                $mail->isHTML(true);     
+                $email = $d->email;
+                $id = $d->idNumber;
+                $fname = $d->fname;
+                $updateEmail = "UPDATE tbl_studentinfo SET si_email = '$email' WHERE si_idnumber = '$id'";
+                if($this->conn->query($updateEmail)){
+                    // id encryption
+                    $simple_string = $id; 
+                    $ciphering = "AES-128-CTR"; 
+                    $iv_length = openssl_cipher_iv_length($ciphering); 
+                    $options = 0; 
+                    $encryption_iv = '1234567891011121'; 
+                    $encryption_key = "fsociety"; 
+                    $encryption = openssl_encrypt($simple_string, $ciphering, 
+                                    $encryption_key, $options, $encryption_iv); 
+                    $key = rawurlencode($encryption);
+                    // email
+                    $mail->addAddress($email);
+                    $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                    $mail->Body = "Hello <b>{$fname}</b>!<br>";
+                    $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                    $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
+                    $mail->Body .="Please visit this link for your printable Form SR01:<br>";
+                    $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                    $mail->Body .="Please secure a printed copy of your Form SR01 to be presented on your examination day on <b>June 15, 2020</b>.<br>";
+                    $mail->Body .="Sincerely,<br>";
+                    $mail->Body .="Gordon College Olongapo";
+                    if ($mail->send()) {
+                        $valid[0]='success';
+                        $valid[1]=$id;
+                        $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
+                        return $valid;
+                    } else {
+                        return 'Email Failed';
+                    }
+                }else{
+                    $valid[0]='error';
+                    $valid[1]='ERROR';
+                    $valid[2]=$this->conn->error;
+                    return $valid;
+                }
             }
 
 

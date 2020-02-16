@@ -2,7 +2,9 @@
         use PHPMailer\PHPMailer\PHPMailer;
         use PHPMailer\PHPMailer\SMTP;
         use PHPMailer\PHPMailer\Exception;
-        require 'vendor/autoload.php';
+        require 'mail/Exception.php';
+        require 'mail/PHPMailer.php';
+        require 'mail/SMTP.php';
     class Post{
         private $conn;
         private $sql;
@@ -841,8 +843,9 @@
                                         $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                                         $mail->Body .="This is your temporary id number: <b>{$tempid}</b>.<br><br>";
                                         $mail->Body .="Please visit this link for your printable Form SR01:<br>";
-                                        $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
-                                        $mail->Body .="Please secure a printed copy of your Form SR01 to be presented on your examination day on <b>June 15, 2020</b>.<br>";
+                                        // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
+                                        $mail->Body .="<b>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
+                                        $mail->Body .="Please secure a printed copy of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                                         $mail->Body .="Sincerely,<br>";
                                         $mail->Body .="Gordon College Olongapo";
                                         if ($mail->send()) {
@@ -851,7 +854,7 @@
                                             $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
                                             return $valid;
                                         } else {
-                                            return 'Email Failed';
+                                            echo "Mailer Error : " . $mail->ErrorInfo;
                                         }
                                     } else{
                                         $valid[0]='error';
@@ -1158,7 +1161,7 @@
             }
 
             function validateStudent($d) {
-                return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_firstname = '$d->firstname' and si_lastname = '$d->lastname' and si_midname = '$d->midname' and si_extname = '$d->nameext' and si_bday = '$d->bday'");
+                return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_firstname = '$d->firstname' and si_lastname = '$d->lastname' and si_midname = '$d->midname' and si_bday = '$d->bday'");
             }
 
             function validateUnenrolled($d) {
@@ -1202,7 +1205,8 @@
                     $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                     $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
                     $mail->Body .="Please visit this link for your printable Form SR01:<br>";
-                    $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                    // $mail->Body .="<b>https://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                    $mail->Body .="<b>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</b><br><br>";
                     $mail->Body .="Please secure a printed copy of your Form SR01 to be presented on your examination day on <b>June 15, 2020</b>.<br>";
                     $mail->Body .="Sincerely,<br>";
                     $mail->Body .="Gordon College Olongapo";

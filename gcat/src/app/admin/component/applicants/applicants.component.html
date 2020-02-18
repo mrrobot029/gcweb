@@ -17,7 +17,6 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 <table class="table table-striped">
                   <thead class=" text-primary">
                     <th>No.</th>
@@ -57,6 +56,8 @@
                       </td>
                     </tr>
                 </table>
+
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div>
               </div>
             </div>
@@ -65,7 +66,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
@@ -103,6 +104,5 @@
       </div>
     </div>
   </div>
-  
-  
-  
+
+

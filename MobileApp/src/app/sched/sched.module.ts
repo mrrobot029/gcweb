@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { SchedPageRoutingModule } from './sched-routing.module';
 
 import { SchedPage } from './sched.page';
-import { NavbarPage } from '../navbar/navbar.page';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -16,6 +14,6 @@ import { NavbarPage } from '../navbar/navbar.page';
     IonicModule,
     SchedPageRoutingModule
   ],
-  declarations: [SchedPage, NavbarPage]
+  declarations: [SchedPage]
 })
 export class SchedPageModule {}

@@ -5,6 +5,8 @@ body{
 	flex-direction: column;
 	background:#ffffff;  
 	color:#000000;
+	
+	font-size:14px;
 }
 
 table{
@@ -12,8 +14,14 @@ table{
 	width:100%;	
 } 
 
+div {
+
+font-size: 7px;
+}
+
 .txt{
-	font-size:11px;
+	
+	font-size:10px;
 }
 
 .table-body{

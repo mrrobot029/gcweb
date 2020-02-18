@@ -586,6 +586,8 @@
                 if(isset($d->course3)){
                     $course3 = $this->conn->real_escape_string($d->course3);
                 }
+                $elem = $this->conn->real_escape_string($d->elem);
+                $elemyear = $this->conn->real_escape_string($d->elemyear);
                 $highschool = $this->conn->real_escape_string($d->highschool);
                 $highschoolyear = $this->conn->real_escape_string($d->highschoolyear);
                 $highschoolgpa = $this->conn->real_escape_string($d->highschoolgpa);
@@ -664,6 +666,8 @@
                 $sem = $this->conn->real_escape_string($d->sem);
                 $yearenrolled = $this->conn->real_escape_string($d->schoolyear);
                 $ipgroup = $this->conn->real_escape_string($d->ipgroup);
+                $isshs = $this->conn->real_escape_string($d->isshs);
+                $hsclass = $this->conn->real_escape_string($d->hsclass);
                 $counten=0;
             
                 // $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype) 
@@ -694,6 +698,8 @@
                 si_english,
                 si_math,
                 si_science,
+                si_elem,
+                si_elemyear,
                 si_tertiary,
                 si_tertiaryyear,
                 si_tertiarycourse,
@@ -737,7 +743,9 @@
                 si_department,
                 si_sem,
                 si_enrolledyear,
-                si_ipgroup
+                si_ipgroup,
+                si_isshs,
+                si_hsclass
                 ) 
                 VALUES
                 ('$lname',
@@ -763,6 +771,8 @@
                 '$english',
                 '$math',
                 '$science',
+                '$elem',
+                '$elemyear',
                 '$tertiary',
                 '$tertiaryyear',
                 '$tertiarycourse',
@@ -806,16 +816,18 @@
                 '$department',
                 '$sem',
                 '$yearenrolled',
-                '$ipgroup')";
+                '$ipgroup',
+                '$isshs',
+                '$hsclass')";
                  $mail = new PHPMailer(true);
                  $mail->isSMTP();                                            // Send using SMTP
                  $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                  $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                 $mail->Username   = 'lorenzo.medenilla@gmail.com';                     // SMTP username
-                 $mail->Password   = 'Oznerol21#291';                               // SMTP password
+                 $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                 $mail->Password   = 'infinitycore4477';                               // SMTP password
                  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                  $mail->Port       = 587;          
-                 $mail->setFrom('lorenzo.medenilla@gmail.com', 'Gordon College');
+                 $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
                  $mail->isHTML(true);        
 
                 if($this->conn->query($insertNewStudent)){
@@ -1177,11 +1189,11 @@
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'lorenzo.medenilla@gmail.com';                     // SMTP username
-                $mail->Password   = 'Oznerol21#291';                               // SMTP password
+                $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                $mail->Password   = 'infinitycore4477';                               // SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port       = 587;          
-                $mail->setFrom('lorenzo.medenilla@gmail.com', 'Gordon College');
+                $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
                 $mail->isHTML(true);     
                 $email = $d->email;
                 $id = $d->idNumber;
@@ -1207,7 +1219,7 @@
                     $mail->Body .="Please visit this link for your printable Form SR01:<br>";
                     // $mail->Body .="<b>https://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
                     $mail->Body .="<b>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                    $mail->Body .="Please secure a printed copy of your Form SR01 to be presented on your examination day on <b>June 15, 2020</b>.<br>";
+                    $mail->Body .="Please secure a printed copy of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                     $mail->Body .="Sincerely,<br>";
                     $mail->Body .="Gordon College Olongapo";
                     if ($mail->send()) {

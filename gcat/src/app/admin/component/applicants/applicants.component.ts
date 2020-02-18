@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./applicants.component.scss']
 })
 export class ApplicantsComponent implements OnInit {
-
+p = 1
   constructor(private ds: DataService) { }
 
   applicants:any = {};

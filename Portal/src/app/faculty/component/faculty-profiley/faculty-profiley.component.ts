@@ -62,6 +62,7 @@ export class FacultyProfileyComponent implements OnInit {
     e.preventDefault();
     this.searchInfo.idNumber = e.target[0].value;
     this.ds.sendRequest('getStudent', this.searchInfo).subscribe((res) => {
+      console.log(res.data[0])
       if (res.status.remarks) {
         this.studInfo = res.data[0];
         this.getEnrolledClasses();

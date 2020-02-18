@@ -1,5 +1,11 @@
 <?php
   require_once '../config/connect.php';
+  $sqlaltertable = mysqli_query($conn, "ALTER TABLE `tbl_enlistment` ADD `en_gcatstart` DATE NOT NULL AFTER `en_enend`, ADD `en_gcatend` DATE NOT NULL AFTER `en_gcatstart`");
+  if($sqlaltertable){
+    if(mysqli_query($conn,"INSERT INTO tbl_enlistment en_gcatstart, en_gcatend VALUES ('2019-05-27', '2020-06-30')")){
+      echo 'Success';
+    }
+  }
 ?>
 
 <!DOCTYPE html>

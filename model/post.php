@@ -669,223 +669,367 @@
                 $isshs = $this->conn->real_escape_string($d->isshs);
                 $hsclass = $this->conn->real_escape_string($d->hsclass);
                 $counten=0;
-            
-                // $insertNewStudent = "INSERT INTO tbl_studentinfo (si_lastname, si_firstname, si_midname, si_extname, si_address,  si_gender, si_bday, si_email, si_mobile, si_course, si_coursechoice, si_coursechoice2, si_reason, si_siblings, si_momname, si_dadname, si_emergencycontact, si_device, si_entranceexam, si_lastschool, si_average, si_istransferee, si_transfercourselevel, si_reasonstudy, si_scholartype, si_support, si_supportoccupation, si_specialaward, si_organization, si_competition, si_interest, si_talent,si_schoolyear,si_isregular, si_yrlevel, si_sem, si_enrolledyear, si_isenrolled, si_isenlisted, si_sport, si_momoccupation, si_dadoccupation, si_lrn, si_strand, si_guardname, si_guardrel, si_guardadd , si_govproj, si_govprojothers, si_famincome, si_isdisabled, si_disability, si_householdno, si_zipcode, si_momcontact, si_dadcontact, si_spouse, si_spousecontact, si_department, si_pob, si_civilstatus, si_age, si_studenttype) 
-                // VALUES ('$lname', '$fname', '$mname', '$extname', '$address',  '$gender', '$bday', '$email', '$contact', '$course', '$course2', '$course3', '$reason', '$siblings', '$mother', '$father', '$emergencynumber', '$devices', '$entrancescore', '$highschool', '$highschoolgpa', '$transferee', '$transferschool', '$reasongc', '$scholartype', '$sponsor', '$sponsoroccupation', '$honors', '$orgs', '$competitions', '$interests', '$talents', '$yearenrolled', '$regular', 1,'$sem','$yearenrolled',0, 1, '$sport', '$motheroccupation', '$fatheroccupation', '$lrn', '$strand', '$guardname', '$guardrel', '$guardadd', '$govproj','$govprojother','$famincome','$disabled','$disability', '$household', '$zipcode', '$momcontact', '$dadcontact', '$spouse', '$spousecontact', '$department', '$pob', '$civilstatus', '$age', 'old')";
 
 
-                $insertNewStudent = "INSERT INTO tbl_studentinfo
-                (si_lastname,
-                si_firstname,
-                si_midname,
-                si_extname,
-                si_address,
-                si_houseno,
-                si_brgy,
-                si_city,
-                si_province,
-                si_zipcode,
-                si_gender,
-                si_bday,
-                si_email,
-                si_mobile,
-                si_course,
-                si_coursechoice,
-                si_coursechoice2,
-                si_lastschool,
-                si_highschoolyear,
-                si_average,
-                si_english,
-                si_math,
-                si_science,
-                si_elem,
-                si_elemyear,
-                si_tertiary,
-                si_tertiaryyear,
-                si_tertiarycourse,
-                si_vocational,
-                si_vocationalyear,
-                si_vocationalcourse,
-                si_nc,
-                si_nclvl,
-                si_specialaward,
-                si_lrn,
-                si_strand,
-                si_brothers,
-                si_sisters,
-                si_siblings,
-                si_momdeceased,
-                si_momname,
-                si_momoccupation,
-                si_educationmom,
-                si_momcontact,
-                si_daddeceased,
-                si_dadname,
-                si_dadoccupation,
-                si_educationdad,
-                si_dadcontact,
-                si_guardname,
-                si_guardrel,
-                si_guardadd,
-                si_emergencycontact,
-                si_govproj,
-                si_govprojothers,
-                si_famincome,
-                si_isdisabled,
-                si_disability,
-                si_householdno,
-                si_pob,
-                si_civilstatus,
-                si_nationality,
-                si_age,
-                si_studenttype,
-                si_cy,
-                si_department,
-                si_sem,
-                si_enrolledyear,
-                si_ipgroup,
-                si_isshs,
-                si_hsclass
-                ) 
-                VALUES
-                ('$lname',
-                '$fname',
-                '$mname',
-                '$extname',
-                '$address',
-                '$addressnum',
-                '$addressst',
-                '$addresscity',
-                '$addressprovince',
-                '$zipcode',
-                '$gender',
-                '$bday',
-                '$email',
-                '$contact',
-                '$course',
-                '$course2',
-                '$course3',
-                '$highschool',
-                '$highschoolyear',
-                '$highschoolgpa',
-                '$english',
-                '$math',
-                '$science',
-                '$elem',
-                '$elemyear',
-                '$tertiary',
-                '$tertiaryyear',
-                '$tertiarycourse',
-                '$vocational',
-                '$vocationalyear',
-                '$vocationalcourse',
-                '$nc',
-                '$nclvl',
-                '$honors',
-                '$lrn',
-                '$strand',
-                '$brothers',
-                '$sisters',
-                '$siblings',
-                '$motherdead',
-                '$mother',
-                '$motheroccupation',
-                '$mothereducation',
-                '$momcontact',
-                '$fatherdead',
-                '$father',
-                '$fatheroccupation',
-                '$fathereducation',
-                '$dadcontact',
-                '$guardname',
-                '$guardrel',
-                '$guardadd',
-                '$emergencynumber',
-                '$govproj',
-                '$govprojother',
-                '$famincome',
-                '$disabled',
-                '$disability',
-                '$household',
-                '$pob',
-                '$civilstatus',
-                '$citizenship',
-                '$age',
-                '$type',
-                '$cy',
-                '$department',
-                '$sem',
-                '$yearenrolled',
-                '$ipgroup',
-                '$isshs',
-                '$hsclass')";
-                 $mail = new PHPMailer(true);
-                 $mail->isSMTP();                                            // Send using SMTP
-                 $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                 $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
-                 $mail->Password   = 'infinitycore4477';                               // SMTP password
-                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                 $mail->Port       = 587;          
-                 $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
-                 $mail->isHTML(true);        
-
-                if($this->conn->query($insertNewStudent)){
-                    $insertid = $this->conn->insert_id;
-			        $tempid = $insertid + 200000;
-                    $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$tempid' where si_recno = '$insertid'";
-                    if($this->conn->query($sqlid)){
-                        $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime, gc_examtime, gc_status) 
-                                    VALUES('$tempid', '$course', '$highschoolgpa', '$english', '$math', '$science', now(), '2020-06-15', 'SCHEDULED')";
-                                    if($this->conn->query($sqlgcat)){
-                                        // id encryption
-                                        $simple_string = $tempid; 
-                                        $ciphering = "AES-128-CTR"; 
-                                        $iv_length = openssl_cipher_iv_length($ciphering); 
-                                        $options = 0; 
-                                        $encryption_iv = '1234567891011121'; 
-                                        $encryption_key = "fsociety"; 
-                                        $encryption = openssl_encrypt($simple_string, $ciphering, 
-                                                      $encryption_key, $options, $encryption_iv); 
-                                        $key = rawurlencode($encryption);
-                                        // email
-                                        $mail->addAddress($email);
-                                        $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
-                                        $mail->Body = "Hello <b>{$fname}</b>!<br>";
-                                        $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
-                                        $mail->Body .="This is your temporary id number: <b>{$tempid}</b>.<br><br>";
-                                        $mail->Body .="Please visit this link for your printable Form SR01:<br>";
-                                        // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
-                                        $mail->Body .="<b>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
-                                        $mail->Body .="Please secure a printed copy of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                                        $mail->Body .="Sincerely,<br>";
-                                        $mail->Body .="Gordon College Olongapo";
-                                        if ($mail->send()) {
-                                            $valid[0]='success';
-                                            $valid[1]=$tempid;
-                                            $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
+                // update student
+                if(isset($d->id)){
+                    $id = $d->id;
+                    $updateNewStudent = "UPDATE tbl_studentinfo SET
+                    si_lastname = '$lname',
+                    si_firstname ='$fname',
+                    si_midname='$mname',
+                    si_extname='$extname',
+                    si_address='$address',
+                    si_houseno='$addressnum',
+                    si_brgy='$addressst',
+                    si_city='$addresscity',
+                    si_province='$addressprovince',
+                    si_zipcode='$zipcode',
+                    si_gender='$gender',
+                    si_bday='$bday',
+                    si_email='$email',
+                    si_mobile='$contact',
+                    si_course='$course',
+                    si_coursechoice='$course2',
+                    si_coursechoice2='$course3',
+                    si_lastschool='$highschool',
+                    si_highschoolyear='$highschoolyear',
+                    si_average='$highschoolgpa',
+                    si_english= '$english',
+                    si_math='$math',
+                    si_science='$science',
+                    si_elem='$elem',
+                    si_elemyear= '$elemyear',
+                    si_tertiary= '$tertiary',
+                    si_tertiaryyear='$tertiaryyear',
+                    si_tertiarycourse='$tertiarycourse',
+                    si_vocational= '$vocational',
+                    si_vocationalyear=  '$vocationalyear',
+                    si_vocationalcourse='$vocationalcourse',
+                    si_nc=  '$nc',
+                    si_nclvl= '$nclvl',
+                    si_specialaward='$honors',
+                    si_lrn= '$lrn',
+                    si_strand= '$strand',
+                    si_brothers= '$brothers',
+                    si_sisters='$sisters',
+                    si_siblings= '$siblings',
+                    si_momdeceased='$motherdead',
+                    si_momname='$mother',
+                    si_momoccupation='$motheroccupation',
+                    si_educationmom='$mothereducation',
+                    si_momcontact='$momcontact',
+                    si_daddeceased='$fatherdead',
+                    si_dadname= '$father',
+                    si_dadoccupation='$fatheroccupation',
+                    si_educationdad='$fathereducation',
+                    si_dadcontact= '$dadcontact',
+                    si_guardname= '$guardname',
+                    si_guardrel='$guardrel',
+                    si_guardadd='$guardadd',
+                    si_emergencycontact='$emergencynumber',
+                    si_govproj='$govproj',
+                    si_govprojothers='$govprojother',
+                    si_famincome='$famincome',
+                    si_isdisabled= '$disabled',
+                    si_disability='$disability',
+                    si_householdno='$household',
+                    si_pob='$pob',
+                    si_civilstatus='$civilstatus',
+                    si_nationality='$citizenship',
+                    si_age='$age',
+                    si_studenttype='$type',
+                    si_cy='$cy',
+                    si_department='$department',
+                    si_sem='$sem',
+                    si_enrolledyear='$yearenrolled',
+                    si_ipgroup='$ipgroup',
+                    si_isshs= '$isshs',
+                    si_hsclass= '$hsclass' 
+                    WHERE si_idnumber = '$id'";
+                     $mail = new PHPMailer(true);
+                     $mail->isSMTP();                                            // Send using SMTP
+                     $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                     $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                     $mail->Password   = 'infinitycore4477';                               // SMTP password
+                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                     $mail->Port       = 587;          
+                     $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
+                     $mail->isHTML(true);        
+                        // id encryption
+                     $simple_string = $id; 
+                     $ciphering = "AES-128-CTR"; 
+                     $iv_length = openssl_cipher_iv_length($ciphering); 
+                     $options = 0; 
+                     $encryption_iv = '1234567891011121'; 
+                     $encryption_key = "fsociety"; 
+                     $encryption = openssl_encrypt($simple_string, $ciphering, 
+                                    $encryption_key, $options, $encryption_iv); 
+                     $key = rawurlencode($encryption);
+                    if($this->conn->query($updateNewStudent)){
+                            $sqlgcat = "UPDATE tbl_gcat SET gc_course = '$course', gc_gpa = '$highschoolgpa', gc_english = '$english', gc_math = '$math', gc_science = '$science', gc_key = '$key' WHERE gc_idnumber = '$id'";
+                                        if($this->conn->query($sqlgcat)){
+                                            // email
+                                            $mail->addAddress($email);
+                                            $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                                            $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
+                                            $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                                            $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
+                                            $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
+                                            // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                                            $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
+                                            $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
+                                            $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
+                                            $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
+                                            $mail->Body .="Thank you.<br><br>";
+                                            $mail->Body .="Sincerely,<br>";
+                                            $mail->Body .="Gordon College Olongapo";
+                                            if ($mail->send()) {
+                                                $valid[0]='success';
+                                                $valid[1]=$id;
+                                                $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
+                                                return $valid;
+                                            } else {
+                                                echo "Mailer Error : " . $mail->ErrorInfo;
+                                            }
+                                        } else{
+                                            $valid[0]='error';
+                                            $valid[1]='ERROR';
+                                            $valid[2]=$this->conn->error;
                                             return $valid;
-                                        } else {
-                                            echo "Mailer Error : " . $mail->ErrorInfo;
                                         }
-                                    } else{
-                                        $valid[0]='error';
-                                        $valid[1]='ERROR';
-                                        $valid[2]=$this->conn->error;
-                                        return $valid;
-                                    }
-                    } else{
+                    }else{
                         $valid[0]='error';
                         $valid[1]='ERROR';
                         $valid[2]=$this->conn->error;
                         return $valid;
                     }
-                }else{
-                    $valid[0]='error';
-                    $valid[1]='ERROR';
-                    $valid[2]=$this->conn->error;
-                    return $valid;
+                } 
+                
+                // insertnewstudent 
+                else{
+                    $insertNewStudent = "INSERT INTO tbl_studentinfo
+                    (si_lastname,
+                    si_firstname,
+                    si_midname,
+                    si_extname,
+                    si_address,
+                    si_houseno,
+                    si_brgy,
+                    si_city,
+                    si_province,
+                    si_zipcode,
+                    si_gender,
+                    si_bday,
+                    si_email,
+                    si_mobile,
+                    si_course,
+                    si_coursechoice,
+                    si_coursechoice2,
+                    si_lastschool,
+                    si_highschoolyear,
+                    si_average,
+                    si_english,
+                    si_math,
+                    si_science,
+                    si_elem,
+                    si_elemyear,
+                    si_tertiary,
+                    si_tertiaryyear,
+                    si_tertiarycourse,
+                    si_vocational,
+                    si_vocationalyear,
+                    si_vocationalcourse,
+                    si_nc,
+                    si_nclvl,
+                    si_specialaward,
+                    si_lrn,
+                    si_strand,
+                    si_brothers,
+                    si_sisters,
+                    si_siblings,
+                    si_momdeceased,
+                    si_momname,
+                    si_momoccupation,
+                    si_educationmom,
+                    si_momcontact,
+                    si_daddeceased,
+                    si_dadname,
+                    si_dadoccupation,
+                    si_educationdad,
+                    si_dadcontact,
+                    si_guardname,
+                    si_guardrel,
+                    si_guardadd,
+                    si_emergencycontact,
+                    si_govproj,
+                    si_govprojothers,
+                    si_famincome,
+                    si_isdisabled,
+                    si_disability,
+                    si_householdno,
+                    si_pob,
+                    si_civilstatus,
+                    si_nationality,
+                    si_age,
+                    si_studenttype,
+                    si_cy,
+                    si_department,
+                    si_sem,
+                    si_enrolledyear,
+                    si_ipgroup,
+                    si_isshs,
+                    si_hsclass
+                    ) 
+                    VALUES
+                    ('$lname',
+                    '$fname',
+                    '$mname',
+                    '$extname',
+                    '$address',
+                    '$addressnum',
+                    '$addressst',
+                    '$addresscity',
+                    '$addressprovince',
+                    '$zipcode',
+                    '$gender',
+                    '$bday',
+                    '$email',
+                    '$contact',
+                    '$course',
+                    '$course2',
+                    '$course3',
+                    '$highschool',
+                    '$highschoolyear',
+                    '$highschoolgpa',
+                    '$english',
+                    '$math',
+                    '$science',
+                    '$elem',
+                    '$elemyear',
+                    '$tertiary',
+                    '$tertiaryyear',
+                    '$tertiarycourse',
+                    '$vocational',
+                    '$vocationalyear',
+                    '$vocationalcourse',
+                    '$nc',
+                    '$nclvl',
+                    '$honors',
+                    '$lrn',
+                    '$strand',
+                    '$brothers',
+                    '$sisters',
+                    '$siblings',
+                    '$motherdead',
+                    '$mother',
+                    '$motheroccupation',
+                    '$mothereducation',
+                    '$momcontact',
+                    '$fatherdead',
+                    '$father',
+                    '$fatheroccupation',
+                    '$fathereducation',
+                    '$dadcontact',
+                    '$guardname',
+                    '$guardrel',
+                    '$guardadd',
+                    '$emergencynumber',
+                    '$govproj',
+                    '$govprojother',
+                    '$famincome',
+                    '$disabled',
+                    '$disability',
+                    '$household',
+                    '$pob',
+                    '$civilstatus',
+                    '$citizenship',
+                    '$age',
+                    '$type',
+                    '$cy',
+                    '$department',
+                    '$sem',
+                    '$yearenrolled',
+                    '$ipgroup',
+                    '$isshs',
+                    '$hsclass')";
+                    $mail = new PHPMailer(true);
+                    $mail->isSMTP();                                            // Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                    $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                    $mail->Password   = 'infinitycore4477';                               // SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                    $mail->Port       = 587;          
+                    $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
+                    $mail->isHTML(true);        
+
+                    if($this->conn->query($insertNewStudent)){
+                        $insertid = $this->conn->insert_id;
+                        $tempid = $insertid + 200000;
+                        $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$tempid' where si_recno = '$insertid'";
+                        if($this->conn->query($sqlid)){
+                            // id encryption
+                            $simple_string = $tempid; 
+                            $ciphering = "AES-128-CTR"; 
+                            $iv_length = openssl_cipher_iv_length($ciphering); 
+                            $options = 0; 
+                            $encryption_iv = '1234567891011121'; 
+                            $encryption_key = "fsociety"; 
+                            $encryption = openssl_encrypt($simple_string, $ciphering, 
+                                        $encryption_key, $options, $encryption_iv); 
+                            $key = rawurlencode($encryption);
+                            $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_key, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime, gc_examtime, gc_status) 
+                                        VALUES('$tempid', '$key', '$course', '$highschoolgpa', '$english', '$math', '$science', now(), '2020-06-15', 'SCHEDULED')";
+                                        if($this->conn->query($sqlgcat)){
+                                            // email
+                                            $mail->addAddress($email);
+                                            $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                                            $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
+                                            $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                                            $mail->Body .="This is your temporary id number: <b>{$tempid}</b>.<br><br>";
+                                            $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
+                                            // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}</a></b><br><br>";
+                                            $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}</a></b><br><br>";
+                                            $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
+                                            $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
+                                            $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
+                                            $mail->Body .="Thank you.<br><br>";
+                                            $mail->Body .="Sincerely,<br>";
+                                            $mail->Body .="Gordon College Olongapo";
+                                            if ($mail->send()) {
+                                                $valid[0]='success';
+                                                $valid[1]=$tempid;
+                                                $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
+                                                return $valid;
+                                            } else {
+                                                echo "Mailer Error : " . $mail->ErrorInfo;
+                                            }
+                                        } else{
+                                            $valid[0]='error';
+                                            $valid[1]='ERROR';
+                                            $valid[2]=$this->conn->error;
+                                            return $valid;
+                                        }
+                        } else{
+                            $valid[0]='error';
+                            $valid[1]='ERROR';
+                            $valid[2]=$this->conn->error;
+                            return $valid;
+                        }
+                    }else{
+                        $valid[0]='error';
+                        $valid[1]='ERROR';
+                        $valid[2]=$this->conn->error;
+                        return $valid;
+                    }
                 }
+                
                 
 
             }             // /GCAT INSERT END
@@ -1169,7 +1313,7 @@
             }
 
             function getApplicants() {
-                return $this->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY gc.gc_regtime ASC");
+                return $this->executeWithRes("SELECT gc.*, si.si_email as si_email, si.si_mobile as si_mobile, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY gc.gc_regtime ASC");
             }
 
             function validateStudent($d) {
@@ -1182,6 +1326,28 @@
 
             function validateEmail($d){
                 return $this->executeWithRes("SELECT si_email from tbl_studentinfo WHERE si_email = '$d->email'");
+            }
+
+            function validateEdit($d){
+                $ciphering = "AES-128-CTR"; 
+                $iv_length = openssl_cipher_iv_length($ciphering); 
+                $options = 0; 
+                $id = $d->id;
+                $key = $d->key;
+                $decryption_iv = '1234567891011121'; 
+                
+                // Store the decryption key 
+                $decryption_key = "fsociety"; 
+                
+                // Use openssl_decrypt() function to decrypt the data 
+                $decryptedkey=openssl_decrypt ($key, $ciphering,  
+                            $decryption_key, $options, $decryption_iv); 
+                if($id == $decryptedkey){
+                    return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_idnumber = '$id'");
+                } else{
+                    return "error";
+                }
+                
             }
 
             function updateEmail($d){
@@ -1198,6 +1364,7 @@
                 $email = $d->email;
                 $id = $d->idNumber;
                 $fname = $d->fname;
+                $lname = $d->lname;
                 $updateEmail = "UPDATE tbl_studentinfo SET si_email = '$email' WHERE si_idnumber = '$id'";
                 if($this->conn->query($updateEmail)){
                     // id encryption
@@ -1213,13 +1380,18 @@
                     // email
                     $mail->addAddress($email);
                     $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
-                    $mail->Body = "Hello <b>{$fname}</b>!<br>";
+                    $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
                     $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                     $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
-                    $mail->Body .="Please visit this link for your printable Form SR01:<br>";
-                    // $mail->Body .="<b>https://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                    $mail->Body .="<b>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                    $mail->Body .="Please secure a printed copy of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
+                    $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
+                    // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                    $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
+                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
+                    $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
+                    $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
+                    $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
+                    $mail->Body .="Thank you.<br><br>";
                     $mail->Body .="Sincerely,<br>";
                     $mail->Body .="Gordon College Olongapo";
                     if ($mail->send()) {
@@ -1235,6 +1407,96 @@
                     $valid[1]='ERROR';
                     $valid[2]=$this->conn->error;
                     return $valid;
+                }
+            }
+
+
+            function getMail(){
+                return $this->executeWithRes("SELECT gc_idnumber, gc_key, si_email, si_firstname, si_lastname FROM tbl_gcat INNER JOIN tbl_studentinfo on tbl_studentinfo.si_idnumber = tbl_gcat.gc_idnumber");
+            }
+
+            function sendMail($d){
+                $valid = 0;
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                $mail->Password   = 'infinitycore4477';                               // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port       = 587;          
+                $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
+                $mail->isHTML(true);     
+                $id = $d->gc_idnumber;
+                $email = $d->si_email;
+                $fname = $d->si_firstname;
+                $lname = $d->si_lastname;
+                // id encryption
+                $key = $d->gc_key;
+                    // email
+                $mail->addAddress($email);
+                $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
+                $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
+                $mail->Body .="<b>Kindly check this link below for final review of your inputted data:<br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
+                $mail->Body .="Sincerely,<br>";
+                $mail->Body .="Gordon College Olongapo";
+                if ($mail->send()) {
+                    return 'Email Success';
+                } else {
+                    return 'Email Failed';
+                }
+            }
+
+            function reSendMail($d){
+                $valid = 0;
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                $mail->Password   = 'infinitycore4477';                               // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port       = 587;          
+                $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
+                $mail->isHTML(true);     
+                $id = $d->id;
+                $email = $d->email;
+                $fname = $d->firstname;
+                $lname = $d->lastname;
+                // id encryption
+                $simple_string = $id; 
+                $ciphering = "AES-128-CTR"; 
+                $iv_length = openssl_cipher_iv_length($ciphering); 
+                $options = 0; 
+                $encryption_iv = '1234567891011121'; 
+                $encryption_key = "fsociety"; 
+                $encryption = openssl_encrypt($simple_string, $ciphering, 
+                                $encryption_key, $options, $encryption_iv); 
+                $key = rawurlencode($encryption);
+                // email
+                $mail->addAddress($email);
+                $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
+                $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
+                $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
+                // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
+                $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
+                $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
+                $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
+                $mail->Body .="Thank you.<br><br>";
+                $mail->Body .="Sincerely,<br>";
+                $mail->Body .="Gordon College Olongapo";
+                if ($mail->send()) {
+                    return 'Email Success';
+                } else {
+                    return 'Email Failed';
                 }
             }
 

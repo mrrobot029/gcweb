@@ -10,6 +10,7 @@ import { AdminPage3Component } from './component/admin-page3/admin-page3.compone
 import { UsersComponent } from './component/users/users.component';
 import { ApplicantsComponent } from './component/applicants/applicants.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule
   ],
   providers: [
     DataService

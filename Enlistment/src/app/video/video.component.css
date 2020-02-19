@@ -1,0 +1,23 @@
+.videobg{
+    display: block;
+  height: 40em;
+  height: 100%; }
+  @media (min-width: 1280px) and (min-height: 768px) {
+    .video-bg {
+      display: block; } }
+
+
+.videobg img{
+  margin-top: 96px;
+    position: fixed;
+    top: -10%;
+    left: 0;
+    z-index: -1;
+    max-width: 10vw;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    background-position: -50% 0;
+    background-size: cover;
+}

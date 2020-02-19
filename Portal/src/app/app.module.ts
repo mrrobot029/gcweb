@@ -70,6 +70,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { IdnumberDialogComponent } from './idnumber-dialog/idnumber-dialog.component';
 import { ReportsDialogComponent } from './reports-dialog/reports-dialog.component';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 
 
@@ -149,7 +150,9 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
     MatSortModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [
+    {provide : LocationStrategy , useClass: HashLocationStrategy}
+  ],
   entryComponents: [ StudentDialogComponent, EditDialogComponent, IdnumberDialogComponent, ReportsDialogComponent, SettingsDialogComponent ],
   bootstrap: [AppComponent]
 })

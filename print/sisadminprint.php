@@ -1,21 +1,6 @@
 <?php
   require_once '../config/connect.php';
-  $sqlaltertable = mysqli_query($conn, "ALTER TABLE `tbl_enlistment` ADD `en_gcatstart` DATE NOT NULL AFTER `en_enend`, ADD `en_gcatend` DATE NOT NULL AFTER `en_gcatstart`");
-  if($sqlaltertable){
-    if(mysqli_query($conn,"INSERT INTO tbl_enlistment en_gcatstart, en_gcatend VALUES ('2019-05-27', '2020-06-30')")){
-      echo 'Success';
-    }
-  }
-?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Student Information Sheet</title>
-    <link rel="stylesheet" type="text/css" href="css/SIS.css">
-  </head>
-  <?php
   // get enlistment info
   $query = mysqli_query($conn, "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'");
   if(mysqli_num_rows($query)>0){
@@ -26,8 +11,21 @@
   }
 
   // get student info
-  $id = $_GET['studentnumber'];
-
+  
+  $ciphering = "AES-128-CTR"; 
+  $iv_length = openssl_cipher_iv_length($ciphering); 
+  $options = 0; 
+  $id = $_GET['id'];
+  $key = rawurldecode($_GET['key']);
+  $decryption_iv = '1234567891011121'; 
+  
+// Store the decryption key 
+  $decryption_key = "fsociety"; 
+  
+// Use openssl_decrypt() function to decrypt the data 
+  $decryptedkey=openssl_decrypt ($key, $ciphering,  
+              $decryption_key, $options, $decryption_iv); 
+  if($id == $decryptedkey){
     $query = mysqli_query($conn,"SELECT * FROM tbl_studentinfo WHERE si_idnumber = '$id'");
     if(mysqli_num_rows($query)>0){
         while($res = mysqli_fetch_assoc($query)){
@@ -121,19 +119,25 @@
             $highschool = $res['si_lastschool'];
             $highschoolyear = $res['si_highschoolyear'];
             $gpa = $res['si_average'];
-            
+            $ipgroup = $res['si_ipgroup'];
         }
     }
 
- 
 ?>
+<!DOCTYPE html>
+<html>
+  <head>
+  <script src="js/jquery.min.js"></script>
+  <meta charset="UTF-8">
+    <title>Student Information Sheet</title>
+    <link rel="stylesheet" type="text/css" href="css/SIS.css">
+  </head>
   <body>
 
-  <div class="twobytwopic">
-    <br>
-    <br><br>
-    2x2 Picture 
-    White Background
+  <div class="twobytwopic ">
+<br><br><br><br><br><br><br><br>
+    <h3>   2x2 Picture 
+        White Background</h3>
   </div>
 	 <table class="txt table-body"> 
     <tbody>
@@ -161,15 +165,15 @@
         </td>
       </tr>
       <tr>
-        <td class="left" width="10%">
-          <p style="text-align:center;"><strong><?php echo $id; ?></strong></p>
+        <td class="left" width="10%" style="position: absolute; margin-top: -20px">
+          <div  style="text-align:center;font-size: 15px"><strong><?php echo $id; ?></strong></div>
           <div class="top-border center">REGISTRATION #</div>
         </td>
         <td></td>
       </tr>
     </tbody>
   </table>
-
+<div style="padding-top:15px"></div>
   <strong class="txt verticalmargin darken"><u>PLEASE FILL IN COMPLETELY, PROCESSING MAY BE DELAYED ON INCOMPLETE FORMS</u></strong>
 
     
@@ -203,7 +207,6 @@
       </tr>
     </tbody>
   </table>
-  <br>
   <h5 class="darken border-thin verticalmargin">1. PERSONAL BACKGROUND</h5>
   <table class="txt table-body"  width="1000" border="1">
     <tbody>
@@ -218,7 +221,6 @@
       </tr>
     </tbody>
   </table>
-
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
@@ -295,7 +297,6 @@
       </tr>
     </tbody>
   </table>
-<br>
   <h5 class="darken border-thin verticalmargin">2. ENTRANCE CATEGORY</h5>
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
@@ -303,24 +304,16 @@
         <td class="border-thin center" width="" > 
           <input type="checkbox" id="new" >
           <label for="freshman">FRESHMAN</label>
-          
-          <input type="checkbox" id="shiftee" >
-          <label for="shiftee">SHIFTEE</label>
-          
-          <input type="checkbox" id="returnee" >
-          <label for="reenrolee">RE-ENROLEE</label>
-          
+  
           <input type="checkbox" id="transferee" >
           <label for="transferee">TRANSFEREE</label>
           
           <input type="checkbox" id="second" >
           <label for="secondcourser">SECOND COURSER</label>
-          
-          <input type="checkbox" id="cross" >
-          <label for="crossenrolee">CROSS-ENROLEE</label></td>
+
       </tr>
     </tbody>
-  </table><br>
+  </table>
 
   <h5 class="darken border-thin verticalmargin">3. FAMILY BACKGROUND</h5>
   <table  class="txt table-body"  width="1000" border="1">
@@ -374,7 +367,6 @@
       </tr>
     </tbody>
   </table>
-  <br>
   <h5 class="darken border-thin verticalmargin"> <i>4. Guardian (if any) who supports your study</i> </h5>
   <table class="txt table-body" border="1">
     <tbody>
@@ -392,7 +384,6 @@
       </tr>
     </tbody>
   </table>
-  <br>
 
 
 <h5 class="darken border-thin verticalmargin"> <i>5. GOVERNMENT PROGRAM/ SCHOLARSHIP GRANT:</i> </h5>
@@ -401,7 +392,6 @@
       <tr>
         <td class="border-thin" width="500">
           
-          <br>
           <input type="checkbox" id="4ps">
           <label for="fourps" class="m-top">Pantawid Pamilyang Pilipino (4P's)</label>
           <br>
@@ -412,34 +402,26 @@
           <label for="esgppa" class="m-top">ESGPPA Beneficiary</label>
           <br>
           <input type="checkbox" id="ips">
-          <label for="ips" class="m-top">Indigenous People (IP) Group: _________</label> 
+          <label for="ips" class="m-top">Indigenous People (IP) Group: ____<u><?php echo $ipgroup; ?></u>____</label> 
           <br>
           <input type="checkbox" id="solo">
           <label for="solo" class="m-top">Solo parent / Child of a Solo Parent</label>
           
-          <br><br>
-         
         </td><td class="border-thin" width="500">
-
-          <br>
           <input type="checkbox" id="noincome">
           <label for="noincome" class="m-top">No Income Household</label>
-          
 
           <br>
           <input type="checkbox" id="Others">
           <label for="other-cc">Others: Please Specify ______<u><?php echo $govprojother; ?></u>_______</label>
           <br>
           Net Monthly Family Income (Total Monthly Income Less Expenses) ______<u><?php echo $famincome; ?></u>______
-         <br>
+       
         </td>
       </tr>
     </tbody>
   </table>
-
-
   <h5 class="darken border-thin verticalmargin"> <i>6. EDUCATIONAL BACKGROUND</i> </h5>
-
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
@@ -510,19 +492,26 @@
       <tr  class="border-thin">
         <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):  <?php echo $award; ?></td>
       </tr>
-      <tr  class="border-thin center" height="120">
-        <td class="border-thin" width="" colspan="2" >
-          <p><i>I hereby certify that the above information is true and correct to the best of my knowledge and ability.</i></p>
+      <tr  class="border-thin center" width="500">
+        <td class="border-thin" >
+          <i>I hereby certify that the above information is true and correct to the best of my knowledge and ability.</i><br>
           <strong>Student's Signature __________________________________ Date: ____________________________</strong>
           
         </td>
+        <td class="border-thin left" >
+           <small><i>(For registrar's use only)</i> </small> <br>
+            <strong>Date & TIME: _________ - _______</strong> <br>
+            <strong>Room #: ________________________</strong> <br>
+            <strong>Issued By: _____________________</strong> 
+          </td>
       </tr>
     </tbody>
   </table>
   </body>
 </html> 
 
-  <script src="js/jquery.min.js"></script>
+
+<script src="js/jquery.min.js"></script>
   <?php $x=0;
  while($x<sizeof($govprog)){ 
    ?>
@@ -580,3 +569,13 @@
         
     });
 </script> 
+
+
+<?php
+    } else{
+?>
+    <script>
+    window.location.href = "https://gordoncollegeccs.edu.ph/gc/home/";
+    </script>
+<?php
+}?>

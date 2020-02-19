@@ -405,6 +405,11 @@
                     echo json_encode($post->validateEmail($d));
                 break;
 
+                case 'validateEdit':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->validateEdit($d));
+                break;
+
                 case 'updateEmail':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->updateEmail($d));
@@ -433,12 +438,33 @@
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($post->getApplicants());
                 break;
+
+                case 'updateNewStudent':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($auth->updateNewStudent($d));
+                break;
                 
                 // print
                 case 'printStudentSIS':
                     echo json_encode($post->printStudentSIS());
                 break;
 
+                //one time use - send mail to all registered via google forms
+                case 'getMail':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->getMail());
+                break;
+
+                case 'sendMail':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->sendMail($d));
+                break;
+
+                
+                case 'reSendMail':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->reSendMail($d));
+                break;
 
 
 

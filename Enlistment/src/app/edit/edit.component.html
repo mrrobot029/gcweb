@@ -1,0 +1,487 @@
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
+
+<!-- STUDENT TYPE -->
+  <div class="cahsnewcontainer animated fadeIn">
+    <mat-card [class.mat-elevation-z24]="!asd" class="card">
+      <h1 style="text-align: center;">Gordon College Admission Test (GCAT)</h1>
+      <h2 style="text-align: center;">Registration Form {{sem}}<sup>{{sup}}</sup> Semester A.Y. {{acadyear}} </h2>
+      <form [formGroup]="studentTypeFormGroup" autocomplete="off">
+        <label for="" class="animated fadeInUp">Entrance Category:*</label><br><br>
+        <mat-radio-group formControlName="studentType">
+          <mat-radio-button type="radio" value="new" style="margin-right:20px" [ngStyle.lt-md]="{'width':'100vw', 'margin-bottom': '10px'}">FRESHMAN</mat-radio-button>
+          <mat-radio-button type="radio" value="transferee" style="margin-right:20px" [ngStyle.lt-md]="{'width':'100vw', 'margin-bottom': '10px'}">TRANSFEREE</mat-radio-button>
+          <mat-radio-button type="radio" value="second" style="margin-right:20px" [ngStyle.lt-md]="{'width':'100vw', 'margin-bottom': '10px'}">SECOND COURSER</mat-radio-button>
+        </mat-radio-group>
+      </form>
+
+<!-- STEPPER START -->
+    <mat-vertical-stepper [linear]="isLinear" #stepper>
+      <!-- PERSONAL INFO -->
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup" autocomplete="off">
+                <ng-template matStepLabel>Personal Information</ng-template>
+                  <!-- <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="25" class="animated fadeInUp">
+                    <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[9]}"  matInput placeholder="Student ID Number" formControlName="idnumber" (keyup.enter)="getInfo()" required  autofocus [readonly]="continue">
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 1%">
+                    <i class="material-icons" style="color:#2196f3;font-size: 20px;">info_outline</i>
+                    <p class="info">Press ENTER after typing in your student id number.</p>
+                </div>
+                  </div> -->
+                <label for="" class="animated fadeInUp">Name</label>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                <mat-form-field fxFlex="30" class="animated fadeInUp">
+                  <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Last Name" formControlName="lname" required>
+                  <mat-error *ngIf="firstFormGroup.controls.lname.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="animated fadeInUp">
+                        <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="First Name" formControlName="fname" required>
+                        <mat-error *ngIf="firstFormGroup.controls.fname.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="10" class="animated fadeInUp">
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Name Ext. (Jr, Sr, I, II)*</label>
+                  <mat-select formControlName="nameext" name="nameext">
+                    <mat-option value=''>--SELECT IF APPLICABLE--</mat-option>
+                    <mat-option [value]="extension" *ngFor="let extension of extensions">{{extension}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="animated fadeInUp">
+                        <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Middle Name" formControlName="mname">
+                        <mat-error *ngIf="firstFormGroup.controls.mname.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                </div>
+                <!-- <label for="" class="animated fadeInUp">Provincial Address (Optional)</label>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                <mat-form-field fxFlex="10" class="animated fadeInUp">
+                    <input matInput placeholder="House Number" formControlName="houseno1">
+                </mat-form-field>
+                <mat-form-field fxFlex="26" class="animated fadeInUp">
+                  <input matInput placeholder="Street/Baranggay" formControlName="street1">
+                </mat-form-field>
+                <mat-form-field fxFlex="26" class="animated fadeInUp">
+                        <input matInput placeholder="Municipality" formControlName="city1">
+                </mat-form-field>
+                <mat-form-field fxFlex="26" class="animated fadeInUp">
+                        <input matInput placeholder="Province" formControlName="province1">
+                </mat-form-field>
+                <mat-form-field fxFlex="10" class="animated fadeInUp">
+                        <input matInput placeholder="Zip Code" formControlName="zipcode1">
+                </mat-form-field>
+                </div> -->
+                <label for="" class="animated fadeInUp">Address</label>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <!-- <mat-form-field fxFlex="90" *ngIf="isOldStudent">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Address" formControlName="fulladdress">
+                  </mat-form-field> -->
+                <mat-form-field fxFlex="20" class="animated fadeInUp">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="House Number and Street" formControlName="houseno">
+                </mat-form-field>
+                <mat-form-field fxFlex="20" class="animated fadeInUp">
+                  <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Barangay" formControlName="street" required>
+                  <mat-error *ngIf="firstFormGroup.controls.street.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20" class="animated fadeInUp">
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Province*</label>
+                <mat-select formControlName="province" name="province" required (selectionChange)="selectProvince($event)">
+                  <mat-option value=''>--SELECT PROVINCE--</mat-option>
+                  <mat-option [value]="province.id" *ngFor="let province of provinces">{{province.name.toUpperCase()}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="firstFormGroup.controls.province.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20" class="animated fadeInUp">
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">City/Municipality*</label>
+                <mat-select formControlName="city" name="city" required (selectionChange)="selectCity($event)">
+                  <mat-option value=''>--SELECT CITY/MUNICIPALITY--</mat-option>
+                  <mat-option [value]="city.id" *ngFor="let city of cities">{{city.name.toUpperCase()}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="firstFormGroup.controls.city.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="10" class="animated fadeInUp">
+                        <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[4]}" matInput placeholder="Zip Code" formControlName="zipcode" required>
+                        <mat-error *ngIf="firstFormGroup.controls.zipcode.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                </div>
+    
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;" class="animated fadeInUp">Sex at Birth*</label>
+                  <mat-radio-group required formControlName="gender" name="gender" id="gender" placeholder="Gender" fxFlex="15" style="padding-top: 20px;" class="animated fadeInUp">
+                    <mat-radio-button required value="Male" style="margin-right: 5%;">Male</mat-radio-button>
+                    <mat-radio-button required value="Female">Female</mat-radio-button>
+                    <mat-error *ngIf="firstFormGroup.controls.gender.invalid&&showErrors1" style="font-size: 12px;">{{getErrorMessage()}}</mat-error>
+                  </mat-radio-group>
+                  <mat-form-field fxFlex="15" class="animated fadeInUp">
+                    <input matInput placeholder="Date of Birth" formControlName="dob" type="date" required (focusout)="computeAge()">
+                    <mat-error *ngIf="firstFormGroup.controls.dob.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="15" class="animated fadeInUp">
+                      <input matInput placeholder="Age" formControlName="age" readonly required>
+                      <mat-error *ngIf="firstFormGroup.controls.age.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="20" class="animated fadeInUp">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Birth Place" formControlName="birthplace" required>
+                      <mat-error *ngIf="firstFormGroup.controls.birthplace.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <label for="gender" [ngStyle.gt-sm]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'absolute','padding-left': '70%'}" [ngStyle.lt-md]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'relative','padding-left': '0'}"  class="animated fadeInUp">Citizenship*</label>
+                  <div fxLayout="row" fxLayoutWrap="nowrap" fxFlex="45" fxLayoutGap="30px">
+                  <mat-radio-group required formControlName="citizenship" name="citizenship" id="citizenship" (change)="onSelection('citizen')" placeholder="Gender" style="padding-top: 20px;z-index: 2;" class="animated fadeInUp">
+                    <mat-radio-button required value="Filipino" style="margin-right: 5%;">Filipino</mat-radio-button>
+                    <mat-radio-button required value="Others">Others:</mat-radio-button>
+                    <mat-form-field fxFlex="50" style="margin-top: -22px;margin-left: 10px;">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput formControlName="citizenshipother" placeholder="If others, please specify." [readonly]="citizenshipisother?'true':'false'">
+                    </mat-form-field> 
+                  </mat-radio-group>
+                  </div>
+                  <mat-error *ngIf="firstFormGroup.controls.citizenship.invalid&&showErrors1" [ngStyle.gt-sm]="{'font-size': '12px','position': 'absolute','padding-left': '70%','padding-top':'45px', 'z-index':'1'}" [ngStyle.lt-md]="{'font-size': '12px','position': 'relative','padding-left': '0', 'margin-top': '-50px', 'margin-bottom': '50px'}" >{{getErrorMessage()}}</mat-error>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 2%;">
+                  <mat-form-field fxFlex="20" class="animated fadeInUp">
+                    <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Civil Status*</label>
+                    <mat-select formControlName="civilstatus" name="civilstatus" required>
+                      <mat-option value="">--SELECT--</mat-option>
+                      <mat-option value="SINGLE">SINGLE</mat-option>
+                      <mat-option value="MARRIED">MARRIED</mat-option>
+                      <mat-option value="DIVORCED">DIVORCED</mat-option>
+                      <mat-option value="SEPARATED">SEPARATED</mat-option>
+                      <mat-option value="WIDOWED">WIDOWED</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="firstFormGroup.controls.civilstatus.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                    <mat-form-field fxFlex="33" class="animated fadeInUp">
+                        <input matInput placeholder="Email" type="email" formControlName="email" required readonly>
+                        <mat-error *ngIf="firstFormGroup.controls.email.invalid">{{getErrorEmail()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33" class="animated fadeInUp">
+                        <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[11]}" matInput placeholder="Mobile Number" formControlName="mobile" required>
+                        <mat-error *ngIf="firstFormGroup.controls.mobile.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button matStepperNext (click)="next()" style="background-color:#2196f3; color: white;">Next</button>
+                </div>
+              </form>
+            </mat-step>
+          <!-- ENLISTMENT INFO -->
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Academic Information</ng-template>
+
+                <div fxLayout="row" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 2%;">
+                  <mat-form-field fxFlex="33">
+                    <input oninput="this.value = this.value.toUpperCase()" [value]="acadyear" readonly="true" matInput formControlName="acadyear" placeholder="Academic Year">
+                  </mat-form-field> 
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;position: absolute;padding-left: 33%;">Semester:*</label>
+                  <mat-radio-group required formControlName="sem" name="sem" id="sem" placeholder="Semester" fxFlex="33" style="padding-top: 20px;">
+                    <mat-radio-button value="1" style="margin-right: 5%;">1<sup>st</sup></mat-radio-button>
+                    <mat-radio-button value="2" style="margin-right: 5%;">2<sup>nd</sup></mat-radio-button>
+                    <mat-radio-button value="Mid Year" style="margin-right: 5%;">Mid Year</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 2%;">
+                  <mat-form-field fxFlex="33">
+                    <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Desired Program:*</label>
+                    <mat-select formControlName="course" name="course" (selectionChange)="filterCourse()" required>
+                      <mat-option value="">--SELECT--</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="secondFormGroup.controls.course.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="33">
+                    <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">2<sup>nd</sup> Choice:</label>
+                    <mat-select formControlName="course2" (selectionChange)="filterCourse2()" name="course2">
+                      <mat-option value="">--SELECT--</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall2">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                    </mat-select>
+
+                  </mat-form-field>
+                  <mat-form-field fxFlex="33">
+                    <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">3<sup>rd</sup> Choice:</label>
+                    <mat-select formControlName="course3" name="course3">
+                      <mat-option value="">--SELECT--</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall3">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button matStepperPrevious style="margin-right: 1%;">Back</button>
+                  <button mat-raised-button matStepperNext style="background-color:#2196f3; color: white;" (click)="next2()">Next</button>
+                </div>
+              </form>
+            </mat-step>
+          <!-- EDUCATIONAL BACKGROUND -->
+            <mat-step [stepControl]="thirdFormGroup">
+              <form [formGroup]="thirdFormGroup" autocomplete="off">
+                <ng-template matStepLabel>Educational Background</ng-template>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Elementary School" formControlName="elem">
+                      <mat-error *ngIf="thirdFormGroup.controls.elem.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" [cleave]="{numericOnly: true,delimiter: '.',blocks:[4]}" matInput placeholder="Year Graduated" formControlName="elemyear">
+                      <mat-error *ngIf="thirdFormGroup.controls.elemyear.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="High School/Senior High School" formControlName="highschool">
+                      <mat-error *ngIf="thirdFormGroup.controls.highschool.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="10">
+                      <input oninput="this.value = this.value.toUpperCase()" [cleave]="{numericOnly: true,delimiter: '.',blocks:[4]}" matInput placeholder="Year Graduated" formControlName="highschoolyear">
+                      <mat-error *ngIf="thirdFormGroup.controls.highschoolyear.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                      <label for="gender" [ngStyle.gt-sm]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'absolute','padding-left': '45%'}" [ngStyle.lt-md]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'relative','padding-left': '0'}"   class="animated fadeInUp">SHS or HS?*</label>
+                      <mat-radio-group required formControlName="isshs" name="isshs" id="isshs" placeholder="isshs" fxFlex="15" style="padding-top: 20px;" class="animated fadeInUp">
+                        <mat-radio-button required value="1" style="margin-right: 5%;">SHS</mat-radio-button>
+                        <mat-radio-button required value="0">HS</mat-radio-button>
+                        <mat-error *ngIf="thirdFormGroup.controls.isshs.invalid&&showErrors3" style="font-size: 12px;">{{getErrorMessage()}}</mat-error>
+                      </mat-radio-group>
+                      <label for="gender" [ngStyle.gt-sm]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'absolute','padding-left': '61%'}" [ngStyle.lt-md]="{'color': 'rgb(0,0,0,0.54)','font-size': '13px','position': 'relative','padding-left': '0'}"   class="animated fadeInUp">HIGHSCHOOL/SHS CLASSIFICATION*</label>
+                      <mat-radio-group required formControlName="hsclass" name="hsclass" id="hsclass" placeholder="hsclass" fxFlex="33" style="padding-top: 20px;" class="animated fadeInUp">
+                        <mat-radio-button required value="1" style="margin-right: 5%;">DEPED(PUBLIC)</mat-radio-button>
+                        <mat-radio-button required value="0">NON-DEPED(PRIVATE)</mat-radio-button>
+                        <mat-error *ngIf="thirdFormGroup.controls.hsclass.invalid&&showErrors3" style="font-size: 12px;">{{getErrorMessage()}}</mat-error>
+                      </mat-radio-group>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="33" class="animated fadeInUp">
+                    <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Strand*</label>
+                    <mat-select formControlName="strand" name="strand">
+                      <mat-option value=''>--SELECT IF APPLICABLE--</mat-option>
+                      <mat-option [value]="strand" *ngFor="let strand of strands">{{strand}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                    <mat-form-field fxFlex="25">
+                      <input oninput="this.value = this.value.toUpperCase()" [cleave]="{numericOnly: true,delimiter: '.',blocks:[12]}" matInput placeholder="Learner's Reference Number(FOR SHS)" formControlName="lrn">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="25">
+                    <input type="number" max="100" matInput placeholder="Grade Point Average(GPA) if SHS" formControlName="highschoolgpa">
+                    <mat-error *ngIf="thirdFormGroup.controls.highschoolgpa.invalid">Please enter a value between 0 and 100</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input type="number" max="100" matInput placeholder="English Final Grade if SHS" formControlName="english">
+                    <mat-error *ngIf="thirdFormGroup.controls.english.invalid">Please enter a value between 0 and 100</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input type="number" max="100" matInput placeholder="Math Final Grade if SHS" formControlName="math">
+                    <mat-error *ngIf="thirdFormGroup.controls.math.invalid">Please enter a value between 0 and 100</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input type="number" max="100" matInput placeholder="Science Final Grade if SHS" formControlName="science">
+                    <mat-error *ngIf="thirdFormGroup.controls.science.invalid">Please enter a value between 0 and 100</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="College" formControlName="tertiary">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Program" formControlName="tertiarycourse">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" [cleave]="{numericOnly: true,delimiter: '.',blocks:[4]}" matInput placeholder="Year Graduated" formControlName="tertiaryyear">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Tech-Voc School" formControlName="vocational">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Tech-Voc Course" formControlName="vocationalcourse">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33">
+                      <input oninput="this.value = this.value.toUpperCase()" [cleave]="{numericOnly: true,delimiter: '.',blocks:[4]}" matInput placeholder="Year Graduated" formControlName="vocationalyear">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="50">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="National Certification(NC)" formControlName="nc">
+                  </mat-form-field>
+                  <mat-form-field fxFlex="50">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="NC Level" formControlName="nclvl">
+                  </mat-form-field>
+              </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                <mat-form-field fxFlex="33">
+                  <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Scholastic Honors and Distinctions Obtained(if any)" formControlName="honors">
+                </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button matStepperPrevious style="margin-right: 1%;">Back</button>
+                  <button mat-raised-button matStepperNext style="background-color:#2196f3; color: white;" (click)="next3()">Next</button>
+                </div>
+              </form>
+            </mat-step>
+    
+            <mat-step [stepControl]="fourthFormGroup">
+              <form [formGroup]="fourthFormGroup" autocomplete="off">
+                <ng-template matStepLabel>Parent & Guardian Information</ng-template>
+                <label for="" class="animated fadeInUp">Family Information</label>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="33">
+                    <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[2]}" oninput="this.value = this.value.toUpperCase()" type="number" matInput placeholder="Number of Brother(s)" formControlName="brothers" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.brothers.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="33">
+                    <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[2]}" oninput="this.value = this.value.toUpperCase()" type="number" matInput placeholder="Number of Sister(s)" formControlName="sisters" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.sisters.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;position: absolute;">Mother Status:*</label>
+                <mat-radio-group required formControlName="motherdead" name="motherdead" id="motherdead" fxFlex="75" style="padding-top: 20px;"  (change)="setMomDead()">
+                  <mat-radio-button value="1" style="margin-right: 5%;">Alive</mat-radio-button>
+                  <mat-radio-button value="0" style="margin-right: 5%;">Deceased</mat-radio-button><br><br>
+                  <mat-error *ngIf="fourthFormGroup.controls.motherdead.invalid" style="font-size: 12px;margin-top: -12px">{{getErrorMessage()}}</mat-error>
+                </mat-radio-group>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Mother's Name(Last Name, First Name, Middle Name)" formControlName="mother" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.mother.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Educational Attainment" formControlName="mothereducation">
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Occupation" formControlName="motheroccupation" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.motheroccupation.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input matInput placeholder="Contact Number" [cleave]="{numericOnly: true,delimiter: '.',blocks:[11]}" formControlName="mothercontact">
+                    <mat-error *ngIf="fourthFormGroup.controls.mothercontact.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;position: absolute;">Father Status:*</label>
+                  <mat-radio-group required formControlName="fatherdead" name="fatherdead" id="fatherdead" fxFlex="75" style="padding-top: 20px;"  (change)="setDadDead()">
+                    <mat-radio-button value="1" style="margin-right: 5%;">Alive</mat-radio-button>
+                    <mat-radio-button value="0" style="margin-right: 5%;">Deceased</mat-radio-button><br><br>
+                    <mat-error *ngIf="fourthFormGroup.controls.fatherdead.invalid" style="font-size: 12px;margin-top: -12px">{{getErrorMessage()}}</mat-error>
+                  </mat-radio-group>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Father's Name(Last Name, First Name, Middle Name)" formControlName="father" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.father.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Educational Attainment" formControlName="fathereducation">
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Occupation" formControlName="fatheroccupation" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.fatheroccupation.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="25">
+                    <input matInput placeholder="Contact Number" [cleave]="{numericOnly: true,delimiter: '.',blocks:[11]}" formControlName="fathercontact">
+                    <mat-error *ngIf="fourthFormGroup.controls.fathercontact.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <label for="" class="animated fadeInUp">Guardian Information</label>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                  <mat-form-field fxFlex="50">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Guardian's Name(Last Name, First Name, Middle Name)" formControlName="guardian" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.guardian.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="50">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Relationship With Guardian" formControlName="relationship" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.relationship.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 2%">
+                  <mat-form-field fxFlex="50">
+                    <input oninput="this.value = this.value.toUpperCase()" matInput placeholder="Guardian's Address" formControlName="guardianadd" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.guardianadd.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="50">
+                    <input [cleave]="{numericOnly: true,delimiter: '.',blocks:[11]}" matInput placeholder="Guardian's Mobile Number" formControlName="emergencynumber" required>
+                    <mat-error *ngIf="fourthFormGroup.controls.emergencynumber.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button matStepperPrevious style="margin-right: 1%;">Back</button>
+                  <button mat-raised-button matStepperNext style="background-color:#2196f3; color: white;">Next</button>
+                </div>
+              </form>
+            </mat-step>
+    
+            <mat-step [stepControl]="fifthFormGroup">
+                <form [formGroup]="fifthFormGroup" autocomplete="off">
+              <ng-template matStepLabel>Other Information</ng-template>
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 5%">
+                <div fxFlex="50" fxFlex.lt-md="100">
+                  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 1%">
+                    <i class="material-icons" style="color:#2196f3;font-size: 20px;">info_outline</i>
+                    <p class="info">You can select 1 or more items</p>
+                  </div>
+                  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 2%;">
+                  <label for="gender" [ngStyle.gt-sm]="{'color': 'rgb(0,0,0,0.54)','font-size': '15px','position': 'absolute','padding-left': '0'}" [ngStyle.lt-md]="{'color': 'rgb(0,0,0,0.54)','font-size': '15px','position': 'relative','padding-left': '0'}">Are you or your family a member/belong to any of the following?:</label>
+                  <mat-selection-list #shoes (selectionChange)="onSelection('govproj')" formControlName="govproj" style="padding-top:20px">
+                    <mat-list-option checkboxPosition="before" value='4ps'>Pantawid Pamilya Pilipino Program (4ps)</mat-list-option>
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                      <mat-list-option checkboxPosition="before" value='listahan'>Listahan 2.0 - DSWD</mat-list-option>
+                      <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;">Household#:</label>
+                      <mat-form-field class="moveup">
+                        <input oninput="this.value = this.value.toUpperCase()" matInput formControlName="household" [readonly]="listahanchecked?'true':'false'">
+                        </mat-form-field> 
+                    </div>
+                    <mat-list-option checkboxPosition="before" value='esgppa' style="margin-top: -2%">ESGPPA Beneficiary</mat-list-option>
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                      <mat-list-option checkboxPosition="before" value='ips'>Indigenous People(IP's)</mat-list-option>
+                        <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;">IP Group:</label>
+                          <mat-form-field class="moveup">
+                          <input oninput="this.value = this.value.toUpperCase()" matInput formControlName="ipgroup" [readonly]="ipschecked?'true':'false'">
+                          </mat-form-field> 
+                    </div>
+                    <mat-list-option checkboxPosition="before" value='noincome'>No Income Household</mat-list-option>
+                    <mat-list-option checkboxPosition="before" value='solo'>Solo Parent/Child of Solo Parent</mat-list-option>
+                    <div fxLayout="row" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                      <mat-list-option checkboxPosition="before" value="Others" style="max-width:120px;margin-right: 0!important;">Others:</mat-list-option>
+                      <mat-form-field class="moveup">
+                      <input oninput="this.value = this.value.toUpperCase()" matInput formControlName="govprojother" [readonly]="govprojisother?'true':'false'">
+                      </mat-form-field> 
+                    </div>
+                  </mat-selection-list>
+                </div>
+                </div>
+                <div fxFlex="50">
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 3%;">
+                      <mat-form-field class="mat-focused" fxFlex="75">
+                        <input #famincome [cleave]="{numeral: true, numeralThousandsGroupStyle: 'thousand', prefix:'Php '}" matInput placeholder="Monthly Net Income (Exclude Expense) in Php:" formControlName="famincome">
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 5%;">
+                        <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 15px;position: absolute;">Are you a person with disability?*</label>
+                        <mat-radio-group required formControlName="disabled" name="disabled" id="disabled" fxFlex="75" style="padding-top: 20px;"  (change)="setDisabled()">
+                          <mat-radio-button value="1" style="margin-right: 5%;">Yes</mat-radio-button>
+                          <mat-radio-button value="0" style="margin-right: 5%;">No</mat-radio-button><br><br>
+                          <mat-error *ngIf="fifthFormGroup.controls.disabled.invalid&&showErrors4" style="font-size: 12px;margin-top: -12px">{{getErrorMessage()}}</mat-error>
+                          <div fxLayout="row" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+                          <mat-form-field class="moveup" fxFlex="100">
+                            <input oninput="this.value = this.value.toUpperCase()" matInput formControlName="disability" [readonly]="isdisabled?'true':'false'" placeholder="Type of disability(if applicable)">
+                          </mat-form-field> 
+                          </div>
+                        </mat-radio-group>
+                    </div>
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 1%">
+                        <i class="material-icons" style="color:#ffa726;font-size: 20px;">info_outline</i>
+                        <p class="info2">Please double check your information before submitting to avoid errors</p>
+                    </div>
+                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="margin-bottom: 1%">
+                        <mat-checkbox formControlName="tos" required>I have read and therefore agree to the <a href="#" target="_blank">Terms of Service</a></mat-checkbox>
+                    </div>
+                </div>
+              </div>
+              <div>
+                <button mat-raised-button matStepperPrevious style="margin-right: 1%;">Back</button>
+                <button mat-raised-button (click)="submit()" style="background-color:#2196f3; color: white;">Submit</button>
+              </div>
+              </form>
+            </mat-step>
+          </mat-vertical-stepper>
+        </mat-card>
+        </div>

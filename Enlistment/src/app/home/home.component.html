@@ -1,0 +1,5 @@
+<div style="height: 100vh;" *ngIf="!mobileQuery.matches"></div>
+<div style="height: 100px;" *ngIf="mobileQuery.matches"></div>
+<app-about></app-about>
+<app-numbers *ngIf="!mobileQuery.matches"></app-numbers>
+<app-news></app-news>

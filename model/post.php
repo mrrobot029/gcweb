@@ -1298,9 +1298,12 @@
 
 
 
+
+
+
             // gcat/users
             function getGCATmembers() {
-                return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='GCAT' ORDER BY fa_lname,fa_fname,fa_mname,fa_extname ASC");
+                return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='GCAT-R' || fa_department='GCAT-AO' ORDER BY fa_lname,fa_fname,fa_mname,fa_extname ASC");
             }
 
             function deleteGCATmember($d) {
@@ -1315,6 +1318,7 @@
             function getApplicants() {
                 return $this->executeWithRes("SELECT gc.*, si.si_email as si_email, si.si_mobile as si_mobile, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY gc.gc_regtime ASC");
             }
+
 
             function validateStudent($d) {
                 return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_firstname = '$d->firstname' and si_lastname = '$d->lastname' and si_midname = '$d->midname' and si_bday = '$d->bday'");

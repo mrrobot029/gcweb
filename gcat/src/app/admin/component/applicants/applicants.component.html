@@ -1,21 +1,37 @@
 <ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
 <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- <button class="btn btn-sm btn-info" data-toggle="modal">
-            Add Member
-          </button> -->
-        </div>
-      </div>
-      <div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h4 class="card-title ">List of All Applicants</h4>
-                <p class="card-category">For GCAT Schedule</p>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">List of Unscheduled Applicants</h4>
+            <p class="card-category">For GCAT Schedule</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 ">
+                <label for="schedDate " class=" p-0 m-0">Schedule Date</label>
+                <input
+                  class="form-control"
+                  name="schedDate"
+                  type="date"
+                  [(ngModel)]="schedDate"
+                  ngModel
+                  required
+                />
               </div>
+              <div class="col-md-3 ">
+                <label for="schedTime" class=" p-0 m-0">Schedule Time</label>
+                <input
+                  class="form-control"
+                  name="schedTime"
+                  type="time"
+                  [(ngModel)]="schedTime"
+                  required
+                />
+              </div>
+<<<<<<< HEAD
               <div class="card-body">
                 <input type="text" class="form-control" placeholder="Search..." (keyup)="searchStudent($event)">
                 <div class="table-responsive">
@@ -58,50 +74,67 @@
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 <button (click)="sendMail()" class="btn btn-sm btn-success pull-right">Send Mail</button>
                 </div>
+=======
+
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <form
+                  (submit)="searchUnscheduledApplicants($event)"
+                  autocomplete="off"
+                >
+                  <label for="search" class="p-0 m-0">Search</label>
+                  <input class="form-control" name="search" type="text" />
+                </form>
+>>>>>>> b010396e1c6455d296cd213569cd7d35631bb77d
               </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class=" text-primary">
+                  <th>No.</th>
+                  <th>ID No.</th>
+                  <th>Full Name</th>
+                  <th>Course</th>
+                  <th>GPA</th>
+                  <th>Registration Time</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let applicant of applicants
+                        | paginate: { itemsPerPage: 20, currentPage: p };
+                      let i = index
+                    "
+                  >
+                    <td>{{ 20 * (p - 1) + i + 1 }}</td>
+                    <td>{{ applicant.gc_idnumber }}</td>
+                    <td>{{ applicant.si_fullname }}</td>
+                    <td>{{ applicant.gc_course }}</td>
+                    <td>{{ applicant.gc_gpa }}</td>
+                    <td>{{ applicant.gc_regtime }}</td>
+                    <td>
+                      <button
+                        class="btn btn-sm btn-success"
+                        (click)="addGCATSchedule(applicant.gc_idnumber)"
+                      >
+                        <i class="material-icons">
+                          note_add
+                        </i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls
+                (pageChange)="p = $event"
+              ></pagination-controls>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="uploadModalLabel">Add Member</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form autocomplete="off">
-            <div class="form-group">
-                <label for="name2">Employee Number</label>
-                <input class="form-control" name="name1" type="number" required>
-            </div>
-            <div class="form-group">
-                <label for="name2">First Name</label>
-                <input class="form-control" name="name1" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="name2">Middle Name</label>
-                <input class="form-control" name="name1" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="name2">Last Name</label>
-                <input class="form-control" name="name1" type="text" required>
-            </div>
-            <div class="form-group">
-                <label for="name2">Extension Name</label>
-                <input class="form-control" name="name1" type="text" required>
-            </div>
-            <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
+</div>

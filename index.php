@@ -439,10 +439,42 @@
                     echo json_encode($post->getApplicants());
                 break;
 
+<<<<<<< HEAD
                 case 'updateNewStudent':
                     $d = json_decode( base64_decode( file_get_contents('php://input')));
                     echo json_encode($auth->updateNewStudent($d));
                 break;
+=======
+
+
+
+                case 'getUnscheduledApplicants':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_examdate ='0000-00-00' && gc.gc_examtime='00:00:00' ORDER BY gc.gc_regtime ASC"));
+                break;
+
+                case 'getScheduledApplicants':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_examdate !='0000-00-00' && gc.gc_examtime!='00:00:00'  ORDER BY si.si_lastname,si.si_firstname,si.si_midname,si.si_extname ASC"));
+                break;
+
+                // ian codes
+                case 'searchUnscheduledApplicants':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' && gc.gc_examdate ='0000-00-00' && gc.gc_examtime='00:00:00' ORDER BY gc.gc_regtime ASC"));
+                break;
+
+                case 'searchScheduledApplicants':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' && gc.gc_examdate !='0000-00-00' && gc.gc_examtime!='00:00:00' ORDER BY si.si_lastname,si.si_firstname,si.si_midname,si.si_extname ASC"));
+                break;
+
+                case 'addGCATSchedule':
+                    $d = json_decode( base64_decode( file_get_contents('php://input')));
+                    echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examdate='$d->date', gc_examtime='$d->time' WHERE gc_idnumber='$d->idNumber'"));
+                break;
+                
+>>>>>>> b010396e1c6455d296cd213569cd7d35631bb77d
                 
                 // print
                 case 'printStudentSIS':

@@ -1,0 +1,64 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">List of Scheduled Applicants</h4>
+            <p class="card-category">For GCAT Schedule</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 "></div>
+              <div class="col-md-3 "></div>
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <form
+                  (submit)="searchScheduledApplicants($event)"
+                  autocomplete="off"
+                >
+                  <label for="search" class="p-0 m-0">Search</label>
+                  <input class="form-control" name="search" type="text" />
+                </form>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class=" text-primary">
+                  <th>No.</th>
+                  <th>ID No.</th>
+                  <th>Full Name</th>
+                  <th>Course</th>
+                  <th>GPA</th>
+                  <th>Registration Time</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let applicant of applicants
+                        | paginate: { itemsPerPage: 20, currentPage: p };
+                      let i = index
+                    "
+                  >
+                    <td>{{ 20 * (p - 1) + i + 1 }}</td>
+                    <td>{{ applicant.gc_idnumber }}</td>
+                    <td>{{ applicant.si_fullname }}</td>
+                    <td>{{ applicant.gc_course }}</td>
+                    <td>{{ applicant.gc_gpa }}</td>
+                    <td>{{ applicant.gc_regtime }}</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination-controls
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

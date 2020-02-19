@@ -10,17 +10,24 @@
 <div class="sidebar-wrapper">
   <ul class="nav">
     <li routerLinkActive="active" class="nav-item" >
-        <a class="nav-link" [routerLink]="['users']">
-          <i class="material-icons">supervised_user_circle</i>
-          <p>Users</p>
-        </a>
-    </li>
-    <li routerLinkActive="active" class="nav-item" >
       <a class="nav-link" [routerLink]="['applicants']">
         <i class="material-icons">subject</i>
-        <p>Applicants</p>
+        <p>Unscheduled Applicants</p>
       </a>
-  </li>
+  </li>   <li routerLinkActive="active" class="nav-item" >
+    <a class="nav-link" [routerLink]="['scheduled']">
+      <i class="material-icons">
+        check_circle
+        </i>
+      <p>Scheduled Applicants</p>
+    </a>
+</li>
+  <li routerLinkActive="active" class="nav-item" >
+    <a class="nav-link" [routerLink]="['users']">
+      <i class="material-icons">supervised_user_circle</i>
+      <p>Users</p>
+    </a>
+</li>
   </ul>
   <div>
     <ul class="nav navbar-nav nav-mobile-menu">

@@ -4,37 +4,17 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Unscheduled Applicants</h4>
+            <h4 class="card-title ">List of Scheduled Applicants</h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3 ">
-                <label for="schedDate " class=" p-0 m-0">Schedule Date</label>
-                <input
-                  class="form-control"
-                  name="schedDate"
-                  type="date"
-                  [(ngModel)]="schedDate"
-                  ngModel
-                  required
-                />
-              </div>
-              <div class="col-md-3 ">
-                <label for="schedTime" class=" p-0 m-0">Schedule Time</label>
-                <input
-                  class="form-control"
-                  name="schedTime"
-                  type="time"
-                  [(ngModel)]="schedTime"
-                  required
-                />
-              </div>
-
+              <div class="col-md-3 "></div>
+              <div class="col-md-3 "></div>
               <div class="col-md-1"></div>
               <div class="col-md-5">
                 <form
-                  (submit)="searchUnscheduledApplicants($event)"
+                  (submit)="searchScheduledApplicants($event)"
                   autocomplete="off"
                 >
                   <label for="search" class="p-0 m-0">Search</label>
@@ -42,7 +22,6 @@
                 </form>
               </div>
             </div>
-
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead class=" text-primary">
@@ -68,16 +47,7 @@
                     <td>{{ applicant.gc_course }}</td>
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-success"
-                        (click)="addGCATSchedule(applicant.gc_idnumber)"
-                      >
-                        <i class="material-icons">
-                          note_add
-                        </i>
-                      </button>
-                    </td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>

@@ -5,12 +5,14 @@ import { AdminPage2Component } from './component/admin-page2/admin-page2.compone
 import { AdminPage3Component } from './component/admin-page3/admin-page3.component';
 import { ApplicantsComponent } from './component/applicants/applicants.component';
 import { UsersComponent } from './component/users/users.component';
+import { ScheduledComponent } from './component/scheduled/scheduled.component'
 
 
 const routes: Routes = [
   { path : '' , redirectTo: 'users', pathMatch: 'full'},
   { path : 'users', component: UsersComponent },
   { path : 'applicants', component: ApplicantsComponent},
+  { path : 'scheduled', component: ScheduledComponent},
   { path : 'page1', component: AdminPage1Component },
   { path : 'page2', component: AdminPage2Component },
   { path : 'page3', component: AdminPage3Component },

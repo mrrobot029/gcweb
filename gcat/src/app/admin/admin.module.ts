@@ -10,6 +10,7 @@ import { AdminPage3Component } from './component/admin-page3/admin-page3.compone
 import { UsersComponent } from './component/users/users.component';
 import { ApplicantsComponent } from './component/applicants/applicants.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ScheduledComponent } from './component/scheduled/scheduled.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AdminPage3Component,
     UsersComponent,
     ApplicantsComponent,
+    ScheduledComponent,
   ],
   imports: [
     CommonModule,

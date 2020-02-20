@@ -783,7 +783,8 @@
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                                             $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                                             $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                                            $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
+                                            $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                                             $mail->Body .="Thank you.<br><br>";
                                             $mail->Body .="Sincerely,<br>";
                                             $mail->Body .="Gordon College Olongapo";
@@ -998,8 +999,8 @@
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}</a></b><br><br>";
                                             $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                                             $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                                            $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
-                                            $mail->Body .="Thank you.<br><br>";
+                                            $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}</a></b><br><br>";
                                             $mail->Body .="Sincerely,<br>";
                                             $mail->Body .="Gordon College Olongapo";
                                             if ($mail->send()) {
@@ -1394,8 +1395,8 @@
                     $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                     $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                     $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                    $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
-                    $mail->Body .="Thank you.<br><br>";
+                    $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                     $mail->Body .="Sincerely,<br>";
                     $mail->Body .="Gordon College Olongapo";
                     if ($mail->send()) {
@@ -1493,8 +1494,8 @@
                 $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                 $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                 $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                $mail->Body .="Kindly acknowledge receipt of this email by replying to us.<br>";
-                $mail->Body .="Thank you.<br><br>";
+                $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                 $mail->Body .="Sincerely,<br>";
                 $mail->Body .="Gordon College Olongapo";
                 if ($mail->send()) {

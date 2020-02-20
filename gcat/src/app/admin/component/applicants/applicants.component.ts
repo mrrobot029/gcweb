@@ -13,13 +13,17 @@ export class ApplicantsComponent implements OnInit {
   schedDate: any;
   schedTime: any;
   p = 1;
-  applicants: any;
+  applicants: any = {};
   noapplicants = true;
   search: any = {};
   schedule: any = {};
   fullscreen = false
-
+  applicantCount = 0;
   ngOnInit() {
+    if(this.applicants.length==null){
+      this.noapplicants = true
+      this.applicantCount = 0;
+    }
     this.getUnconfirmedApplicants()
   }
 
@@ -30,6 +34,7 @@ export class ApplicantsComponent implements OnInit {
       if(res.status.remarks){
         this.applicants = res.data;
         this.noapplicants = false;
+        this.applicantCount = res.data.length
         } else{
           this.noapplicants = true
         }

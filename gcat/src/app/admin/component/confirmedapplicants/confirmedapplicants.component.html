@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Unscheduled Applicants</h4>
+            <h4 class="card-title ">List of Unscheduled Applicants - Total Count: <strong>{{applicantCount}}</strong></h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
           <div class="card-body">
@@ -46,6 +46,9 @@
             </div>
 
             <div class="table-responsive" *ngIf="!noapplicants">
+              <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>

@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Scheduled Applicants</h4>
+            <h4 class="card-title ">List of Scheduled Applicants - Total Count: <strong>{{applicantCount}}</strong></h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
           <div class="card-body">
@@ -22,7 +22,10 @@
                 </form>
               </div>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" *ngIf="!noapplicants">
+              <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -56,6 +59,9 @@
                 (pageChange)="p = $event"
               ></pagination-controls>
             </div>
+            <div *ngIf="noapplicants" style="text-align: center;">
+              <h1>NO SCHEDULED APPLICANTS!</h1>
+          </div>
           </div>
         </div>
       </div>

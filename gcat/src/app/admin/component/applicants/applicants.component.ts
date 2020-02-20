@@ -18,7 +18,7 @@ export class ApplicantsComponent implements OnInit {
   schedule: any = {};
 
   ngOnInit() {
-    this.getUnscheduledApplicants();
+    this.getUnscheduledApplicants()
   }
 
   getUnscheduledApplicants() {
@@ -58,6 +58,7 @@ export class ApplicantsComponent implements OnInit {
       })
     })
   }
+  
   addGCATSchedule(idnumber) {
     let isSchedDateSet: any;
     let isSchedTimeSet: any;

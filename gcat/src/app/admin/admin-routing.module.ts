@@ -9,7 +9,7 @@ import { ScheduledComponent } from './component/scheduled/scheduled.component'
 
 
 const routes: Routes = [
-  { path : '' , redirectTo: 'users', pathMatch: 'full'},
+  { path : '' , redirectTo: 'applicants', pathMatch: 'full'},
   { path : 'users', component: UsersComponent },
   { path : 'applicants', component: ApplicantsComponent},
   { path : 'scheduled', component: ScheduledComponent},

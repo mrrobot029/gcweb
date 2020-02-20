@@ -39,7 +39,12 @@
                   autocomplete="off"
                 >
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" (keyup)="searchUnscheduledApplicants($event)"/>
+                  <input
+                    class="form-control"
+                    name="search"
+                    type="text"
+                    (keyup)="searchUnscheduledApplicants($event)"
+                  />
                 </form>
               </div>
             </div>
@@ -74,20 +79,32 @@
                     <td>
                       <button
                         class="btn btn-sm btn-success"
+                        title="Add Schedule"
                         (click)="addGCATSchedule(applicant.gc_idnumber)"
                       >
                         <i class="material-icons">
                           note_add
                         </i>
                       </button>
-                      <a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}' target="_blank">
-                      <button class="btn btn-sm btn-success">
-                        <i class="material-icons">
-                          edit
-                        </i>
-                      </button>
+                      <a
+                        href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                          applicant.gc_idnumber
+                        }}/{{ applicant.gc_key }}"
+                        target="_blank"
+                      >
+                        <button
+                          class="btn btn-sm btn-success"
+                          title="Update Information"
+                        >
+                          <i class="material-icons">
+                            edit
+                          </i>
+                        </button>
                       </a>
-                      <button class="btn btn-sm btn-success" (click)="sendMail(applicant)">
+                      <button
+                        class="btn btn-sm btn-success"
+                        (click)="sendMail(applicant)"
+                      >
                         <i class="material-icons">
                           email
                         </i>

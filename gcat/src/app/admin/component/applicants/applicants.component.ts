@@ -72,6 +72,46 @@ export class ApplicantsComponent implements OnInit {
     })
   }
 
+  delete(a){
+    Swal.fire({
+      title: `Delete applicant <br>${a.si_fullname}<br>`,
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#d33',
+      reverseButtons: false
+    }).then((result) => {
+      if (result.value) {
+        this.fullscreen = true
+        this.spinner.show()
+        let promise = this.ds.sendRequest('deleteApplicant', a).toPromise()
+        promise.then(res=>{
+          this.spinner.hide()
+          if(res.status.remarks){  
+            Swal.fire(
+            'Deleted!',
+            'The application has been removed.',
+            'success'
+          ).then(()=>{
+            this.ngOnInit()
+          })
+          } else{
+            Swal.fire(
+            'Error!',
+            'Something went wrong.',
+            'error'
+          ).then(()=>{
+            this.ngOnInit()
+          })
+          }
+
+        })
+      }
+    })
+    this.fullscreen = false
+  }
+
   confirmApplication(a){
     Swal.fire({
       title: `Confirm application for <br>${a.si_fullname}<br>`,

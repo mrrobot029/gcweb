@@ -49,6 +49,8 @@
     $decryptedkey=openssl_decrypt ($key, $ciphering,  
                 $decryption_key, $options, $decryption_iv); 
     if($id == $decryptedkey){
+        $statusQuery = mysqli_query($conn, "SELECT gc_status FROM tbl_gcat WHERE gc_idnumber = '$id'");
+        $status = mysqli_fetch_row($statusQuery);
         $queryName = mysqli_query($conn, "SELECT si_lastname, si_firstname FROM tbl_studentinfo WHERE si_idnumber = '$id'");
         if(mysqli_num_rows($queryName)>0){
             while($res = mysqli_fetch_assoc($queryName)){
@@ -61,10 +63,7 @@
         if(mysqli_query($conn, $updateStatus)){
             $mail->addAddress('gcat@gordoncollegeccs.edu.ph');
             $mail->Subject = "GCAT Registration Confirmation";
-            $mail->Body = "Applicant <b>{$fname} {$lname}</b> has acknowledged receipt of his confirmation email.<br>";
-
-            $statusQuery = mysqli_query($conn, "SELECT gc_status FROM tbl_gcat WHERE gc_idnumber = '$id'");
-            $status = mysqli_fetch_row($statusQuery);
+            $mail->Body = "Applicant <b>{$fname} {$lname}</b> has acknowledged receipt of his/her confirmation email.<br>";
             if($status[0] == '0'){
                 if ($mail->send()) {
                     $confirmation = true;

@@ -1,10 +1,12 @@
 <?php
 
     require_once '../config/connect.php';
+    date_default_timezone_set('Asia/Manila');
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-disposition: attachment; filename=download.xls');
+    header('Content-disposition: attachment; filename=GCAT APPLICANTS.xls');
 
     echo '
+    <h1>List of GCAT Applicants as of '.date('F d Y - h:i A').'<h1>
     <table border="1">
         <thead>
             <tr>
@@ -13,7 +15,7 @@
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Middle Name</th>
-                <th>Extention Name</th>
+                <th>Extension Name</th>
                 <th>E-mail</th>
                 <th>Contact Number</th>
                 <th>Program</th>

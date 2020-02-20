@@ -61,8 +61,10 @@
                     <td>{{ applicant.si_email }}</td>
                     <td>{{ applicant.gc_course }}</td>
                     <td>{{ applicant.gc_gpa }}</td>
-                    <td>{{ applicant.gc_regtime }}</td>
                     <td>
+                      {{ applicant.gc_regtime | date: "MM-dd-yyyy hh:mm" }}
+                    </td>
+                    <td class="flexcontainer">
                       <a
                         href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
                           applicant.gc_idnumber
@@ -76,6 +78,22 @@
                         >
                           <i class="material-icons">
                             edit
+                          </i>
+                        </button>
+                      </a>
+                      <a
+                        href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
+                          applicant.gc_idnumber
+                        }}&key={{ applicant.gc_key }}"
+                        target="_blank"
+                      >
+                        <button
+                          class="btn btn-sm btn-success"
+                          matTooltip="Print"
+                          matTooltipPosition="above"
+                        >
+                          <i class="material-icons">
+                            print
                           </i>
                         </button>
                       </a>
@@ -100,8 +118,13 @@
                           check_circle
                         </i>
                       </button>
-
-                      <button class="btn btn-sm btn-danger">
+                      <button
+                        style="align-self: flex-start; margin-left: auto;"
+                        class="btn btn-sm btn-danger"
+                        (click)="delete(applicant)"
+                        matTooltip="Delete Applicant"
+                        matTooltipPosition="above"
+                      >
                         <i class="material-icons">
                           delete
                         </i>

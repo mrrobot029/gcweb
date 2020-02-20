@@ -5,6 +5,7 @@
         require 'mail/Exception.php';
         require 'mail/PHPMailer.php';
         require 'mail/SMTP.php';
+        date_default_timezone_set('Asia/Manila');
     class Post{
         private $conn;
         private $sql;

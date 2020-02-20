@@ -2,7 +2,7 @@
     header('Access-Control-Allow-Origin: *');
     // header('Access-Control-Allow-Methods: PUT, POST, PATCH, OPTIONS, GET');
     header('Content-Type: application/json');
-
+    date_default_timezone_set('Asia/Manila');
     include_once './config/database.php';
     include_once './model/post.php';
     include_once './model/auth.php';

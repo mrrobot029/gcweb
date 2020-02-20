@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from 'ngx-spinner'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-applicants",
@@ -45,6 +46,18 @@ export class ApplicantsComponent implements OnInit {
       this.p = 1
   }
 
+  sendMail(a){
+    console.log(a)
+    this.spinner.show()
+    let promise = this.ds.sendRequest('sendMail', a).toPromise()
+    promise.then(res=>{
+      this.spinner.hide()
+      Swal.fire({
+        icon: 'success',
+        title: 'Confirmation Email Sent!',
+      })
+    })
+  }
   addGCATSchedule(idnumber) {
     let isSchedDateSet: any;
     let isSchedTimeSet: any;

@@ -12,6 +12,8 @@ import { ApplicantsComponent } from './component/applicants/applicants.component
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ScheduledComponent } from './component/scheduled/scheduled.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/confirmedapplicants.component';
 
 
 @NgModule({
@@ -22,13 +24,15 @@ import { NgxSpinnerModule } from "ngx-spinner";
     UsersComponent,
     ApplicantsComponent,
     ScheduledComponent,
+    ConfirmedapplicantsComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     NgxPaginationModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTooltipModule
   ],
   providers: [
     DataService

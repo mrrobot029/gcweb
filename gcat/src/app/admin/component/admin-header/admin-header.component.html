@@ -12,6 +12,11 @@
       <div class="collapse navbar-collapse justify-content-end" id="navigation">
           <ul class="navbar-nav">
             <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)" matTooltip="Current Date/Time">
+                   <strong>{{ date | date : "MMMM dd,y h:mm:ss a" }}</strong>
+                </a>
+                </li>
+            <li class="nav-item">
                 <a class="nav-link" href="javascript:void(0)" matTooltip="Total Number of Applicants">
                     <i class="material-icons">people_alt</i>Total Applicants: <strong>{{applicantCount}}</strong>
                 </a>

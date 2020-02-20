@@ -9,6 +9,7 @@ import { DataService } from "src/app/services/data.service";
   styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
+  date = new Date()
   applicantCount
   credAdmin: any = {};
   mobile_menu_visible: any = 0;
@@ -23,6 +24,14 @@ export class AdminHeaderComponent implements OnInit {
     this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
       this.applicantCount = res.data[0].applicantcount
     })
+    setInterval(() => {
+      this.date = new Date;
+    }, 1000);
+    setInterval(() => {
+      this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+        this.applicantCount = res.data[0].applicantcount
+      })
+    }, 60000);
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

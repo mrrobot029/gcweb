@@ -10,11 +10,8 @@ import { AdminPage3Component } from './component/admin-page3/admin-page3.compone
 import { UsersComponent } from './component/users/users.component';
 import { ApplicantsComponent } from './component/applicants/applicants.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-<<<<<<< HEAD
-import { NgxSpinnerModule } from 'ngx-spinner';
-=======
 import { ScheduledComponent } from './component/scheduled/scheduled.component';
->>>>>>> b010396e1c6455d296cd213569cd7d35631bb77d
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({

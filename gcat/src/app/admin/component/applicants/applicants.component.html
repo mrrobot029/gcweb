@@ -31,50 +31,6 @@
                   required
                 />
               </div>
-<<<<<<< HEAD
-              <div class="card-body">
-                <input type="text" class="form-control" placeholder="Search..." (keyup)="searchStudent($event)">
-                <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead class=" text-primary">
-                    <th>No.</th>
-                    <th>ID No.</th>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Course</th>
-                    <th>GPA</th>
-                    <th>Registration Time</th>
-                    <th>Exam Date</th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let applicant of applicants | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
-                      <td>{{ 10 * (p - 1) + i+1 }}</td>
-                      <td>{{applicant.gc_idnumber}}</td>
-                      <td>{{applicant.si_fullname}}</td>
-                      <td>{{applicant.si_email}}</td>
-                      <td>{{applicant.si_mobile}}</td>
-                      <td>{{applicant.gc_course}}</td>
-                      <td>{{applicant.gc_gpa}}</td>
-                      <td>{{applicant.gc_regtime}}</td>
-                      <td>{{applicant.gc_examtime}}</td>
-                      <td>
-                        <a href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}" target="_blank">
-                        <button class="btn btn-sm btn-success">
-                          <i class="material-icons">
-                            remove_red_eye
-                          </i>
-                        </button>
-                        </a>
-                      </td>
-                    </tr>
-                </table>
-
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                <button (click)="sendMail()" class="btn btn-sm btn-success pull-right">Send Mail</button>
-                </div>
-=======
 
               <div class="col-md-1"></div>
               <div class="col-md-5">
@@ -83,9 +39,8 @@
                   autocomplete="off"
                 >
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" />
+                  <input class="form-control" name="search" type="text" (keyup)="searchUnscheduledApplicants($event)"/>
                 </form>
->>>>>>> b010396e1c6455d296cd213569cd7d35631bb77d
               </div>
             </div>
 
@@ -96,6 +51,7 @@
                   <th>ID No.</th>
                   <th>Full Name</th>
                   <th>Course</th>
+                  <th>Email</th>
                   <th>GPA</th>
                   <th>Registration Time</th>
                   <th>Action</th>
@@ -111,6 +67,7 @@
                     <td>{{ 20 * (p - 1) + i + 1 }}</td>
                     <td>{{ applicant.gc_idnumber }}</td>
                     <td>{{ applicant.si_fullname }}</td>
+                    <td>{{ applicant.si_email }}</td>
                     <td>{{ applicant.gc_course }}</td>
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
@@ -123,6 +80,13 @@
                           note_add
                         </i>
                       </button>
+                      <a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}' target="_blank">
+                      <button class="btn btn-sm btn-success">
+                        <i class="material-icons">
+                          edit
+                        </i>
+                      </button>
+                      </a>
                     </td>
                   </tr>
                 </tbody>

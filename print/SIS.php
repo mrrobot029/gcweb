@@ -342,9 +342,9 @@
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="200" >Name: </td>
+        <td class="border-thin" width="100" >Name: </td>
         <td class="border-thin" width="" > <?php echo $dadname; ?></td>
-        <td class="border-thin" width="200" >Name: </td>
+        <td class="border-thin" width="100" >Name: </td>
         <td class="border-thin" width="" >  <?php echo $momname; ?></td>
       </tr>
       <tr  class="border-thin">
@@ -371,9 +371,9 @@
   <table class="txt table-body" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="214">Name of Guardian: </td>
+        <td class="border-thin" width="100">Name of Guardian: </td>
         <td class="border-thin" width="200"><?php echo $guardname; ?></td>
-        <td class="border-thin" width="111">Relationship: </td>
+        <td class="border-thin" width="100">Relationship: </td>
         <td class="border-thin " width="273"><?php echo $guardianrel; ?></td>
       </tr>
       <tr class="border-thin">
@@ -425,13 +425,13 @@
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="500" >Elementary: <?php echo $elem; ?> </td>
-        <td class="border-thin" width="" >Year Completed:  <?php echo $elemyear; ?></td>
+        <td class="border-thin" width="550" >Elementary: <?php echo $elem; ?> </td>
+        <td class="border-thin" width="" style="font-size: 0.7rem">Year Completed:  <?php echo $elemyear; ?></td>
       </tr>
       
       <tr  class="border-thin">
         <td class="border-thin" width="" >High School/Senior High School: <?php echo $highschool; ?></td> </td>
-        <td class="border-thin" width="" >Year Completed: <?php echo $highschoolyear; ?></td></td></td>
+        <td class="border-thin" width="" style="font-size: 0.7rem">Year Completed: <?php echo $highschoolyear; ?></td></td></td>
       </tr>
     </tbody>
   </table>
@@ -457,8 +457,8 @@
    
       
       <tr  class="border-thin">
-        <td class="border-thin" width="400" >College: <?php echo $tertiary; ?></td>
-        <td class="border-thin" width="100" >Course: <?php echo $tertiarycourse; ?></td>
+        <td class="border-thin" width="250" >College: <?php echo $tertiary; ?></td>
+        <td class="border-thin" width="325" >Course: <?php echo $tertiarycourse; ?></td>
         <td class="border-thin" width="" > Year Completed: <?php echo $tertiaryyear; ?></td>
       </tr>
     </tbody>

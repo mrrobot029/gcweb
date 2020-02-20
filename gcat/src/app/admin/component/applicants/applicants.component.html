@@ -12,20 +12,19 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3 ">
-            
-              </div>
-              <div class="col-md-3 ">
-    
-              </div>
+              <div class="col-md-3 "></div>
+              <div class="col-md-3 "></div>
 
               <div class="col-md-1"></div>
               <div class="col-md-5">
-                <form
-                  autocomplete="off"
-                >
+                <form autocomplete="off">
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" (keyup)="searchUnconfirmedApplicants($event)"/>
+                  <input
+                    class="form-control"
+                    name="search"
+                    type="text"
+                    (keyup)="searchUnconfirmedApplicants($event)"
+                  />
                 </form>
               </div>
             </div>
@@ -61,36 +60,42 @@
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
-                      <a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}' target="_blank">
-                      <button class="btn btn-sm btn-success"
-                              matTooltip="Edit"
-                              matTooltipPosition="above"
+                      <a
+                        href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                          applicant.gc_idnumber
+                        }}/{{ applicant.gc_key }}"
+                        target="_blank"
                       >
-                        <i class="material-icons">
-                          edit
-                        </i>
-                      </button>
+                        <button
+                          class="btn btn-sm btn-success"
+                          matTooltip="Edit"
+                          matTooltipPosition="above"
+                        >
+                          <i class="material-icons">
+                            edit
+                          </i>
+                        </button>
                       </a>
-                      <button 
-                            class="btn btn-sm btn-success" 
-                            (click)="sendMail(applicant)"
-                            matTooltip="Send Confirmation Email"
-                            matTooltipPosition="above"
+                      <button
+                        class="btn btn-sm btn-success"
+                        (click)="sendMail(applicant)"
+                        matTooltip="Send Confirmation Email"
+                        matTooltipPosition="above"
                       >
                         <i class="material-icons">
                           email
                         </i>
                       </button>
-                      <button 
-                        class="btn btn-sm btn-success" 
+                      <button
+                        class="btn btn-sm btn-success"
                         (click)="confirmApplication(applicant)"
                         matTooltip="Confirm Application"
                         matTooltipPosition="above"
-                        >
+                      >
                         <i class="material-icons">
                           check_circle
-                      </i>
-                </button>
+                        </i>
+                      </button>
                     </td>
                   </tr>
                 </tbody>

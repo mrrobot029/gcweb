@@ -389,9 +389,20 @@
                 break;
 
                 case 'addGCATSchedule':
-                    echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examdate='$d->date', gc_examtime='$d->time' WHERE gc_idnumber='$d->idNumber'"));
+                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_gcatschedule(sched_time) values('$d->time')"));
                 break;
-                
+
+                case 'delGCATSchedule':
+                    echo json_encode($post->executeWithoutRes("DELETE from tbl_gcatschedule WHERE sched_recno='$d->recNo' "));
+                break;
+
+                case 'getGCATSchedules':
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_time ASC"));
+                break;
+
+                case 'getSchedules':
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_time ASC"));
+                break;
                 
                 // print
                 case 'printStudentSIS':

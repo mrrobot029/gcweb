@@ -1,5 +1,5 @@
 <div class="main-content">
-  <ngx-spinner type="ball-clip-rotate-multiple" [fullScreen]="fullscreen">
+  <ngx-spinner type="ball-clip-rotate-multiple" [fullScreen]="false">
     <p class="loading" style="color: white;">Please wait...</p>
   </ngx-spinner>
   <div class="container-fluid">
@@ -13,10 +13,25 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-3 ">
-            
+                <label for="schedDate " class=" p-0 m-0">Schedule Date</label>
+                <input
+                  class="form-control"
+                  name="schedDate"
+                  type="date"
+                  [(ngModel)]="schedDate"
+                  ngModel
+                  required
+                />
               </div>
               <div class="col-md-3 ">
-    
+                <label for="schedTime" class=" p-0 m-0">Schedule Time</label>
+                <input
+                  class="form-control"
+                  name="schedTime"
+                  type="time"
+                  [(ngModel)]="schedTime"
+                  required
+                />
               </div>
 
               <div class="col-md-1"></div>
@@ -25,7 +40,7 @@
                   autocomplete="off"
                 >
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" (keyup)="searchUnconfirmedApplicants($event)"/>
+                  <input class="form-control" name="search" type="text" (keyup)="searchUnscheduledApplicants($event)"/>
                 </form>
               </div>
             </div>
@@ -58,6 +73,16 @@
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
+                      <button
+                        matTooltip="Add Schedule"
+                        matTooltipPosition="above"
+                        class="btn btn-sm btn-success"
+                        (click)="addGCATSchedule(applicant.gc_idnumber)"
+                      >
+                        <i class="material-icons">
+                          note_add
+                        </i>
+                      </button>
                       <a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}' target="_blank">
                       <button class="btn btn-sm btn-success"
                               matTooltip="Edit"
@@ -68,38 +93,28 @@
                         </i>
                       </button>
                       </a>
-                      <button 
-                            class="btn btn-sm btn-success" 
-                            (click)="sendMail(applicant)"
-                            matTooltip="Send Confirmation Email"
-                            matTooltipPosition="above"
-                      >
-                        <i class="material-icons">
-                          email
-                        </i>
-                      </button>
-                      <button 
-                        class="btn btn-sm btn-success" 
-                        (click)="confirmApplication(applicant)"
-                        matTooltip="Confirm Application"
-                        matTooltipPosition="above"
-                        >
-                        <i class="material-icons">
-                          check_circle
+
+                      <button
+                      matTooltip="Undo Confirmation"
+                      matTooltipPosition="above"
+                      class="btn btn-sm btn-success"
+                      (click)="unconfirmApplicant(applicant)"
+                    >
+                      <i class="material-icons">
+                        undo
                       </i>
-                </button>
+                    </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
-
               <pagination-controls
                 (pageChange)="p = $event"
               ></pagination-controls>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
-              <h1>NO CONFIRMED APPLICANTS!</h1>
-          </div>
+                <h1>NO CONFIRMED APPLICANTS!</h1>
+            </div>
           </div>
         </div>
       </div>

@@ -6,12 +6,14 @@ import { AdminPage3Component } from './component/admin-page3/admin-page3.compone
 import { ApplicantsComponent } from './component/applicants/applicants.component';
 import { UsersComponent } from './component/users/users.component';
 import { ScheduledComponent } from './component/scheduled/scheduled.component'
+import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/confirmedapplicants.component'
 
 
 const routes: Routes = [
   { path : '' , redirectTo: 'applicants', pathMatch: 'full'},
   { path : 'users', component: UsersComponent },
   { path : 'applicants', component: ApplicantsComponent},
+  { path : 'unscheduled', component: ConfirmedapplicantsComponent},
   { path : 'scheduled', component: ScheduledComponent},
   { path : 'page1', component: AdminPage1Component },
   { path : 'page2', component: AdminPage2Component },

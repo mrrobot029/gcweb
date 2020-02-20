@@ -1,6 +1,7 @@
 import { Component, OnInit,ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { DataService } from "src/app/services/data.service";
 
 @Component({
   selector: 'app-admin-header',
@@ -8,17 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
-
+  applicantCount
   credAdmin: any = {};
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
 
-  constructor(private router: Router, private element: ElementRef) {
+  constructor(private router: Router, private element: ElementRef, private ds: DataService) {
     this.sidebarVisible = false;
   }
 
   ngOnInit( ) {
+    this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+      this.applicantCount = res.data[0].applicantcount
+    })
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

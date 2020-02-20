@@ -3,12 +3,13 @@ import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from 'ngx-spinner'
 import Swal from 'sweetalert2';
 
+
 @Component({
-  selector: "app-applicants",
-  templateUrl: "./applicants.component.html",
-  styleUrls: ["./applicants.component.scss"]
+  selector: 'app-confirmedapplicants',
+  templateUrl: './confirmedapplicants.component.html',
+  styleUrls: ['./confirmedapplicants.component.scss']
 })
-export class ApplicantsComponent implements OnInit {
+export class ConfirmedapplicantsComponent implements OnInit {
   constructor(private ds: DataService, private spinner: NgxSpinnerService) {}
   schedDate: any;
   schedTime: any;
@@ -20,56 +21,26 @@ export class ApplicantsComponent implements OnInit {
   fullscreen = false
 
   ngOnInit() {
-    this.getUnconfirmedApplicants()
+    this.getUnscheduledApplicants()
   }
 
-  getUnconfirmedApplicants() {
+  getUnscheduledApplicants() {
     this.spinner.show()
-    let promise = this.ds.sendRequest("getUnconfirmedApplicants", null).toPromise()
+    let promise = this.ds.sendRequest("getUnscheduledApplicants", null).toPromise()
     promise.then(res => {
       if(res.status.remarks){
-        this.applicants = res.data;
-        this.noapplicants = false;
-        } else{
-          this.noapplicants = true
-        }
+      this.applicants = res.data;
+      this.noapplicants = false;
+      } else{
+        this.noapplicants = true
+      }
       this.spinner.hide()
     });
   }
 
-  searchUnconfirmedApplicants(e) {
-    e.preventDefault();
-    console.log(e);
-    this.search.value = e.target.value;
-    this.ds
-      .sendRequest("searchUnconfirmedApplicants", this.search)
-      .subscribe(res => {
-        if (res.status.remarks) {
-          console.log(res.data)
-          this.applicants = res.data;
-        } else {
-          this.applicants = [];
-        }
-      });
-      this.p = 1
-  }
-
-  sendMail(a){
-    console.log(a)
-    this.spinner.show()
-    let promise = this.ds.sendRequest('sendMail', a).toPromise()
-    promise.then(res=>{
-      this.spinner.hide()
-      Swal.fire({
-        icon: 'success',
-        title: 'Confirmation Email Sent!',
-      })
-    })
-  }
-
-  confirmApplication(a){
+  unconfirmApplicant(a){
     Swal.fire({
-      title: `Confirm application for <br>${a.si_fullname}<br>`,
+      title: `Undo confirmation for <br>${a.si_fullname}<br>`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -79,13 +50,13 @@ export class ApplicantsComponent implements OnInit {
       if (result.value) {
         this.fullscreen = true
         this.spinner.show()
-        let promise = this.ds.sendRequest('confirmApplication', a).toPromise()
+        let promise = this.ds.sendRequest('unconfirmApplication', a).toPromise()
         promise.then(res=>{
           this.spinner.hide()
           if(res.status.remarks){  
             Swal.fire(
-            'Confirmed!',
-            'The application is now confirmed.',
+            'Success!',
+            'The application is now unconfirmed.',
             'success'
           ).then(()=>{
             this.ngOnInit()
@@ -105,6 +76,23 @@ export class ApplicantsComponent implements OnInit {
     })
     this.fullscreen = false
   }
+
+  searchUnscheduledApplicants(e) {
+    e.preventDefault();
+    console.log(e);
+    this.search.value = e.target.value;
+    this.ds
+      .sendRequest("searchUnscheduledApplicants", this.search)
+      .subscribe(res => {
+        if (res.status.remarks) {
+          console.log(res.data)
+          this.applicants = res.data;
+        } else {
+          this.applicants = [];
+        }
+      });
+      this.p = 1
+  }
   
   addGCATSchedule(idnumber) {
     let isSchedDateSet: any;
@@ -122,7 +110,7 @@ export class ApplicantsComponent implements OnInit {
           this.ds
             .callSwal("Success", "Record updated successfully.", "success")
             .then(() => {
-              this.getUnconfirmedApplicants();
+              this.getUnscheduledApplicants();
             });
         }
       });

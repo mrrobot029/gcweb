@@ -982,8 +982,8 @@
                             $encryption = openssl_encrypt($simple_string, $ciphering, 
                                         $encryption_key, $options, $encryption_iv); 
                             $key = rawurlencode($encryption);
-                            $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_key, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime, gc_examtime, gc_status) 
-                                        VALUES('$tempid', '$key', '$course', '$highschoolgpa', '$english', '$math', '$science', now(), '2020-06-15', 'SCHEDULED')";
+                            $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_key, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime) 
+                                        VALUES('$tempid', '$key', '$course', '$highschoolgpa', '$english', '$math', '$science', now())";
                                         if($this->conn->query($sqlgcat)){
                                             // email
                                             $mail->addAddress($email);

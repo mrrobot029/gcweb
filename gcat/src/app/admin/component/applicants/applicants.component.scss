@@ -1,6 +1,29 @@
+@media (min-width: 1541px) {
 .flexcontainer {
     display: flex;
     flex-direction: row;
     align-items: left;
     justify-content: left;
+    flex-wrap: wrap;
+ }
+
+.flex-right{
+    align-self: flex-start; 
+    margin-left: auto;
+ }
+}
+
+
+ @media (max-width: 1526px) {
+    .flexcontainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: wrap;
+        align-content: center;
+     }
+     .flexright{
+        align-self: flex-end; 
+        margin-left: none;
+     }
  }

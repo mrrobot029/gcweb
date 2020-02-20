@@ -1,9 +1,8 @@
 <?php
-
     require_once '../config/connect.php';
     date_default_timezone_set('Asia/Manila');
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-disposition: attachment; filename=GCAT APPLICANTS - '.date('F d Y - h:i A').'.xls');
+    header('Content-disposition: attachment; filename=GCAT DUPLICATES- '.date('F d Y - h:i A').'.xls');
   
     // get enlistment info
     $query = mysqli_query($conn, "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'");
@@ -47,7 +46,7 @@
                 $decryption_key, $options, $decryption_iv); 
 if($id == $decryptedkey){
     echo '
-    <h1>List of GCAT Applicants as of '.date('F d Y - h:i A').'<h1>
+    <h1>List of GCAT DUPLICATE ENTRIES as of '.date('F d Y - h:i A').'<h1>
     <h2>School Year '.$en_schoolyear.' - '.$sem.' Semester</h2>
     <table border="1">
         <thead>
@@ -60,52 +59,31 @@ if($id == $decryptedkey){
                 <th>Extension Name</th>
                 <th>E-mail</th>
                 <th>Contact Number</th>
-                <th>Program</th>
-                <th>Status</th>
+                <th>Count</th>
             </tr>
         </thead>
         <tbody>';
 
     $x=1;
-    $sql = "SELECT tbl_gcat.gc_idnumber,tbl_gcat.gc_status, tbl_studentinfo.si_lastname, tbl_studentinfo.si_firstname, tbl_studentinfo.si_midname, tbl_studentinfo.si_extname, tbl_studentinfo.si_email, tbl_studentinfo.si_mobile, tbl_studentinfo.si_course FROM tbl_gcat INNER JOIN tbl_studentinfo ON tbl_studentinfo.si_idnumber = tbl_gcat.gc_idnumber ORDER BY tbl_studentinfo.si_lastname ASC";
+    $sql = "SELECT *, COUNT(*) as counts
+    FROM tbl_studentinfo inner join tbl_gcat on tbl_gcat.gc_idnumber = tbl_studentinfo.si_idnumber
+    GROUP BY tbl_studentinfo.si_lastname, tbl_studentinfo.si_firstname, tbl_studentinfo.si_midname
+    HAVING COUNT(*) > 1";
 
     $query = mysqli_query($conn,$sql);
     if(mysqli_num_rows($query)>0){
       while($res = mysqli_fetch_assoc($query)){
-        $gcstatus = $res['gc_status'];
-        switch($gcstatus){
-            case '0':
-                $status = 'Unconfirmed';
-                $color = 'red';
-                break;
-            case '1':
-                $status = 'Unscheduled';
-                $color = 'yellow';
-                break;
-            case '2':
-                $status = 'Scheduled';
-                $color = 'orange';
-                break;
-            case '3':
-                $status = 'Finished';
-                $color = 'green';
-                break;
-            default:
-                $status = 'Unregistered';
-                $color = 'white';
-            }
         echo '
             <tr>
                 <td><strong>' .$x.'</strong> </td>
-                <td>' .$res['gc_idnumber'] . '</td>
+                <td>' .$res['si_idnumber'] . '</td>
                 <td>' .$res['si_lastname'] . '</td>
                 <td>' .$res['si_firstname'] . '</td>
                 <td>' .$res['si_midname'] . '</td>
                 <td>' .$res['si_extname'] . '</td>
                 <td>' .$res['si_email'] . '</td>
                 <td>' .$res['si_mobile'] . '</td>
-                <td>' .$res['si_course'] . '</td>
-                <td style="background-color:'.$color.';font-weight: bold">' .$status. '</td>
+                <td>' .$res['counts'] . '</td>
             </tr>';
             $x++;
       }

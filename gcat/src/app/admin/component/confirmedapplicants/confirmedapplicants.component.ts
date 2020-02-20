@@ -20,7 +20,10 @@ export class ConfirmedapplicantsComponent implements OnInit {
   schedule: any = {};
   fullscreen = false
   applicantCount = 0;
+  searchValue = ''
+  sort = 'gc.gc_idnumber';
   ngOnInit() {
+    this.search.sort = this.sort;
     if(this.applicants.length==null){
       this.noapplicants = true
       this.applicantCount = 0;
@@ -28,9 +31,25 @@ export class ConfirmedapplicantsComponent implements OnInit {
     this.getUnscheduledApplicants()
   }
 
+  setSort(e){
+    switch(e){
+      case 'id':
+        this.sort = 'gc.gc_idnumber'
+        this.ngOnInit()
+        break
+      case 'name':
+        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
+        this.ngOnInit()
+        break
+      default:
+        this.sort = 'gc.gc_idnumber'
+    }
+    this.searchValue = ''
+  }
+
   getUnscheduledApplicants() {
     this.spinner.show()
-    let promise = this.ds.sendRequest("getUnscheduledApplicants", null).toPromise()
+    let promise = this.ds.sendRequest("getUnscheduledApplicants", this.search).toPromise()
     promise.then(res => {
       if(res.status.remarks){
       this.applicants = res.data;
@@ -41,6 +60,23 @@ export class ConfirmedapplicantsComponent implements OnInit {
       }
       this.spinner.hide()
     });
+  }
+
+  
+  searchUnscheduledApplicants(e) {
+    e.preventDefault();
+    this.search.value = e.target.value;
+    this.ds
+      .sendRequest("searchUnscheduledApplicants", this.search)
+      .subscribe(res => {
+        if (res.status.remarks) {
+          console.log(res.data)
+          this.applicants = res.data;
+        } else {
+          this.applicants = [];
+        }
+      });
+      this.p = 1
   }
 
   unconfirmApplicant(a){
@@ -80,23 +116,6 @@ export class ConfirmedapplicantsComponent implements OnInit {
       }
     })
     this.fullscreen = false
-  }
-
-  searchUnscheduledApplicants(e) {
-    e.preventDefault();
-    console.log(e);
-    this.search.value = e.target.value;
-    this.ds
-      .sendRequest("searchUnscheduledApplicants", this.search)
-      .subscribe(res => {
-        if (res.status.remarks) {
-          console.log(res.data)
-          this.applicants = res.data;
-        } else {
-          this.applicants = [];
-        }
-      });
-      this.p = 1
   }
   
   addGCATSchedule(idnumber) {

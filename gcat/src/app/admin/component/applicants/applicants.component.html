@@ -20,13 +20,27 @@
                   <label for="search" class="p-0 m-0">Search</label>
                   <input
                     class="form-control"
+                    [(ngModel)]="searchValue"
                     name="search"
                     type="text"
                     (keyup)="searchUnconfirmedApplicants($event)"
                   />
                 </form>
-              </div>
-              <div class="col-md-8">
+                </div>
+                <div class="col-md-4">
+                  <label for="">SORT BY:</label>
+                  <form autocomplete="off" class="flexcontainercolumn">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="defaultChecked" (click)="setSort('id')" name="sort" checked>
+                      <label class="custom-control-label" for="defaultChecked">ID NUMBER</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" id="defaultUnchecked" (click)="setSort('name')" name="sort">
+                      <label class="custom-control-label" for="defaultUnchecked">NAME</label>
+                    </div>
+                  </form>
+                </div>
+              <div class="col-md-4">
                 <br />
                 <pagination-controls
                   class="pull-right"
@@ -99,6 +113,16 @@
                       </a>
                       <button
                         class="btn btn-sm btn-success"
+                        (click)="confirmApplication(applicant)"
+                        matTooltip="Confirm Application"
+                        matTooltipPosition="above"
+                      >
+                        <i class="material-icons">
+                          check_circle
+                        </i>
+                    </button>
+                      <button
+                        class="btn btn-sm btn-success"
                         (click)="sendMail(applicant)"
                         matTooltip="Send Confirmation Email"
                         matTooltipPosition="above"
@@ -109,18 +133,7 @@
                       </button>
                       <br />
                       <button
-                        class="btn btn-sm btn-success"
-                        (click)="confirmApplication(applicant)"
-                        matTooltip="Confirm Application"
-                        matTooltipPosition="above"
-                      >
-                        <i class="material-icons">
-                          check_circle
-                        </i>
-                      </button>
-                      <button
-                        style="align-self: flex-start; margin-left: auto;"
-                        class="btn btn-sm btn-danger"
+                        class="btn btn-sm btn-danger flex-right"
                         (click)="delete(applicant)"
                         matTooltip="Delete Applicant"
                         matTooltipPosition="above"
@@ -133,11 +146,13 @@
                   </tr>
                 </tbody>
               </table>
-
+              <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
               <pagination-controls
-                class="pull-right"
+                
+                maxSize="20"
                 (pageChange)="p = $event"
               ></pagination-controls>
+            </div>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
               <h1>NO APPLICANTS!</h1>

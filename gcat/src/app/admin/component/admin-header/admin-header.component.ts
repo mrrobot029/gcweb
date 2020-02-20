@@ -37,6 +37,13 @@ export class AdminHeaderComponent implements OnInit {
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
   }
 
+  getDuplicates(){
+    let promise = this.ds.sendRequest('getDuplicateApplications', null).toPromise()
+    promise.then(res=>{
+      console.log(res);
+    })
+  }
+
   logout() {
     Swal.fire({
       title: 'Log Out',

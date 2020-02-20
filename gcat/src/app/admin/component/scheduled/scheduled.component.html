@@ -4,15 +4,15 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Scheduled Applicants - Total Count: <strong>{{applicantCount}}</strong></h4>
+            <h4 class="card-title ">
+              List of Scheduled Applicants - Total Count:
+              <strong>{{ applicantCount }}</strong>
+            </h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3 "></div>
-              <div class="col-md-3 "></div>
-              <div class="col-md-1"></div>
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <form
                   (submit)="searchScheduledApplicants($event)"
                   autocomplete="off"
@@ -21,11 +21,22 @@
                   <input class="form-control" name="search" type="text" />
                 </form>
               </div>
+              <div class="col-md-4">
+                <input
+                  class="form-control"
+                  name="search"
+                  type="datetime-local"
+                />
+              </div>
+              <div class="col-md-4">
+                <br />
+                <pagination-controls
+                  class="pull-right"
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+              </div>
             </div>
             <div class="table-responsive" *ngIf="!noapplicants">
-              <pagination-controls
-              (pageChange)="p = $event"
-            ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -56,12 +67,13 @@
               </table>
 
               <pagination-controls
+                class="pull-right"
                 (pageChange)="p = $event"
               ></pagination-controls>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
               <h1>NO SCHEDULED APPLICANTS!</h1>
-          </div>
+            </div>
           </div>
         </div>
       </div>

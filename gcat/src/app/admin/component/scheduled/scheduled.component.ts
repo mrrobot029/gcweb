@@ -16,18 +16,20 @@ export class ScheduledComponent implements OnInit {
   schedule: any = {};
   noapplicants = true;
   applicantCount = 0;
-  ngOnInit() {
-    if(this.applicants.length==null){
-      this.noapplicants = true
+
+  async ngOnInit() {
+    await this.getScheduledApplicants();
+    if (this.applicants.length == null) {
+      this.noapplicants = true;
       this.applicantCount = 0;
     }
-    this.getScheduledApplicants();
   }
 
   getScheduledApplicants() {
     this.ds.sendRequest("getScheduledApplicants", null).subscribe(res => {
       this.applicants = res.data;
-      this.applicantCount = res.data.length
+      this.applicantCount = res.data.length;
+      this.noapplicants = false;
     });
   }
 

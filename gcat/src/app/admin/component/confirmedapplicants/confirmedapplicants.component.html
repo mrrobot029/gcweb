@@ -7,12 +7,26 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">List of Unscheduled Applicants - Total Count: <strong>{{applicantCount}}</strong></h4>
+            <h4 class="card-title ">
+              List of Unscheduled Applicants - Total Count:
+              <strong>{{ applicantCount }}</strong>
+            </h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3 ">
+              <div class="col-md-3">
+                <form autocomplete="off">
+                  <label for="search" class="p-0 m-0">Search</label>
+                  <input
+                    class="form-control"
+                    name="search"
+                    type="text"
+                    (keyup)="searchUnscheduledApplicants($event)"
+                  />
+                </form>
+              </div>
+              <!-- <div class="col-md-4 ">
                 <label for="schedDate " class=" p-0 m-0">Schedule Date</label>
                 <input
                   class="form-control"
@@ -23,7 +37,7 @@
                   required
                 />
               </div>
-              <div class="col-md-3 ">
+              <div class="col-md-4 ">
                 <label for="schedTime" class=" p-0 m-0">Schedule Time</label>
                 <input
                   class="form-control"
@@ -32,23 +46,18 @@
                   [(ngModel)]="schedTime"
                   required
                 />
-              </div>
+              </div> -->
 
-              <div class="col-md-1"></div>
-              <div class="col-md-5">
-                <form
-                  autocomplete="off"
-                >
-                  <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" (keyup)="searchUnscheduledApplicants($event)"/>
-                </form>
+              <div class="col-md-9">
+                <br />
+                <pagination-controls
+                  class="pull-right"
+                  (pageChange)="p = $event"
+                ></pagination-controls>
               </div>
             </div>
 
             <div class="table-responsive" *ngIf="!noapplicants">
-              <pagination-controls
-              (pageChange)="p = $event"
-            ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -86,37 +95,44 @@
                           note_add
                         </i>
                       </button>
-                      <a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{applicant.gc_idnumber}}/{{applicant.gc_key}}' target="_blank">
-                      <button class="btn btn-sm btn-success"
-                              matTooltip="Edit"
-                              matTooltipPosition="above"
+                      <a
+                        href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                          applicant.gc_idnumber
+                        }}/{{ applicant.gc_key }}"
+                        target="_blank"
                       >
-                        <i class="material-icons">
-                          edit
-                        </i>
-                      </button>
+                        <button
+                          class="btn btn-sm btn-success"
+                          matTooltip="Edit"
+                          matTooltipPosition="above"
+                        >
+                          <i class="material-icons">
+                            edit
+                          </i>
+                        </button>
                       </a>
 
                       <button
-                      matTooltip="Undo Confirmation"
-                      matTooltipPosition="above"
-                      class="btn btn-sm btn-success"
-                      (click)="unconfirmApplicant(applicant)"
-                    >
-                      <i class="material-icons">
-                        undo
-                      </i>
-                    </button>
+                        matTooltip="Undo Confirmation"
+                        matTooltipPosition="above"
+                        class="btn btn-sm btn-success"
+                        (click)="unconfirmApplicant(applicant)"
+                      >
+                        <i class="material-icons">
+                          undo
+                        </i>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <pagination-controls
+                class="pull-right"
                 (pageChange)="p = $event"
               ></pagination-controls>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
-                <h1>NO CONFIRMED APPLICANTS!</h1>
+              <h1>NO CONFIRMED APPLICANTS!</h1>
             </div>
           </div>
         </div>

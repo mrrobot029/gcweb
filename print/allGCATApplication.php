@@ -3,7 +3,7 @@
     require_once '../config/connect.php';
     header('Content-Type: application/vnd.ms-excel');
     header('Content-disposition: attachment; filename=download.xls');
-    
+
     echo '
     <table border="1">
         <thead>
@@ -15,6 +15,7 @@
                 <th>Middle Name</th>
                 <th>Extention Name</th>
                 <th>E-mail</th>
+                <th>Contact Number</th>
                 <th>Program</th>
             </tr>
         </thead>
@@ -35,6 +36,7 @@
                 <td>' .$res['si_firstname'] . '</td>
                 <td>' .$res['si_midname'] . '</td>
                 <td>' .$res['si_extname'] . '</td>
+                <td>' .$res['si_email'] . '</td>
                 <td>' .$res['si_mobile'] . '</td>
                 <td>' .$res['si_course'] . '</td>
             </tr>';

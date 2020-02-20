@@ -12,31 +12,40 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <form
                   (submit)="searchScheduledApplicants($event)"
                   autocomplete="off"
                 >
-                  <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" name="search" type="text" />
+                  <input
+                    class="form-control"
+                    name="search"
+                    placeholder="Search ..."
+                    type="text"
+                  />
                 </form>
               </div>
-              <!-- <div class="col-md-4">
-                <input
-                  class="form-control"
-                  name="search"
-                  type="datetime-local"
-                />
-              </div> -->
-              <div class="col-md-4">
-                <br />
-                <pagination-controls
-                  class="pull-right"
-                  (pageChange)="p = $event"
-                ></pagination-controls>
+              <div class="col-md-3">
+                <select class="form-control">
+                  <option>SELECT TIME</option>
+                </select>
               </div>
+              <div class="col-md-3">
+                <button
+                  class="btn btn-sm btn-block btn-info"
+                  data-toggle="modal"
+                  data-target="#addModal"
+                >
+                  Schedules
+                </button>
+              </div>
+              <div class="col-md-3 "></div>
             </div>
             <div class="table-responsive" *ngIf="!noapplicants">
+              <pagination-controls
+                class="pull-right"
+                (pageChange)="p = $event"
+              ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -75,6 +84,75 @@
               <h1>NO SCHEDULED APPLICANTS!</h1>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="uploadModalLabel">Schedules</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" (submit)="addGCATSchedule($event)">
+          <div class="form-group">
+            <label for="name2">Date And Time</label>
+            <input class="form-control" name="name2" type="datetime-local" />
+          </div>
+          <button type="submit" class="btn btn-sm btn-success pull-right">
+            Add Sched
+          </button>
+        </form>
+
+        <br /><br />
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class=" text-primary">
+              <th>No.</th>
+              <th>Date&Time</th>
+              <th>Count</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sched of scheds; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ sched.sched_time }}</td>
+                <td>{{ sched.sched_count }}</td>
+
+                <td>
+                  <button
+                    style="align-self: flex-start; margin-left: auto;"
+                    class="btn btn-sm btn-danger"
+                    matTooltip="Delete Applicant"
+                    matTooltipPosition="above"
+                    (click)="delGCATSchedule(sched.sched_recno)"
+                  >
+                    <i class="material-icons">
+                      delete
+                    </i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -16,9 +16,11 @@ export class ScheduledComponent implements OnInit {
   schedule: any = {};
   noapplicants = true;
   applicantCount = 0;
+  scheds: any;
 
   async ngOnInit() {
     await this.getScheduledApplicants();
+    await this.getSchedules();
     if (this.applicants.length == null) {
       this.noapplicants = true;
       this.applicantCount = 0;
@@ -46,5 +48,46 @@ export class ScheduledComponent implements OnInit {
           this.applicants = [];
         }
       });
+  }
+
+  getSchedules() {
+    this.ds.sendRequest("getSchedules", null).subscribe(res => {
+      if (res.status.remarks) {
+        this.scheds = res.data;
+      } else {
+        this.scheds = [];
+      }
+    });
+  }
+
+  addGCATSchedule(e) {
+    e.preventDefault();
+    this.schedule.time = e.target.elements[0].value;
+
+    this.ds.sendRequest("addGCATSchedule", this.schedule).subscribe(res => {
+      if (res.status.remarks) {
+        this.getSchedules();
+      } else {
+        this.ds.callSwal("Adding Failed.", "Check the sched info.", "error");
+      }
+    });
+
+    this.schedule = {};
+  }
+
+  delGCATSchedule(e) {
+    this.schedule.recNo = e;
+    this.ds.sendRequest("delGCATSchedule", this.schedule).subscribe(res => {
+      if (res.status.remarks) {
+        this.getSchedules();
+      } else {
+        this.ds.callSwal(
+          "Deleting Failed.",
+          "Sched was already assign to an applicant",
+          "error"
+        );
+      }
+    });
+    this.schedule = {};
   }
 }

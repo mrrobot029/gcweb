@@ -15,37 +15,42 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <form autocomplete="off">
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input
-                    class="form-control"
-                    [(ngModel)]="searchValue"
-                    name="search"
-                    type="text"
-                    (keyup)="searchUnscheduledApplicants($event)"
-                  />
+                  <input class="form-control" [(ngModel)]="searchValue" name="search" type="text"
+                    (keyup)="searchUnscheduledApplicants($event)" />
                 </form>
-                </div>
-                <div class="col-md-2">
-                  <label for="">SORT BY:</label>
-                  <form autocomplete="off" class="flexcontainercolumn">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="defaultChecked" (click)="setSort('id')" name="sort" checked>
-                      <label class="custom-control-label" for="defaultChecked">ID NUMBER</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="defaultUnchecked" (click)="setSort('name')" name="sort">
-                      <label class="custom-control-label" for="defaultUnchecked">NAME</label>
-                    </div>
-                  </form>
-                </div>
-              <div class="col-md-6">
+              </div>
+
+              <div class="col-md-3">
+                <label for="">SORT BY:</label>
+                <form autocomplete="off" class="flexcontainercolumn">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="defaultChecked" (click)="setSort('id')"
+                      name="sort" checked />
+                    <label class="custom-control-label" for="defaultChecked">ID NUMBER</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="defaultUnchecked" (click)="setSort('name')"
+                      name="sort" />
+                    <label class="custom-control-label" for="defaultUnchecked">NAME</label>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-3 ">
+                <label for="time" class="p-0 m-0">Schedule Time</label>
+                <select class="form-control" name="time" [(ngModel)]="schedTime">
+                  <option value="">SELECT TIME</option>
+                  <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
+                    {{ sched.sched_time }} | <strong>Count:</strong>
+                    {{ " (" + sched.sched_count + ")" }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
                 <br />
-                <pagination-controls
-                  class="pull-right"
-                  (pageChange)="p = $event"
-                ></pagination-controls>
+                <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
               </div>
             </div>
 
@@ -62,13 +67,11 @@
                   <th>Action</th>
                 </thead>
                 <tbody>
-                  <tr
-                    *ngFor="
+                  <tr *ngFor="
                       let applicant of applicants
                         | paginate: { itemsPerPage: 20, currentPage: p };
                       let i = index
-                    "
-                  >
+                    ">
                     <td>{{ 20 * (p - 1) + i + 1 }}</td>
                     <td>{{ applicant.gc_idnumber }}</td>
                     <td>{{ applicant.si_fullname }}</td>
@@ -77,54 +80,32 @@
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
-                      <button
-                        matTooltip="Add Schedule"
-                        matTooltipPosition="above"
-                        class="btn btn-sm btn-success"
-                        (click)="addGCATSchedule(applicant.gc_idnumber)"
-                      >
+                      <button matTooltip="Add Schedule" matTooltipPosition="above" class="btn btn-sm btn-success"
+                        (click)="addScheduleForApplicant(applicant.gc_idnumber)">
                         <i class="material-icons">
                           note_add
                         </i>
                       </button>
-                      <a
-                        href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                      <a href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
                           applicant.gc_idnumber
-                        }}/{{ applicant.gc_key }}"
-                        target="_blank"
-                      >
-                        <button
-                          class="btn btn-sm btn-success"
-                          matTooltip="Edit"
-                          matTooltipPosition="above"
-                        >
+                        }}/{{ applicant.gc_key }}" target="_blank">
+                        <button class="btn btn-sm btn-success" matTooltip="Edit" matTooltipPosition="above">
                           <i class="material-icons">
                             edit
                           </i>
                         </button>
                       </a>
-                      <a
-                        href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
+                      <a href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
                           applicant.gc_idnumber
-                        }}&key={{ applicant.gc_key }}"
-                        target="_blank"
-                      >
-                        <button
-                          class="btn btn-sm btn-success"
-                          matTooltip="Print"
-                          matTooltipPosition="above"
-                        >
+                        }}&key={{ applicant.gc_key }}" target="_blank">
+                        <button class="btn btn-sm btn-success" matTooltip="Print" matTooltipPosition="above">
                           <i class="material-icons">
                             print
                           </i>
                         </button>
                       </a>
-                      <button
-                        matTooltip="Undo Confirmation"
-                        matTooltipPosition="above"
-                        class="btn btn-sm btn-danger"
-                        (click)="unconfirmApplicant(applicant)"
-                      >
+                      <button matTooltip="Undo Confirmation" matTooltipPosition="above" class="btn btn-sm btn-danger"
+                        (click)="unconfirmApplicant(applicant)">
                         <i class="material-icons">
                           undo
                         </i>
@@ -134,11 +115,7 @@
                 </tbody>
               </table>
               <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
-                <pagination-controls
-                  
-                  maxSize="20"
-                  (pageChange)="p = $event"
-                ></pagination-controls>
+                <pagination-controls maxSize="20" (pageChange)="p = $event"></pagination-controls>
               </div>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">

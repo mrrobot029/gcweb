@@ -1,68 +1,72 @@
 import { Component, OnInit } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
-import { NgxSpinnerService } from 'ngx-spinner'
-import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-confirmedapplicants',
-  templateUrl: './confirmedapplicants.component.html',
-  styleUrls: ['./confirmedapplicants.component.scss']
+  selector: "app-confirmedapplicants",
+  templateUrl: "./confirmedapplicants.component.html",
+  styleUrls: ["./confirmedapplicants.component.scss"]
 })
 export class ConfirmedapplicantsComponent implements OnInit {
-  constructor(private ds: DataService, private spinner: NgxSpinnerService) {}
+  constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
-  schedTime: any;
+  schedTime: any = "";
   p = 1;
   applicants: any = {};
   noapplicants = true;
   search: any = {};
   schedule: any = {};
-  fullscreen = false
+  fullscreen = false;
   applicantCount = 0;
-  searchValue = ''
-  sort = 'gc.gc_idnumber';
-  ngOnInit() {
+  searchValue = "";
+  sort = "gc.gc_idnumber";
+
+  scheds: any;
+  async ngOnInit() {
     this.search.sort = this.sort;
-    if(this.applicants.length==null){
-      this.noapplicants = true
+    if (this.applicants.length == null) {
+      this.noapplicants = true;
       this.applicantCount = 0;
     }
-    this.getUnscheduledApplicants()
+    await this.getUnscheduledApplicants();
+    await this.getAvailableSchedules();
   }
 
-  setSort(e){
-    switch(e){
-      case 'id':
-        this.sort = 'gc.gc_idnumber'
-        this.ngOnInit()
-        break
-      case 'name':
-        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
-        this.ngOnInit()
-        break
+  setSort(e) {
+    switch (e) {
+      case "id":
+        this.sort = "gc.gc_idnumber";
+        this.ngOnInit();
+        break;
+      case "name":
+        this.sort =
+          "si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber";
+        this.ngOnInit();
+        break;
       default:
-        this.sort = 'gc.gc_idnumber'
+        this.sort = "gc.gc_idnumber";
     }
-    this.searchValue = ''
+    this.searchValue = "";
   }
 
   getUnscheduledApplicants() {
-    this.spinner.show()
-    let promise = this.ds.sendRequest("getUnscheduledApplicants", this.search).toPromise()
+    this.spinner.show();
+    let promise = this.ds
+      .sendRequest("getUnscheduledApplicants", this.search)
+      .toPromise();
     promise.then(res => {
-      if(res.status.remarks){
-      this.applicants = res.data;
-      this.applicantCount = this.applicants.length
-      this.noapplicants = false;
-      } else{
-        this.noapplicants = true
+      if (res.status.remarks) {
+        this.applicants = res.data;
+        this.applicantCount = this.applicants.length;
+        this.noapplicants = false;
+      } else {
+        this.noapplicants = true;
       }
-      this.spinner.hide()
+      this.spinner.hide();
     });
   }
 
-  
   searchUnscheduledApplicants(e) {
     e.preventDefault();
     this.search.value = e.target.value;
@@ -70,80 +74,83 @@ export class ConfirmedapplicantsComponent implements OnInit {
       .sendRequest("searchUnscheduledApplicants", this.search)
       .subscribe(res => {
         if (res.status.remarks) {
-          console.log(res.data)
+          console.log(res.data);
           this.applicants = res.data;
         } else {
           this.applicants = [];
         }
       });
-      this.p = 1
+    this.p = 1;
   }
 
-  unconfirmApplicant(a){
+  unconfirmApplicant(a) {
     Swal.fire({
       title: `Undo confirmation for <br>${a.si_fullname}<br>`,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
       reverseButtons: false
-    }).then((result) => {
+    }).then(result => {
       if (result.value) {
-        this.fullscreen = true
-        this.spinner.show()
-        let promise = this.ds.sendRequest('unconfirmApplication', a).toPromise()
-        promise.then(res=>{
-          this.spinner.hide()
-          if(res.status.remarks){  
+        this.fullscreen = true;
+        this.spinner.show();
+        let promise = this.ds
+          .sendRequest("unconfirmApplication", a)
+          .toPromise();
+        promise.then(res => {
+          this.spinner.hide();
+          if (res.status.remarks) {
             Swal.fire(
-            'Success!',
-            'The application is now unconfirmed.',
-            'success'
-          ).then(()=>{
-            this.ngOnInit()
-          })
-          } else{
-            Swal.fire(
-            'Error!',
-            'Something went wrong.',
-            'error'
-          ).then(()=>{
-            this.ngOnInit()
-          })
-          }
-
-        })
-      }
-    })
-    this.fullscreen = false
-  }
-  
-  addGCATSchedule(idnumber) {
-    let isSchedDateSet: any;
-    let isSchedTimeSet: any;
-
-    isSchedDateSet = this.schedDate ? this.schedDate : null;
-    isSchedTimeSet = this.schedTime ? this.schedTime : null;
-
-    if (isSchedDateSet !== null && isSchedTimeSet !== null) {
-      this.schedule.date = isSchedDateSet;
-      this.schedule.time = isSchedTimeSet;
-      this.schedule.idNumber = idnumber;
-      this.ds.sendRequest("addGCATSchedule", this.schedule).subscribe(res => {
-        if (res.status.remarks) {
-          this.ds
-            .callSwal("Success", "Record updated successfully.", "success")
-            .then(() => {
-              this.getUnscheduledApplicants();
+              "Success!",
+              "The application is now unconfirmed.",
+              "success"
+            ).then(() => {
+              this.ngOnInit();
             });
-        }
-      });
+          } else {
+            Swal.fire("Error!", "Something went wrong.", "error").then(() => {
+              this.ngOnInit();
+            });
+          }
+        });
+      }
+    });
+    this.fullscreen = false;
+  }
+
+  addScheduleForApplicant(idnumber) {
+    if (this.schedTime !== "") {
+      this.schedule.time = this.schedTime;
+      this.schedule.idNumber = idnumber;
+      this.ds
+        .sendRequest("addScheduleForApplicant", this.schedule)
+        .subscribe(res => {
+          if (res.status.remarks) {
+            this.ds
+              .callSwal("Success", "Record updated successfully.", "success")
+              .then(() => {
+                this.getUnscheduledApplicants();
+                this.getAvailableSchedules();
+              });
+          }
+        });
     } else {
       this.ds.callSwal(
         "Incomplete Info",
-        "Please fill up the schedule date and time.",
+        "Please select schedule time.",
         "error"
       );
     }
+  }
+
+  getAvailableSchedules() {
+    this.ds.sendRequest("getAvailableSchedules", null).subscribe(res => {
+      if (res.status.remarks) {
+        this.scheds = res.data;
+      } else {
+        this.scheds = [];
+      }
+    });
   }
 }

@@ -17,6 +17,7 @@ export class ScheduledComponent implements OnInit {
   noapplicants = true;
   applicantCount = 0;
   scheds: any;
+  dropDownSched = "";
 
   async ngOnInit() {
     await this.getScheduledApplicants();
@@ -28,24 +29,38 @@ export class ScheduledComponent implements OnInit {
   }
 
   getScheduledApplicants() {
-    this.ds.sendRequest("getScheduledApplicants", null).subscribe(res => {
-      this.applicants = res.data;
-      this.applicantCount = res.data.length;
-      this.noapplicants = false;
+    this.search.dropDownSched = this.dropDownSched;
+    this.ds.sendRequest("getScheduledApplicants", this.search).subscribe(res => {
+      if (res.data) {
+
+        this.applicants = res.data;
+        this.applicantCount = res.data.length;
+        this.noapplicants = false;
+      } else {
+        this.applicants = [];
+        this.applicantCount = 0
+        this.noapplicants = true;
+      }
+
+
     });
   }
 
   searchScheduledApplicants(e) {
     e.preventDefault();
-    console.log(e);
     this.search.value = e.target.elements[0].value;
+    this.search.dropDownSched = this.dropDownSched;
     this.ds
       .sendRequest("searchScheduledApplicants", this.search)
       .subscribe(res => {
         if (res.status.remarks) {
           this.applicants = res.data;
+          this.applicantCount = res.data.length;
+          this.noapplicants = false;
         } else {
           this.applicants = [];
+          this.applicantCount = 0
+          this.noapplicants = true;
         }
       });
   }

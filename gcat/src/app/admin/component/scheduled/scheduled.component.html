@@ -18,9 +18,11 @@
                 </form>
               </div>
               <div class="col-md-3">
-                <select class="form-control">
-                  <option value="">SELECT TIME</option>
-                  <option *ngFor="let shed of sheds"></option>
+                <select class="form-control" [(ngModel)]="dropDownSched" (change)="getScheduledApplicants()">
+                  <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
+                    {{ sched.sched_time }} | <strong>Count:</strong>
+                    {{ " (" + sched.sched_count + ")" }}
+                  </option>
                 </select>
               </div>
               <div class="col-md-3">

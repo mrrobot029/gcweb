@@ -7,7 +7,7 @@ import { DataService } from "src/app/services/data.service";
   styleUrls: ["./scheduled.component.scss"]
 })
 export class ScheduledComponent implements OnInit {
-  constructor(private ds: DataService) {}
+  constructor(private ds: DataService) { }
   schedDate: any;
   schedTime: any;
   p = 1;
@@ -20,7 +20,7 @@ export class ScheduledComponent implements OnInit {
 
   async ngOnInit() {
     await this.getScheduledApplicants();
-    await this.getSchedules();
+    await this.getAllSchedules();
     if (this.applicants.length == null) {
       this.noapplicants = true;
       this.applicantCount = 0;
@@ -50,8 +50,8 @@ export class ScheduledComponent implements OnInit {
       });
   }
 
-  getSchedules() {
-    this.ds.sendRequest("getSchedules", null).subscribe(res => {
+  getAllSchedules() {
+    this.ds.sendRequest("getAllSchedules", null).subscribe(res => {
       if (res.status.remarks) {
         this.scheds = res.data;
       } else {
@@ -66,7 +66,7 @@ export class ScheduledComponent implements OnInit {
 
     this.ds.sendRequest("addGCATSchedule", this.schedule).subscribe(res => {
       if (res.status.remarks) {
-        this.getSchedules();
+        this.getAllSchedules();
       } else {
         this.ds.callSwal("Adding Failed.", "Check the sched info.", "error");
       }
@@ -79,7 +79,7 @@ export class ScheduledComponent implements OnInit {
     this.schedule.recNo = e;
     this.ds.sendRequest("delGCATSchedule", this.schedule).subscribe(res => {
       if (res.status.remarks) {
-        this.getSchedules();
+        this.getAllSchedules();
       } else {
         this.ds.callSwal(
           "Deleting Failed.",

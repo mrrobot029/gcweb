@@ -420,34 +420,52 @@ export class EditComponent implements OnInit {
 
 
 computeAge(){
-    let student: any = {}
-    student.firstname = this.firstFormGroup.value.fname
-    student.lastname = this.firstFormGroup.value.lname
-    student.nameext = this.firstFormGroup.value.nameext
-    student.midname = this.firstFormGroup.value.mname
-    student.bday = this.firstFormGroup.value.dob
-    if(this.student1.si_firstname != this.firstFormGroup.value.fname || this.student1.si_lastname != this.firstFormGroup.value.lname || this.student1.si_midname != this.firstFormGroup.value.mname || this.student1.si_bday != this.firstFormGroup.value.dob){
-      this.spinner.show()
-      let promise = this.ds.sendRequest('validateStudent', student).toPromise()
+  this.spinner.show()
+  let checkStudent:any = {}
+  checkStudent.idNumber = this.student.id
+  let promise= this.ds.sendRequest('getStudent', checkStudent).toPromise()
+  promise.then(res=>{
+    this.spinner.hide()
+    checkStudent = res.data[0]
+    console.log(checkStudent)
+    if(checkStudent.si_firstname == this.firstFormGroup.value.fname && checkStudent.si_lastname == this.firstFormGroup.value.lname && checkStudent.si_midname == this.firstFormGroup.value.mname){
+        var timeDiff = Math.abs(Date.now() - new Date(this.firstFormGroup.controls.dob.value).getTime());
+        this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+        if(this.age<5||this.age>100){
+          alert('Invalid Birthdate!');
+          this.firstFormGroup.controls.age.setValue('')
+          this.firstFormGroup.controls.dob.setValue('')
+        } else{
+          this.firstFormGroup.controls.age.setValue(this.age)
+        }
+        this.spinner.hide()
+    } else{
+      let student: any = {}
+      student.firstname = this.firstFormGroup.value.fname
+      student.lastname = this.firstFormGroup.value.lname
+      student.nameext = this.firstFormGroup.value.nameext
+      student.midname = this.firstFormGroup.value.mname
+      student.bday = this.firstFormGroup.value.dob
+      promise = this.ds.sendRequest('validateStudent', student).toPromise()
       promise.then((res)=>{
         this.spinner.hide()
-        let str = res.data[0].si_email
-        console.log(res.data[0].si_email)
-        let n = str.indexOf("@");
-        let substr = str.substring(1, n)
-        let asterisks = ''
-        let x = 0
-        while(x<substr.length+1){
-          asterisks = asterisks+'*'
-          x++
-        }
-        let email = str.replace(substr, asterisks)
         if(res.status.remarks){  
+          student.email = res.data[0].si_email
+          let str = res.data[0].si_email
+          let n = str.indexOf("@");
+          let substr = str.substring(1, n)
+          let asterisks = ''
+          let x = 0
+          while(x<substr.length+1){
+            asterisks = asterisks+'*'
+            x++
+          }
+          let email = str.replace(substr, asterisks)
+          student.id = res.data[0].si_idnumber
           student.idNumber = res.data[0].si_idnumber
           this.spinner.show()    
           promise = this.ds.sendRequest('validateUnenrolled', student).toPromise()
           promise.then((res)=>{
-            this.spinner.hide()
             if(!res.status.remarks){
               Swal.fire({
                 icon: "error",
@@ -457,6 +475,11 @@ computeAge(){
                 this.router.navigate(['application']);
               });
             }
+          })
+          promise = this.ds.sendRequest('reSendMail', student).toPromise()
+          promise.then((res)=>{
+            this.spinner.hide()
+            console.log(res)
           })
           Swal.fire({
           icon: 'warning',
@@ -475,8 +498,8 @@ computeAge(){
         }).then((result) => {
           if (result.value) {
             Swal.fire({
-              title: `Enter your Mother's First Name:`,
-              input: 'text',
+              title: `Enter your new email:`,
+              input: 'email',
               inputAttributes: {
                 autocapitalize: 'on'
               },
@@ -487,104 +510,49 @@ computeAge(){
               },
               allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
-                this.spinner.show()
-                student.idNumber = res.data[0].si_idnumber
-                promise = this.ds.sendRequest('getStudent', student).toPromise()
-                promise.then((res)=>{
-                  this.spinner.hide()
-                  return res
-                }).then(response => {
-                  if(response.data[0].si_momname.toUpperCase().includes(result.value.toUpperCase())&&result.value!=''!&&result.value!=' '){
-                    Swal.fire({
-                      title: `Enter your Father's First Name:`,
-                      input: 'text',
-                      inputAttributes: {
-                        autocapitalize: 'on'
-                      },
-                      showCancelButton: false,
-                      confirmButtonText: 'Submit',
-                      showLoaderOnConfirm: true,
-                      preConfirm: (data) => {
-                      },
-                      allowOutsideClick: () => !Swal.isLoading()
-                    }).then((result) => {
-                        if(response.data[0].si_dadname.toUpperCase().includes(result.value.toUpperCase())&&result.value!=''!&&result.value!=' '){
-                          Swal.fire({
-                            title: `Enter your new email:`,
-                            input: 'email',
-                            inputAttributes: {
-                              autocapitalize: 'on'
-                            },
-                            showCancelButton: false,
-                            confirmButtonText: 'Submit',
-                            showLoaderOnConfirm: true,
-                            preConfirm: (data) => {
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                          }).then((result) => {
-                            let q:any = {}
-                            q.idNumber = res.data[0].si_idnumber
-                            q.email = result.value
-                            q.fname = res.data[0].si_firstname
-                            this.spinner.show()
-                            promise = this.ds.sendRequest('validateEmail', q).toPromise()
-                            promise.then((res)=>{
-                              this.spinner.hide()
-                              if(res.status.remarks){
-                                Swal.fire({
-                                  icon: "error",
-                                  title: "Email already registered to another applicant!",
-                                  text: "Please enter another email."
-                                }).then(() => {
-                                  this.router.navigate(['application']);
-                                });
-                              } else{
-                                this.spinner.show()
-                                promise = this.ds.sendRequest('updateEmail', q).toPromise()
-                                promise.then((res)=>{
-                                  this.spinner.hide()
-                                  console.log(res)
-                                  if(res[0]=='success'){
-                                    Swal.fire({
-                                      icon: "success",
-                                      html: `<h2>Your email address has been changed to <br><b>${q.email}</b>!</h2><br>`+
-                                             "Please check your inbox for our email containing a link to your printable <b>Form SR01</b>."
-                                    }).then(() => {
-                                      this.router.navigate(['application']);
-                                    });
-                                  } else{
-                                    Swal.fire({
-                                      icon: "error",
-                                      title: "We have encountered an unknown error!",
-                                      text: "Please try again."
-                                    }).then(() => {
-                                      this.router.navigate(['application']);
-                                    });
-                                  }
-                                })
-                              }
-                            })
-                          })
-                        } else{
-                          Swal.fire({
-                            icon: "error",
-                            title: "Your data did not match",
-                            text: "Please try again."
-                          }).then(() => {
-                            this.router.navigate(['application']);
-                          });
-                        }
-                    })
-                  } else{
-                    Swal.fire({
-                      icon: "error",
-                      title: "Your data did not match",
-                      text: "pukinana mo ka animal"
-                    }).then(() => {
-                      this.router.navigate(['application']);
-                    });
-                  }
-                })
+              let q:any = {}
+              q.idNumber = res.data[0].si_idnumber
+              q.email = result.value
+              q.fname = res.data[0].si_firstname
+              q.lastname = res.data[0].si_lastname
+              this.spinner.show()
+              promise = this.ds.sendRequest('validateEmail', q).toPromise()
+              promise.then((res)=>{
+                this.spinner.hide()
+                if(res.status.remarks){
+                  Swal.fire({
+                    icon: "error",
+                    title: "Email already registered to another applicant!",
+                    text: "Please enter another email."
+                  }).then(() => {
+                    this.router.navigate(['application']);
+                  });
+                } else{
+                  this.spinner.show()
+                  promise = this.ds.sendRequest('updateEmail', q).toPromise()
+                  promise.then((res)=>{
+                    this.spinner.hide()
+                    console.log(res)
+                    if(res[0]=='success'){
+                      Swal.fire({
+                        icon: "success",
+                        html: `<h2>Your email address has been changed to <br><b>${q.email}</b>!</h2><br>`+
+                               "Please check your inbox for our email containing a link to your printable <b>Form SR01</b>."
+                      }).then(() => {
+                        this.router.navigate(['application']);
+                      });
+                    } else{
+                      Swal.fire({
+                        icon: "error",
+                        title: "We have encountered an unknown error!",
+                        text: "Please try again."
+                      }).then(() => {
+                        this.router.navigate(['application']);
+                      });
+                    }
+                  })
+                }
+              })
             })
           } else if (
             /* Read more about handling dismissals below */
@@ -596,16 +564,7 @@ computeAge(){
       }
       })
     }
-  var timeDiff = Math.abs(Date.now() - new Date(this.firstFormGroup.controls.dob.value).getTime());
-  this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-  if(this.age<5||this.age>100){
-    alert('Invalid Birthdate!');
-    this.firstFormGroup.controls.age.setValue('')
-    this.firstFormGroup.controls.dob.setValue('')
-  } else{
-    this.firstFormGroup.controls.age.setValue(this.age)
-  }
- 
+  })
 }
 
 changeEmail(e){

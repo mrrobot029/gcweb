@@ -183,7 +183,7 @@
                     <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">Desired Program:*</label>
                     <mat-select formControlName="course" name="course" (selectionChange)="filterCourse()" required>
                       <mat-option value="">--SELECT--</mat-option>
-                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall">{{coursesall1.co_name}} - {{coursesall1.co_description}}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="secondFormGroup.controls.course.invalid">{{getErrorMessage()}}</mat-error>
                   </mat-form-field>
@@ -191,7 +191,7 @@
                     <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">2<sup>nd</sup> Choice:</label>
                     <mat-select formControlName="course2" (selectionChange)="filterCourse2()" name="course2">
                       <mat-option value="">--SELECT--</mat-option>
-                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall2">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall2">{{coursesall1.co_name}} - {{coursesall1.co_description}}</mat-option>
                     </mat-select>
 
                   </mat-form-field>
@@ -199,7 +199,7 @@
                     <label for="gender" style="color: rgb(0,0,0,0.54);font-size: 13px;position: absolute;margin-top:-20px">3<sup>rd</sup> Choice:</label>
                     <mat-select formControlName="course3" name="course3">
                       <mat-option value="">--SELECT--</mat-option>
-                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall3">{{coursesall1.co_description}}({{coursesall1.co_name}})</mat-option>
+                      <mat-option [value]="coursesall1.co_name" *ngFor="let coursesall1 of coursesall3">{{coursesall1.co_name}} - {{coursesall1.co_description}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>

@@ -1450,6 +1450,7 @@
                 $mail->Body .="Sincerely,<br>";
                 $mail->Body .="Gordon College Olongapo";
                 if ($mail->send()) {
+                    $this->executeWithoutRes("UPDATE tbl_gcat SET gc_mailstatus = 1 WHERE gc_idnumber = '$id'");
                     return 'Email Success';
                 } else {
                     return 'Email Failed';

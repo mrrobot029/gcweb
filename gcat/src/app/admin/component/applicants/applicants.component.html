@@ -122,6 +122,7 @@
                         </i>
                     </button>
                       <button
+                        *ngIf="applicant.gc_mailstatus == 0"
                         class="btn btn-sm btn-success"
                         (click)="sendMail(applicant)"
                         matTooltip="Send Confirmation Email"
@@ -131,7 +132,17 @@
                           email
                         </i>
                       </button>
-                      <br />
+                      <button
+                      *ngIf="applicant.gc_mailstatus == 1"
+                      class="btn btn-sm btn-warning"
+                      (click)="sendMail(applicant)"
+                      matTooltip="Send Confirmation Email"
+                      matTooltipPosition="above"
+                    >
+                      <i class="material-icons">
+                        email
+                      </i>
+                      </button>
                       <button
                         class="btn btn-sm btn-danger flex-right"
                         (click)="delete(applicant)"

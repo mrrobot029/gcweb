@@ -124,8 +124,6 @@
     }
 
 ?>
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -136,11 +134,10 @@
   </head>
   <body>
 
-  <div class="twobytwopic">
-    <br>
-    <br><br>
-    2x2 Picture 
-    White Background
+  <div class="twobytwopic ">
+<br><br><br><br><br><br><br><br>
+    <h3>   2x2 Picture 
+        White Background</h3>
   </div>
 	 <table class="txt table-body"> 
     <tbody>
@@ -168,15 +165,15 @@
         </td>
       </tr>
       <tr>
-        <td class="left" width="10%">
-          <p style="text-align:center;"><strong><?php echo $id; ?></strong></p>
+        <td class="left" width="10%" style="position: absolute; margin-top: -20px">
+          <div  style="text-align:center;font-size: 15px"><strong><?php echo $id; ?></strong></div>
           <div class="top-border center">REGISTRATION #</div>
         </td>
         <td></td>
       </tr>
     </tbody>
   </table>
-
+<div style="padding-top:15px"></div>
   <strong class="txt verticalmargin darken"><u>PLEASE FILL IN COMPLETELY, PROCESSING MAY BE DELAYED ON INCOMPLETE FORMS</u></strong>
 
     
@@ -210,7 +207,6 @@
       </tr>
     </tbody>
   </table>
-  <br>
   <h5 class="darken border-thin verticalmargin">1. PERSONAL BACKGROUND</h5>
   <table class="txt table-body"  width="1000" border="1">
     <tbody>
@@ -225,7 +221,6 @@
       </tr>
     </tbody>
   </table>
-
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
@@ -302,7 +297,6 @@
       </tr>
     </tbody>
   </table>
-<br>
   <h5 class="darken border-thin verticalmargin">2. ENTRANCE CATEGORY</h5>
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
@@ -310,24 +304,16 @@
         <td class="border-thin center" width="" > 
           <input type="checkbox" id="new" >
           <label for="freshman">FRESHMAN</label>
-          
-          <input type="checkbox" id="shiftee" >
-          <label for="shiftee">SHIFTEE</label>
-          
-          <input type="checkbox" id="returnee" >
-          <label for="reenrolee">RE-ENROLEE</label>
-          
+  
           <input type="checkbox" id="transferee" >
           <label for="transferee">TRANSFEREE</label>
           
           <input type="checkbox" id="second" >
           <label for="secondcourser">SECOND COURSER</label>
-          
-          <input type="checkbox" id="cross" >
-          <label for="crossenrolee">CROSS-ENROLEE</label></td>
+
       </tr>
     </tbody>
-  </table><br>
+  </table>
 
   <h5 class="darken border-thin verticalmargin">3. FAMILY BACKGROUND</h5>
   <table  class="txt table-body"  width="1000" border="1">
@@ -356,9 +342,9 @@
       </tr>
       
       <tr  class="border-thin">
-        <td class="border-thin" width="200" >Name: </td>
+        <td class="border-thin" width="100" >Name: </td>
         <td class="border-thin" width="" > <?php echo $dadname; ?></td>
-        <td class="border-thin" width="200" >Name: </td>
+        <td class="border-thin" width="100" >Name: </td>
         <td class="border-thin" width="" >  <?php echo $momname; ?></td>
       </tr>
       <tr  class="border-thin">
@@ -381,14 +367,13 @@
       </tr>
     </tbody>
   </table>
-  <br>
   <h5 class="darken border-thin verticalmargin"> <i>4. Guardian (if any) who supports your study</i> </h5>
   <table class="txt table-body" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="214">Name of Guardian: </td>
+        <td class="border-thin" width="100">Name of Guardian: </td>
         <td class="border-thin" width="200"><?php echo $guardname; ?></td>
-        <td class="border-thin" width="111">Relationship: </td>
+        <td class="border-thin" width="100">Relationship: </td>
         <td class="border-thin " width="273"><?php echo $guardianrel; ?></td>
       </tr>
       <tr class="border-thin">
@@ -399,7 +384,6 @@
       </tr>
     </tbody>
   </table>
-  <br>
 
 
 <h5 class="darken border-thin verticalmargin"> <i>5. GOVERNMENT PROGRAM/ SCHOLARSHIP GRANT:</i> </h5>
@@ -408,7 +392,6 @@
       <tr>
         <td class="border-thin" width="500">
           
-          <br>
           <input type="checkbox" id="4ps">
           <label for="fourps" class="m-top">Pantawid Pamilyang Pilipino (4P's)</label>
           <br>
@@ -424,39 +407,31 @@
           <input type="checkbox" id="solo">
           <label for="solo" class="m-top">Solo parent / Child of a Solo Parent</label>
           
-          <br><br>
-         
         </td><td class="border-thin" width="500">
-
-          <br>
           <input type="checkbox" id="noincome">
           <label for="noincome" class="m-top">No Income Household</label>
-          
 
           <br>
           <input type="checkbox" id="Others">
           <label for="other-cc">Others: Please Specify ______<u><?php echo $govprojother; ?></u>_______</label>
           <br>
           Net Monthly Family Income (Total Monthly Income Less Expenses) ______<u><?php echo $famincome; ?></u>______
-         <br>
+       
         </td>
       </tr>
     </tbody>
   </table>
-
-
   <h5 class="darken border-thin verticalmargin"> <i>6. EDUCATIONAL BACKGROUND</i> </h5>
-
   <table  class="txt table-body"  width="1000" border="1">
     <tbody>
       <tr  class="border-thin">
-        <td class="border-thin" width="500" >Elementary: <?php echo $elem; ?> </td>
-        <td class="border-thin" width="" >Year Completed:  <?php echo $elemyear; ?></td>
+        <td class="border-thin" width="550" >Elementary: <?php echo $elem; ?> </td>
+        <td class="border-thin" width="" style="font-size: 0.7rem">Year Completed:  <?php echo $elemyear; ?></td>
       </tr>
       
       <tr  class="border-thin">
         <td class="border-thin" width="" >High School/Senior High School: <?php echo $highschool; ?></td> </td>
-        <td class="border-thin" width="" >Year Completed: <?php echo $highschoolyear; ?></td></td></td>
+        <td class="border-thin" width="" style="font-size: 0.7rem">Year Completed: <?php echo $highschoolyear; ?></td></td></td>
       </tr>
     </tbody>
   </table>
@@ -482,8 +457,8 @@
    
       
       <tr  class="border-thin">
-        <td class="border-thin" width="400" >College: <?php echo $tertiary; ?></td>
-        <td class="border-thin" width="100" >Course: <?php echo $tertiarycourse; ?></td>
+        <td class="border-thin" width="250" >College: <?php echo $tertiary; ?></td>
+        <td class="border-thin" width="325" >Course: <?php echo $tertiarycourse; ?></td>
         <td class="border-thin" width="" > Year Completed: <?php echo $tertiaryyear; ?></td>
       </tr>
     </tbody>
@@ -517,12 +492,18 @@
       <tr  class="border-thin">
         <td class="border-thin" width="" colspan="2" >Scholastic Honors and Distinctions Obtained (if any):  <?php echo $award; ?></td>
       </tr>
-      <tr  class="border-thin center" height="120">
-        <td class="border-thin" width="" colspan="2" >
-          <p><i>I hereby certify that the above information is true and correct to the best of my knowledge and ability.</i></p>
+      <tr  class="border-thin center" width="500">
+        <td class="border-thin" >
+          <i>I hereby certify that the above information is true and correct to the best of my knowledge and ability.</i><br>
           <strong>Student's Signature __________________________________ Date: ____________________________</strong>
           
         </td>
+        <td class="border-thin left" >
+           <small><i>(For registrar's use only)</i> </small> <br>
+            <strong>Date & TIME: _________ - _______</strong> <br>
+            <strong>Room #: ________________________</strong> <br>
+            <strong>Issued By: _____________________</strong> 
+          </td>
       </tr>
     </tbody>
   </table>
@@ -588,6 +569,7 @@
         
     });
 </script> 
+
 
 <?php
     } else{

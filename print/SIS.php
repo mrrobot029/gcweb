@@ -28,7 +28,9 @@
   if($id == $decryptedkey){
     $query = mysqli_query($conn,"SELECT * FROM tbl_studentinfo WHERE si_idnumber = '$id'");
     if(mysqli_num_rows($query)>0){
-        while($res = mysqli_fetch_assoc($query)){
+        $sqlUpdateStatus = "UPDATE tbl_gcat SET gc_status = 1 WHERE gc_idnumber = '$id'";
+        if(mysqli_query($conn, $sqlUpdateStatus)){
+          while($res = mysqli_fetch_assoc($query)){
   
   
             $sex = $res['si_gender'];
@@ -121,6 +123,7 @@
             $gpa = $res['si_average'];
             $ipgroup = $res['si_ipgroup'];
         }
+      }
     }
 
 ?>

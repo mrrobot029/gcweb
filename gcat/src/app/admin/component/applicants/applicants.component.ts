@@ -88,6 +88,8 @@ export class ApplicantsComponent implements OnInit {
       Swal.fire({
         icon: 'success',
         title: 'Confirmation Email Sent!',
+      }).then(()=>{
+        this.ngOnInit()
       })
     })
   }

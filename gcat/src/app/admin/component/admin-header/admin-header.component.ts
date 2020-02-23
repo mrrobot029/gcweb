@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DataService } from "src/app/services/data.service";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-admin-header',
@@ -16,7 +17,7 @@ export class AdminHeaderComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
 
-  constructor(private router: Router, private element: ElementRef, private ds: DataService) {
+  constructor(private router: Router, private element: ElementRef, private ds: DataService, private auth: AuthService) {
     this.sidebarVisible = false;
   }
 
@@ -32,7 +33,8 @@ export class AdminHeaderComponent implements OnInit {
         this.applicantCount = res.data[0].applicantcount
       })
     }, 60000);
-    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_admin'));
+    this.credAdmin = JSON.parse(localStorage.getItem('gcweb_GCAT'));
+    console.log(this.credAdmin);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
   }
@@ -59,6 +61,7 @@ export class AdminHeaderComponent implements OnInit {
     }).then((res) => {
       if (res.value) {
         localStorage.removeItem('gcweb_GCAT');
+        this.auth.setUserLoggedIn(false);
         this.router.navigate(['/login']);
       }
     });

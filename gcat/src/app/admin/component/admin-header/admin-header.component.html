@@ -1,60 +1,66 @@
 <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
-  <div class="container-fluid">
-      <div class="navbar-wrapper">
-        <a class="navbar-brand" href="javascript:void(0)"></a>
-      </div>
-      <button class="navbar-toggler" type="button" (click)="sidebarToggle()">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-          <span class="navbar-toggler-icon icon-bar"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navigation">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" matTooltip="Current Date/Time">
-                   <strong>{{ date | date : "MMMM dd,y h:mm:ss a" }}</strong>
-                </a>
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:void(0)"></a>
+        </div>
+        <button class="navbar-toggler" type="button" (click)="sidebarToggle()">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="Current Date/Time">
+                        <strong>{{ date | date : "MMMM dd,y h:mm:ss a" }}</strong>
+                    </a>
                 </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" matTooltip="Total Number of Applicants">
-                    <i class="material-icons">people_alt</i><strong>{{applicantCount}}</strong><br>Total Applicants
-                </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="Total Number of Applicants">
+                        <i class="material-icons">people_alt</i><strong>{{applicantCount}}</strong><br>Total Applicants
+                    </a>
                 </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://gordoncollegeccs.edu.ph/gc/api/print/allGCATApplication.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D" matTooltip="Generate Excel File">
-                    <i class="material-icons">grid_on</i><br>EXCEL FILE
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://gordoncollegeccs.edu.ph/gc/api/print/allDuplicates.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D" matTooltip="Get Duplicate Entries">
-                    <i class="material-icons">exposure_plus_2</i><br>GET DUPLICATES
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" matTooltip="Print Reports">
-                    <i class="material-icons">print</i><br>REPORTS
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics">
-                    <i class="material-icons">pie_chart</i><br>STATISTICS
-                </a>
-            </li>
-              <li class="nav-item" matTooltip="Current User">
-                  <a class="nav-link" href="javascript:void(0)" >
-                    <i class="material-icons">supervised_user_circle</i><br> Test User
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="javascript:void(0)" title="Log Out" (click)="logout()" matTooltip="Log Out">
-                      <i class="fa fa-sign-out"></i>
-                      <p>
-                          <span class="d-lg-none d-md-block">Account</span>
-                      </p>
-                  </a>
-              </li>
-          </ul>
-      </div>
-  </div>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://gordoncollegeccs.edu.ph/gc/api/print/allGCATApplication.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+                        matTooltip="Generate Excel File">
+                        <i class="material-icons">grid_on</i><br>EXCEL FILE
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://gordoncollegeccs.edu.ph/gc/api/print/allDuplicates.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+                        matTooltip="Get Duplicate Entries">
+                        <i class="material-icons">exposure_plus_2</i><br>GET DUPLICATES
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="Print Reports">
+                        <i class="material-icons">print</i><br>REPORTS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics">
+                        <i class="material-icons">pie_chart</i><br>STATISTICS
+                    </a>
+                </li>
+                <li class="nav-item" matTooltip="Current User">
+                    <a class="nav-link" href="javascript:void(0)">
+                        <i class="material-icons">supervised_user_circle</i><br>
+                        {{ credAdmin.data[0].fa_lname + ", " +credAdmin.data[0].fa_fname + " " + credAdmin.data[0].fa_mname  + " "+ credAdmin.data[0].fa_extname }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" title="Log Out" (click)="logout()"
+                        matTooltip="Log Out">
+                        <i class="fa fa-sign-out"></i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Account</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>

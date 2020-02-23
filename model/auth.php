@@ -406,11 +406,6 @@ class Auth{
 
 
 
-
-
-
-
-
 	// all about gcat
 	function addGCATmember($d) {
 		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->empNo'");

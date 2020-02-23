@@ -47,7 +47,6 @@ export class ApplicantsComponent implements OnInit {
   }
   
   getUnconfirmedApplicants() {
-    console.log(this.search)
     this.spinner.show()
     let promise = this.ds.sendRequest("getUnconfirmedApplicants", this.search).toPromise()
     promise.then(res => {
@@ -64,13 +63,11 @@ export class ApplicantsComponent implements OnInit {
 
   searchUnconfirmedApplicants(e) {
     e.preventDefault();
-    console.log(e);
     this.search.value = e.target.value;
     this.ds
       .sendRequest("searchUnconfirmedApplicants", this.search)
       .subscribe(res => {
         if (res.status.remarks) {
-          console.log(res.data)
           this.applicants = res.data;
         } else {
           this.applicants = [];
@@ -80,7 +77,6 @@ export class ApplicantsComponent implements OnInit {
   }
 
   sendMail(a){
-    console.log(a)
     this.spinner.show()
     let promise = this.ds.sendRequest('sendMail', a).toPromise()
     promise.then(res=>{

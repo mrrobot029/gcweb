@@ -34,7 +34,6 @@ export class AdminHeaderComponent implements OnInit {
       })
     }, 60000);
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_GCAT'));
-    console.log(this.credAdmin);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
   }
@@ -42,7 +41,6 @@ export class AdminHeaderComponent implements OnInit {
   getDuplicates() {
     let promise = this.ds.sendRequest('getDuplicateApplications', null).toPromise()
     promise.then(res => {
-      console.log(res);
     })
   }
 

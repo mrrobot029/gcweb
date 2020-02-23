@@ -19,7 +19,6 @@ export class UsersComponent implements OnInit {
 
   getGCATmembers() {
     this.ds.sendRequest('getGCATmembers', null).subscribe(res => {
-      console.log(res.data);
       this.gcatmembers = res.data;
     });
   }
@@ -47,7 +46,6 @@ export class UsersComponent implements OnInit {
   deleteGCATmember(i) {
     this.requestdata.empRecno = this.gcatmembers[i].fa_recno;
     this.ds.sendRequest('deleteGCATmember', this.requestdata).subscribe(res => {
-      console.log(res);
       this.getGCATmembers();
     });
   }

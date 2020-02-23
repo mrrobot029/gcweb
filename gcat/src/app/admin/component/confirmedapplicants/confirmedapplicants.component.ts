@@ -74,7 +74,6 @@ export class ConfirmedapplicantsComponent implements OnInit {
       .sendRequest("searchUnscheduledApplicants", this.search)
       .subscribe(res => {
         if (res.status.remarks) {
-          console.log(res.data);
           this.applicants = res.data;
         } else {
           this.applicants = [];

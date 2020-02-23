@@ -7,10 +7,10 @@ import Swal from "sweetalert2";
   providedIn: "root"
 })
 export class DataService {
-  // apiLink = "http://localhost/gordoncollegeweb/";
-  apiLink = 'https://gordoncollegeccs.edu.ph/gc/api/'
+  apiLink = "http://localhost/gordoncollegeweb/";
+  // apiLink = 'https://gordoncollegeccs.edu.ph/gc/api/'
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   sendRequest(method, data) {
     return this.http.post<any>(

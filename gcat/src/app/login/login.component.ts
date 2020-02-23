@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +15,15 @@ export class LoginComponent implements OnInit {
   credGCAT: any = {};
 
 
-  constructor(private ds: DataService, private router: Router) { }
+  constructor(private ds: DataService, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
     this.credGCAT = JSON.parse(localStorage.getItem('gcweb_GCAT'));
-    this.loginData.payload = this.credGCAT.payload;
-    if ( this.credGCAT !== null ) {
+    this.loginData.payload = this.credGCAT.payload ? this.credGCAT.payload : null;
+    if (this.credGCAT !== null) {
       this.ds.sendRequest('checkGCATmember', this.loginData).subscribe((res) => {
         if (res.status.remarks) {
+          this.auth.setUserLoggedIn(true);
           this.router.navigate(['admin']);
         } else {
           localStorage.removeItem('gcweb_GCAT');
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
           'success',
         );
 
+        this.auth.setUserLoggedIn(true);
         localStorage.setItem('gcweb_GCAT', JSON.stringify(res));
         this.router.navigate(['admin']);
 

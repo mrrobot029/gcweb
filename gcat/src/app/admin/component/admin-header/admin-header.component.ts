@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DataService } from "src/app/services/data.service";
@@ -20,15 +20,15 @@ export class AdminHeaderComponent implements OnInit {
     this.sidebarVisible = false;
   }
 
-  ngOnInit( ) {
-    this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+  ngOnInit() {
+    this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
       this.applicantCount = res.data[0].applicantcount
     })
     setInterval(() => {
       this.date = new Date;
     }, 1000);
     setInterval(() => {
-      this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+      this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
         this.applicantCount = res.data[0].applicantcount
       })
     }, 60000);
@@ -37,9 +37,9 @@ export class AdminHeaderComponent implements OnInit {
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
   }
 
-  getDuplicates(){
+  getDuplicates() {
     let promise = this.ds.sendRequest('getDuplicateApplications', null).toPromise()
-    promise.then(res=>{
+    promise.then(res => {
       console.log(res);
     })
   }
@@ -66,78 +66,78 @@ export class AdminHeaderComponent implements OnInit {
 
 
   sidebarOpen() {
-      const toggleButton = this.toggleButton;
-      const body = document.getElementsByTagName('body')[0];
-      setTimeout(() => {
-          toggleButton.classList.add('toggled');
-      }, 500);
+    const toggleButton = this.toggleButton;
+    const body = document.getElementsByTagName('body')[0];
+    setTimeout(() => {
+      toggleButton.classList.add('toggled');
+    }, 500);
 
-      body.classList.add('nav-open');
-      this.sidebarVisible = true;
+    body.classList.add('nav-open');
+    this.sidebarVisible = true;
   }
 
 
   sidebarClose() {
-      const body = document.getElementsByTagName('body')[0];
-      this.toggleButton.classList.remove('toggled');
-      this.sidebarVisible = false;
-      body.classList.remove('nav-open');
+    const body = document.getElementsByTagName('body')[0];
+    this.toggleButton.classList.remove('toggled');
+    this.sidebarVisible = false;
+    body.classList.remove('nav-open');
   }
 
   sidebarToggle() {
-      var $toggle = document.getElementsByClassName('navbar-toggler')[0];
+    var $toggle = document.getElementsByClassName('navbar-toggler')[0];
 
-      if (this.sidebarVisible === false) {
-          this.sidebarOpen();
-      } else {
-          this.sidebarClose();
+    if (this.sidebarVisible === false) {
+      this.sidebarOpen();
+    } else {
+      this.sidebarClose();
+    }
+
+    const body = document.getElementsByTagName('body')[0];
+
+    if (this.mobile_menu_visible === 1) {
+
+      body.classList.remove('nav-open');
+      if ($layer) {
+        $layer.remove();
+      }
+      setTimeout(() => {
+        $toggle.classList.remove('toggled');
+      }, 400);
+      this.mobile_menu_visible = 0;
+    } else {
+      setTimeout(() => {
+        $toggle.classList.add('toggled');
+      }, 430);
+
+      var $layer = document.createElement('div');
+      $layer.setAttribute('class', 'close-layer');
+
+      if (body.querySelectorAll('.main-panel')) {
+        document.getElementsByClassName('main-panel')[0].appendChild($layer);
+      } else if (body.classList.contains('off-canvas-sidebar')) {
+        document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
       }
 
-      const body = document.getElementsByTagName('body')[0];
+      setTimeout(() => {
+        $layer.classList.add('visible');
+      }, 100);
 
-      if (this.mobile_menu_visible === 1) {
+      $layer.onclick = function () {
 
-          body.classList.remove('nav-open');
-          if ($layer) {
-            $layer.remove();
-          }
-          setTimeout(() => {
-            $toggle.classList.remove('toggled');
-          }, 400);
-          this.mobile_menu_visible = 0;
-      } else {
-          setTimeout(() => {
-              $toggle.classList.add('toggled');
-          }, 430);
+        body.classList.remove('nav-open');
+        this.mobile_menu_visible = 0;
+        $layer.classList.remove('visible');
+        setTimeout(() => {
+          $layer.remove();
+          $toggle.classList.remove('toggled');
+        }, 400);
 
-          var $layer = document.createElement('div');
-          $layer.setAttribute('class', 'close-layer');
+      }.bind(this);
 
-          if (body.querySelectorAll('.main-panel')) {
-              document.getElementsByClassName('main-panel')[0].appendChild($layer);
-          } else if (body.classList.contains('off-canvas-sidebar')) {
-              document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
-          }
-
-          setTimeout(() => {
-              $layer.classList.add('visible');
-          }, 100);
-
-          $layer.onclick = function() {
-
-              body.classList.remove('nav-open');
-              this.mobile_menu_visible = 0;
-              $layer.classList.remove('visible');
-              setTimeout(() => {
-                  $layer.remove();
-                  $toggle.classList.remove('toggled');
-              }, 400);
-
-          }.bind(this);
-
-          body.classList.add('nav-open');
-          this.mobile_menu_visible = 1;
-      }
+      body.classList.add('nav-open');
+      this.mobile_menu_visible = 1;
+    }
   }
 
 }

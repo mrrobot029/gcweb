@@ -9,10 +9,22 @@ import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'applicants', pathMatch: 'full' },
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
-  { path: 'applicants', component: ApplicantsComponent, canActivate: [AuthGuard] },
-  { path: 'unscheduled', component: ConfirmedapplicantsComponent, canActivate: [AuthGuard] },
-  { path: 'scheduled', component: ScheduledComponent, canActivate: [AuthGuard] }
+  {
+    path: 'users', component: UsersComponent,
+    // canActivate: [AuthGuard] 
+  },
+  {
+    path: 'applicants', component: ApplicantsComponent,
+    //  canActivate: [AuthGuard] 
+  },
+  {
+    path: 'unscheduled', component: ConfirmedapplicantsComponent,
+    //  canActivate: [AuthGuard] 
+  },
+  {
+    path: 'scheduled', component: ScheduledComponent,
+    // canActivate: [AuthGuard] 
+  }
 ];
 
 @NgModule({

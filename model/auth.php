@@ -419,13 +419,13 @@ class Auth{
 		} else {
 			$pass = $this->encryptPassword("Aa1234567");	
 			$this->conn->query("INSERT INTO tbl_faculty(fa_empnumber,fa_fname,fa_mname,fa_lname,fa_extname,fa_password,fa_department) 
-			VALUES('$d->empNo','$d->empFname','$d->empMname','$d->empLname','$d->empEname','$pass','GCAT')");
+			VALUES('$d->empNo','$d->empFname','$d->empMname','$d->empLname','$d->empEname','$pass','$d->empType')");
 			return $this->info = array('status'=>array('remarks'=>true, 'message'=>'Successfully added.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
 		}
 	}
 
 	function loginGCATmember($d) {
-		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->username' and fa_department='GCAT' LIMIT 1");
+		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->username' and (fa_department='GCAT-AO' || fa_department='GCAT-R' || (fa_department='CCS' && fa_accounttype='1')) LIMIT 1");
 
         if ($this->result->num_rows>0) {
             while($res = $this->result->fetch_assoc()){

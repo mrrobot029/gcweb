@@ -9,7 +9,10 @@ import Swal from 'sweetalert2';
   styleUrls: ["./applicants.component.scss"]
 })
 export class ApplicantsComponent implements OnInit {
-  constructor(private ds: DataService, private spinner: NgxSpinnerService) {}
+
+  credentials: any = {};
+  credType: any = "";
+  constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
   schedTime: any;
   p = 1;
@@ -23,15 +26,23 @@ export class ApplicantsComponent implements OnInit {
   sort = 'gc.gc_idnumber';
   ngOnInit() {
     this.search.sort = this.sort;
-    if(this.applicants.length==null){
+    if (this.applicants.length == null) {
       this.noapplicants = true
       this.applicantCount = 0;
     }
     this.getUnconfirmedApplicants()
+
+
+    this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
+
+    if (this.credentials !== null) {
+      this.credType = this.credentials.data[0].fa_department;
+      console.log(this.credType);
+    }
   }
 
-  setSort(e){
-    switch(e.target.selectedOptions[0].value){
+  setSort(e) {
+    switch (e.target.selectedOptions[0].value) {
       case 'id':
         this.sort = 'gc.gc_idnumber'
         this.ngOnInit()
@@ -53,18 +64,18 @@ export class ApplicantsComponent implements OnInit {
     }
     this.searchValue = ''
   }
-  
+
   getUnconfirmedApplicants() {
     this.spinner.show()
     let promise = this.ds.sendRequest("getUnconfirmedApplicants", this.search).toPromise()
     promise.then(res => {
-      if(res.status.remarks){
+      if (res.status.remarks) {
         this.applicants = res.data;
         this.noapplicants = false;
         this.applicantCount = res.data.length
-        } else{
-          this.noapplicants = true
-        }
+      } else {
+        this.noapplicants = true
+      }
       this.spinner.hide()
     });
   }
@@ -81,24 +92,24 @@ export class ApplicantsComponent implements OnInit {
           this.applicants = [];
         }
       });
-      this.p = 1
+    this.p = 1
   }
 
-  sendMail(a){
+  sendMail(a) {
     this.spinner.show()
     let promise = this.ds.sendRequest('sendMail', a).toPromise()
-    promise.then(res=>{
+    promise.then(res => {
       this.spinner.hide()
       Swal.fire({
         icon: 'success',
         title: 'Confirmation Email Sent!',
-      }).then(()=>{
+      }).then(() => {
         this.ngOnInit()
       })
     })
   }
 
-  delete(a){
+  delete(a) {
     Swal.fire({
       title: `Delete applicant <br>${a.si_fullname}<br>`,
       icon: 'error',
@@ -112,24 +123,24 @@ export class ApplicantsComponent implements OnInit {
         this.fullscreen = true
         this.spinner.show()
         let promise = this.ds.sendRequest('deleteApplication', a).toPromise()
-        promise.then(res=>{
+        promise.then(res => {
           this.spinner.hide()
-          if(res.status.remarks){  
+          if (res.status.remarks) {
             Swal.fire(
-            'Deleted!',
-            'The application has been removed.',
-            'success'
-          ).then(()=>{
-            this.ngOnInit()
-          })
-          } else{
+              'Deleted!',
+              'The application has been removed.',
+              'success'
+            ).then(() => {
+              this.ngOnInit()
+            })
+          } else {
             Swal.fire(
-            'Error!',
-            'Something went wrong.',
-            'error'
-          ).then(()=>{
-            this.ngOnInit()
-          })
+              'Error!',
+              'Something went wrong.',
+              'error'
+            ).then(() => {
+              this.ngOnInit()
+            })
           }
 
         })
@@ -138,7 +149,7 @@ export class ApplicantsComponent implements OnInit {
     this.fullscreen = false
   }
 
-  confirmApplication(a){
+  confirmApplication(a) {
     Swal.fire({
       title: `Confirm application for <br>${a.si_fullname}<br>`,
       icon: 'warning',
@@ -151,24 +162,24 @@ export class ApplicantsComponent implements OnInit {
         this.fullscreen = true
         this.spinner.show()
         let promise = this.ds.sendRequest('confirmApplication', a).toPromise()
-        promise.then(res=>{
+        promise.then(res => {
           this.spinner.hide()
-          if(res.status.remarks){  
+          if (res.status.remarks) {
             Swal.fire(
-            'Confirmed!',
-            'The application is now confirmed.',
-            'success'
-          ).then(()=>{
-            this.ngOnInit()
-          })
-          } else{
+              'Confirmed!',
+              'The application is now confirmed.',
+              'success'
+            ).then(() => {
+              this.ngOnInit()
+            })
+          } else {
             Swal.fire(
-            'Error!',
-            'Something went wrong.',
-            'error'
-          ).then(()=>{
-            this.ngOnInit()
-          })
+              'Error!',
+              'Something went wrong.',
+              'error'
+            ).then(() => {
+              this.ngOnInit()
+            })
           }
 
         })
@@ -176,7 +187,7 @@ export class ApplicantsComponent implements OnInit {
     })
     this.fullscreen = false
   }
-  
+
   addGCATSchedule(idnumber) {
     let isSchedDateSet: any;
     let isSchedTimeSet: any;

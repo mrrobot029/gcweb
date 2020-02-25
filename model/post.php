@@ -1305,7 +1305,7 @@
 
             // gcat/users
             function getGCATmembers() {
-                return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='GCAT-R' || fa_department='GCAT-AO' ORDER BY fa_lname,fa_fname,fa_mname,fa_extname ASC");
+                return $this->executeWithRes("SELECT * from tbl_faculty WHERE fa_department='GCAT-R' || fa_department='GCAT-AO' ORDER BY fa_department,fa_lname,fa_fname,fa_mname,fa_extname ASC");
             }
 
             function deleteGCATmember($d) {

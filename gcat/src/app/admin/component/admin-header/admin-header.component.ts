@@ -10,6 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
+
+  credentials: any = {};
+  credType: any = "";
+
+
+
   date = new Date()
   applicantCount
   credAdmin: any = {};
@@ -22,6 +28,19 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+    this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
+
+    if (this.credentials !== null) {
+      this.credType = this.credentials.data[0].fa_department;
+      console.log(this.credType);
+    }
+
+
+
+
+
     this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
       this.applicantCount = res.data[0].applicantcount
     })

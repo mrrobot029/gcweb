@@ -73,7 +73,8 @@ font-size: 0.4375rem;
 
 @media print{
 	html, body{
-		height: 100%;
+		width: 8.27in!important;
+		height: 11.69in!important;
 		margin: 0 !important;
 		padding: 0 !important;
 		overflow: hidden;

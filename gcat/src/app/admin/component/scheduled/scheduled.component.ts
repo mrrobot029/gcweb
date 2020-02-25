@@ -1,6 +1,7 @@
 import { Component, OnInit, ɵConsole } from "@angular/core";
 import { NgxSpinnerService } from 'ngx-spinner'
 import { DataService } from "src/app/services/data.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-scheduled",
@@ -109,5 +110,32 @@ export class ScheduledComponent implements OnInit {
       }
     });
     this.schedule = {};
+  }
+
+  unschedule(a){
+    this.spinner.show()
+    let promise = this.ds.sendRequest('unscheduleApplicant', a).toPromise()
+    promise.then(res => {
+      if(res.status.remarks){
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          html: `Applicant<br><strong>${a.si_fullname}</strong><br>has been unscheduled.`
+        }).then(()=>{
+          this.getScheduledApplicants()
+          this.getAllSchedules()
+        })
+      } else{
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          html: `Unscheduling failed!`
+        }).then(()=>{
+          this.getAllSchedules()
+          this.getScheduledApplicants()
+        })
+      }
+      this.spinner.hide()
+    })
   }
 }

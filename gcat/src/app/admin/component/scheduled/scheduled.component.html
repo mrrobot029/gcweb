@@ -27,9 +27,13 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <a href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}"
+                <a *ngIf="dropDownSched" href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}" target="_blank"
                   class="btn btn-sm btn-block btn-success">
                   Print Attendance
+                </a>
+                <a *ngIf="!dropDownSched" href="javascript:void(0)"
+                  class="btn btn-sm btn-block btn-disabled">
+                  Select schedule date first!
                 </a>
               </div>
               <div class="col-md-3">

@@ -16,31 +16,31 @@
                         <strong>{{ date | date : "MMMM dd,y h:mm:ss a" }}</strong>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="credType=='CCS'">
                     <a class="nav-link" href="javascript:void(0)" matTooltip="Total Number of Applicants">
                         <i class="material-icons">people_alt</i><strong>{{applicantCount}}</strong><br>Total Applicants
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="credType=='CCS'">
                     <a class="nav-link"
                         href="https://gordoncollegeccs.edu.ph/gc/api/print/allGCATApplication.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
                         matTooltip="Generate Excel File">
                         <i class="material-icons">grid_on</i><br>EXCEL FILE
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="credType=='CCS'">
                     <a class="nav-link"
                         href="https://gordoncollegeccs.edu.ph/gc/api/print/allDuplicates.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
                         matTooltip="Get Duplicate Entries">
                         <i class="material-icons">exposure_plus_2</i><br>GET DUPLICATES
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="credType=='CCS'">
                     <a class="nav-link" href="javascript:void(0)" matTooltip="Print Reports">
                         <i class="material-icons">print</i><br>REPORTS
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="credType=='CCS'">
                     <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics">
                         <i class="material-icons">pie_chart</i><br>STATISTICS
                     </a>

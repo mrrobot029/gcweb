@@ -1,9 +1,5 @@
 <div class="logo text-center">
-  <a
-    href="https://www.facebook.com/GordonCollegeOfficial/"
-    target="_blank"
-    class="simple-text"
-  >
+  <a href="https://www.facebook.com/GordonCollegeOfficial/" target="_blank" class="simple-text">
     <div class="logo-img">
       <img src="assets/img/gc-log.png" />
     </div>
@@ -21,21 +17,22 @@
       </a>
     </li>
     <li routerLinkActive="active" class="nav-item">
-      <a class="nav-link" [routerLink]="['unscheduled']">
+      <a class=" nav-link" [routerLink]="['unscheduled']">
         <i class="material-icons">group_add</i>
         <p>Confirmed Applicants</p>
       </a>
     </li>
     <li routerLinkActive="active" class="nav-item">
-      <a class="nav-link" [routerLink]="['scheduled']">
+      <a class=" nav-link" [routerLink]="['scheduled']">
         <i class="material-icons">
           how_to_reg
         </i>
         <p>Scheduled Applicants</p>
       </a>
     </li>
-    <li routerLinkActive="active" class="nav-item">
-      <a class="nav-link" [routerLink]="['users']">
+    <li routerLinkActive="active" class="nav-item" *ngIf="credType=='CCS' 
+    ">
+      <a class=" nav-link" [routerLink]="['users']">
         <i class="material-icons">supervised_user_circle</i>
         <p>Users</p>
       </a>

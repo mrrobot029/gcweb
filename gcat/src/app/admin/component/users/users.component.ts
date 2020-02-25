@@ -30,13 +30,14 @@ export class UsersComponent implements OnInit {
     this.requestdata.empMname = e.target.elements[2].value;
     this.requestdata.empLname = e.target.elements[3].value;
     this.requestdata.empEname = e.target.elements[4].value;
+    this.requestdata.empType = e.target.elements[5].value;
 
     this.ds.sendRequest('addGCATmember', this.requestdata).subscribe(res => {
       if (res.status.remarks) {
-        this.ds.callSwal('Success', res.status.message , 'success');
+        this.ds.callSwal('Success', res.status.message, 'success');
         this.getGCATmembers();
       } else {
-        this.ds.callSwal('Failed', res.status.message , 'error');
+        this.ds.callSwal('Failed', res.status.message, 'error');
       }
 
       this.requestdata = {};

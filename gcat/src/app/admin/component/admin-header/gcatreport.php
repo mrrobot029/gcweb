@@ -1,5 +1,5 @@
 <?php
-            $sched_recno = $_GET['sched_recno'];
+            $report = $_GET['report'];
             require_once "../config/connect.php";
             $sql = "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'";
             $query = mysqli_query($conn,$sql);
@@ -76,7 +76,7 @@ if($id == $decryptedkey){
         <tbody>
             <tr>
                 <td class="center" colspan="3">
-                    <h2>GCAT Examinees A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
+                    <h2>GCAT A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
 
 if($es_sem == '1'){
   echo "1st";
@@ -87,46 +87,57 @@ if($es_sem == '1'){
 }
 
 ?> Semester</h2>
-                    <h3>Exam Date: <?php echo date('F d, Y', $sched_date); ?> - <?php echo $sched_time; ?> | Room No:__________</h3>
+<?php switch($report){
+        case 'stats':
+            $tbody = "";
+            $title = "STATISTICS REPORT";
+            $thead = "
+                <th class='border-thin'>No.</th>
+                <th class='border-thin'>ID Number</th>
+                <th class='border-thin'>Full Name</th>
+                <th class='border-thin' width='60'>Course</th>
+                <th class='border-thin'>E-mail</th>
+                <th class='border-thin'>CP Number</th>
+                <th class='border-thin'>Signature</th>
+            ";  
+            $x = 1;
+            $query = mysqli_query($conn, "SELECT * from tbl_studentinfo stud INNER JOIN tbl_gcat g ON g.gc_idnumber = stud.si_idnumber INNER JOIN tbl_gcatschedule gs ON g.gc_examtime = gs.sched_recno WHERE gs.sched_recno = '$sched_recno' ORDER BY stud.si_lastname,stud.si_firstname,stud.si_midname");
+            if(mysqli_num_rows($query)>0){
+                while($res = mysqli_fetch_assoc($query)){
+                    $idnumber = $res['si_idnumber'];
+                    $fullname = $res['si_lastname'].", ".$res['si_firstname'].", ".$res['si_midname'];
+                    $course = $res['si_course'];
+                    $email = $res['si_email'];
+                    $mobile = $res['si_mobile'];
+                    $tbody .= `
+                    <td class="border-thin">$x</td>
+                    <td class="border-thin">$idnumber</td>
+                    <td class="border-thin">$fullname</td>
+                    <td class="border-thin">$course</td>
+                    <td class="border-thin">$email</td>
+                    <td class="border-thin">$mobile</td>
+                    <td class="border-thin"></td>
+                    `;
+                    $x++;
+                }
+            }
+
+    }
+?>
+                    <h3><?php echo $title; ?></h3>
                 </td>
             </tr>
         </tbody>
     </table>
     <table width="100%" class="table-body">
         <thead>
-            <th class="border-thin">No.</th>
-            <th class="border-thin">ID Number</th>
-            <th class="border-thin">Full Name</th>
-            <th class="border-thin" width="60">Course</th>
-            <th class="border-thin">E-mail</th>
-            <th class="border-thin">CP Number</th>
-            <th class="border-thin">Signature</th>
+           <?php echo $thead; ?>
         </thead>
         <tbody>
 
-
-        <?php     
-            $x = 1;
-            $query = mysqli_query($conn, "SELECT * from tbl_studentinfo stud INNER JOIN tbl_gcat g ON g.gc_idnumber = stud.si_idnumber INNER JOIN tbl_gcatschedule gs ON g.gc_examtime = gs.sched_recno WHERE gs.sched_recno = '$sched_recno' ORDER BY stud.si_lastname,stud.si_firstname,stud.si_midname");
-            if(mysqli_num_rows($query)>0){
-                while($res = mysqli_fetch_assoc($query)){
-
-        ?>
             <tr>
-                <td class="border-thin"><?php echo $x; ?></td>
-                <td class="border-thin"><?php echo $res['si_idnumber']; ?></td>
-                <td class="border-thin"><?php echo $res['si_lastname']; ?>, <?php echo $res['si_firstname']; ?> <?php echo $res['si_midname']; ?> <?php echo $res['si_extname']; ?></td>
-                <td class="border-thin"><?php echo $res['si_course']; ?></td>
-                <td class="border-thin"><?php echo $res['si_email']; ?></td>
-                <td class="border-thin"><?php echo $res['si_mobile']; ?></td>
-                <td class="border-thin"></td>
+                <?php echo $tbody ?>
             </tr>
-
-        <?php 
-                    $x++;
-                }
-            }
-        ?>
         </tbody>
     </table>
 </body>

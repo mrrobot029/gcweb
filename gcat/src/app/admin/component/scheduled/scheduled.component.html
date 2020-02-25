@@ -56,7 +56,14 @@
                     <td>{{ applicant.gc_course }}</td>
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
-                    <td></td>
+                    <td>
+                      <button matTooltip="Undo Schedule" matTooltipPosition="above" class="btn btn-sm btn-danger"
+                      (click)="unschedule(applicant)">
+                      <i class="material-icons">
+                        undo
+                      </i>
+                    </button>
+                  </td>
                   </tr>
                 </tbody>
               </table>

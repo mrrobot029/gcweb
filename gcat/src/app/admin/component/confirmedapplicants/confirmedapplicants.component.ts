@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: "app-confirmedapplicants",
@@ -125,16 +126,21 @@ export class ConfirmedapplicantsComponent implements OnInit {
     this.fullscreen = false;
   }
 
-  addScheduleForApplicant(idnumber) {
+  addScheduleForApplicant(applicant) {
     if (this.schedTime !== "") {
       this.schedule.time = this.schedTime;
-      this.schedule.idNumber = idnumber;
+      this.schedule.idNumber = applicant.gc_idnumber;
+      let selectedsched = this.scheds.filter(s => {
+        return s.sched_recno == this.schedTime
+      })
       this.ds
         .sendRequest("addScheduleForApplicant", this.schedule)
         .subscribe(res => {
           if (res.status.remarks) {
-            this.ds
-              .callSwal("Success", "Record updated successfully.", "success")
+              Swal.fire({
+                title: `${applicant.si_fullname}`, 
+                html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
+                icon: "success"})
               .then(() => {
                 this.getUnscheduledApplicants();
                 this.getAvailableSchedules();
@@ -154,8 +160,15 @@ export class ConfirmedapplicantsComponent implements OnInit {
     this.ds.sendRequest("getAvailableSchedules", null).subscribe(res => {
       if (res.status.remarks) {
         this.scheds = res.data;
+        this.schedTime = ""
+        this.schedule.time = ""
+        if(this.schedTime == ""){
+          this.schedTime = res.data[0].sched_recno
+        }
       } else {
         this.scheds = [];
+        this.schedTime = ""
+        this.schedule.time = ""
       }
     });
   }

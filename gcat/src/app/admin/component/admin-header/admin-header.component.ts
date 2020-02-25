@@ -14,7 +14,7 @@ export class AdminHeaderComponent implements OnInit {
   credentials: any = {};
   credType: any = "";
 
-
+  queryVar: any = {};
 
   date = new Date()
   applicantCount
@@ -82,6 +82,28 @@ export class AdminHeaderComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+
+  updatePassword(e) {
+    e.preventDefault();
+    if (e.target.elements[1].value === e.target.elements[2].value) {
+      this.queryVar.fa_recno = this.credentials.data[0].fa_recno;
+      this.queryVar.oldPass = e.target.elements[0].value
+      this.queryVar.newPass = e.target.elements[1].value
+      this.queryVar.accType = 0;
+      this.ds.sendRequest("updatePassword", this.queryVar).subscribe(res => {
+        if (res.status.remarks) {
+          this.ds.callSwal("Update success.", res.status.message, "success");
+        } else {
+          this.ds.callSwal("Update failed.", res.status.message, "error");
+        }
+      });
+    } else {
+      this.ds.callSwal("Update failed.", "Confirm password does not match.", "error");
+    }
+
+
   }
 
 

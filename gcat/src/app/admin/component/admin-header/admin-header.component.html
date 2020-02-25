@@ -45,8 +45,8 @@
                         <i class="material-icons">pie_chart</i><br>STATISTICS
                     </a>
                 </li>
-                <li class="nav-item" matTooltip="Current User">
-                    <a class="nav-link" href="javascript:void(0)">
+                <li class="nav-item" matTooltip="Change Password">
+                    <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#addModal">
                         <i class="material-icons">supervised_user_circle</i><br>
                         {{ credAdmin.data[0].fa_lname + ", " +credAdmin.data[0].fa_fname + " " + credAdmin.data[0].fa_mname  + " "+ credAdmin.data[0].fa_extname }}
                     </a>
@@ -64,3 +64,43 @@
         </div>
     </div>
 </nav>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="uploadModalLabel">Change Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" (submit)="updatePassword($event)">
+                    <div class="form-group">
+                        <label for="name2">Old Password</label>
+                        <input class="form-control" name="name2" type="password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="name2">New Password</label>
+                        <input class="form-control" name="name2" type="password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="name2">Confirm Password</label>
+                        <input class="form-control" name="name2" type="password" required />
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success pull-right">
+                        Add Sched
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,12 +16,12 @@
                         <strong>{{ date | date : "MMMM dd,y h:mm:ss a" }}</strong>
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="credType=='CCS'">
+                <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0)" matTooltip="Total Number of Applicants">
                         <i class="material-icons">people_alt</i><strong>{{applicantCount}}</strong><br>Total Applicants
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="credType=='CCS'">
+                <li class="nav-item">
                     <a class="nav-link"
                         href="https://gordoncollegeccs.edu.ph/gc/api/print/allGCATApplication.php?key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
                         matTooltip="Generate Excel File">
@@ -35,18 +35,18 @@
                         <i class="material-icons">exposure_plus_2</i><br>GET DUPLICATES
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="credType=='CCS'">
-                    <a class="nav-link" href="javascript:void(0)" matTooltip="Print Reports">
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="Print Reports" data-toggle="modal" data-target="#reportsModal">
                         <i class="material-icons">print</i><br>REPORTS
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="credType=='CCS'">
+                <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics">
                         <i class="material-icons">pie_chart</i><br>STATISTICS
                     </a>
                 </li>
                 <li class="nav-item" matTooltip="Change Password">
-                    <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#addModal">
+                    <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#changePasswordModal">
                         <i class="material-icons">supervised_user_circle</i><br>
                         {{ credAdmin.data[0].fa_lname + ", " +credAdmin.data[0].fa_fname + " " + credAdmin.data[0].fa_mname  + " "+ credAdmin.data[0].fa_extname }}
                     </a>
@@ -73,7 +73,7 @@
 
 
 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,9 +97,25 @@
                         <input class="form-control" name="name2" type="password" required />
                     </div>
                     <button type="submit" class="btn btn-sm btn-success pull-right">
-                        Add Sched
+                        Change Password
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportsModal" tabindex="-1" role="dialog" aria-labelledby="reportsModal" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="uploadModalLabel">Reports</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>REPORTS</h1>
             </div>
         </div>
     </div>

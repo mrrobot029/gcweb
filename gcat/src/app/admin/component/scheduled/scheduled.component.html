@@ -6,7 +6,7 @@
           <div class="card-header card-header-success">
             <h4 class="card-title ">
               List of Scheduled Applicants - Total Count:
-              <strong>{{ applicantCount }}</strong>
+              <strong>{{applicantCountOnDate}}/{{ applicantCount }}</strong>
             </h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
@@ -20,6 +20,7 @@
               </div>
               <div class="col-md-3">
                 <select class="form-control" [(ngModel)]="dropDownSched" (change)="getScheduledApplicants()">
+                  <option value="">--SELECT DATE--</option>
                   <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
                     {{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}} | <strong>Count:</strong>
                     {{ " (" + sched.sched_count + ")" }}
@@ -27,7 +28,7 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <a *ngIf="dropDownSched" href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}" target="_blank"
+                <a *ngIf="dropDownSched" href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D" target="_blank"
                   class="btn btn-sm btn-block btn-success">
                   Print Attendance
                 </a>
@@ -137,7 +138,7 @@
                 <td>
                   <button style="align-self: flex-start; margin-left: auto;" class="btn btn-sm btn-danger"
                     matTooltip="Delete Applicant" matTooltipPosition="above"
-                    (click)="delGCATSchedule(sched.sched_recno)">
+                    (click)="delGCATSchedule(sched.sched_recno)"  [disabled]="sched.sched_count != 0">
                     <i class="material-icons">
                       delete
                     </i>

@@ -94,13 +94,13 @@ export class AdminHeaderComponent implements OnInit {
       this.queryVar.accType = 0;
       this.ds.sendRequest("updatePassword", this.queryVar).subscribe(res => {
         if (res.status.remarks) {
-          this.ds.callSwal("Update success.", res.status.message, "success");
+          this.ds.callSwal("Update success.", res.status.message, "success").then(()=>this.ngOnInit());
         } else {
-          this.ds.callSwal("Update failed.", res.status.message, "error");
+          this.ds.callSwal("Update failed.", res.status.message, "error").then(()=>this.ngOnInit());
         }
       });
     } else {
-      this.ds.callSwal("Update failed.", "Confirm password does not match.", "error");
+      this.ds.callSwal("Update failed.", "Confirm password does not match.", "error").then(()=>this.ngOnInit());
     }
 
 

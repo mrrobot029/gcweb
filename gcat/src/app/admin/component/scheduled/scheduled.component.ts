@@ -18,16 +18,24 @@ export class ScheduledComponent implements OnInit {
   schedule: any = {};
   noapplicants = true;
   applicantCount = 0;
+  applicantCountOnDate = 0
   scheds: any;
   dropDownSched = "";
 
   async ngOnInit() {
     await this.getScheduledApplicants();
     await this.getAllSchedules();
+    await this.getScheduledApplicantsCount()
     if (this.applicants.length == null) {
       this.noapplicants = true;
       this.applicantCount = 0;
     }
+  }
+
+  getScheduledApplicantsCount(){
+    this.ds.sendRequest('getAllScheduledApplicantsCount', null).subscribe(res=>{
+      this.applicantCount = res.data[0].scheduledCount
+    })
   }
 
   getScheduledApplicants() {
@@ -36,11 +44,11 @@ export class ScheduledComponent implements OnInit {
       if (res.data) {
 
         this.applicants = res.data;
-        this.applicantCount = res.data.length;
+        this.applicantCountOnDate = res.data.length
         this.noapplicants = false;
       } else {
         this.applicants = [];
-        this.applicantCount = 0
+        this.applicantCountOnDate = 0
         this.noapplicants = true;
       }
 
@@ -57,11 +65,11 @@ export class ScheduledComponent implements OnInit {
       .subscribe(res => {
         if (res.status.remarks) {
           this.applicants = res.data;
-          this.applicantCount = res.data.length;
+          this.applicantCountOnDate = res.data.length
           this.noapplicants = false;
         } else {
           this.applicants = [];
-          this.applicantCount = 0
+          this.applicantCountOnDate = 0
           this.noapplicants = true;
         }
       });
@@ -123,6 +131,7 @@ export class ScheduledComponent implements OnInit {
           html: `Applicant<br><strong>${a.si_fullname}</strong><br>has been unscheduled.`
         }).then(()=>{
           this.getScheduledApplicants()
+          this.getScheduledApplicantsCount()
           this.getAllSchedules()
         })
       } else{
@@ -133,6 +142,7 @@ export class ScheduledComponent implements OnInit {
         }).then(()=>{
           this.getAllSchedules()
           this.getScheduledApplicants()
+          this.getScheduledApplicantsCount()
         })
       }
       this.spinner.hide()

@@ -1,13 +1,45 @@
+<?php
+            $sched_recno = $_GET['sched_recno'];
+            require_once "../config/connect.php";
+            $sqlGetSchedule = "SELECT * FROM tbl_gcatschedule WHERE sched_recno = '$sched_recno'";
+            $queryGetSchedule = mysqli_query($conn,$sqlGetSchedule);
+            if(mysqli_num_rows($queryGetSchedule)>0){
+                while($res = mysqli_fetch_assoc($queryGetSchedule)){
+                $sched_date = strtotime($res['sched_date']);
+                $sched_time = $res['sched_time'];
+                }
+            } else{
+                echo $conn->error;
+            }
+            $ciphering = "AES-128-CTR"; 
+    $iv_length = openssl_cipher_iv_length($ciphering); 
+    $options = 0; 
+    $id = 'forgcatadminonly!';
+    $key = '';
+    if(isset($_GET['key'])){
+        $key = rawurldecode($_GET['key']);
+    }
+    $decryption_iv = '1234567891011121'; 
+    
+  // Store the decryption key 
+    $decryption_key = "fsociety"; 
+    
+  // Use openssl_decrypt() function to decrypt the data 
+    $decryptedkey=openssl_decrypt ($key, $ciphering,  
+                $decryption_key, $options, $decryption_iv); 
+if($id == $decryptedkey){
+
+?>
 <!DOCTYPE html>
-<html>
+<html style="width: 8.5in!important; height: 11in!important">
 
 <head>
     <meta charset="UTF-8">
-    <title>Student Information Sheet</title>
+    <title>GCAT Examinees Attendance</title>
     <link rel="stylesheet" type="text/css" href="css/GCATAttendance.css">
 </head>
 
-<body>
+<body style="width: 99%!important; height: 100%!important;">
     <table class="txt table-body">
         <tbody>
             <tr>
@@ -33,6 +65,7 @@
             <tr>
                 <td class="center" colspan="3">
                     <h2>GCAT Examinees A.Y. 2020-2021 1st Semester</h2>
+                    <h3>Exam Date: <?php echo date('F d, Y', $sched_date); ?> - <?php echo $sched_time; ?></h3>
                 </td>
             </tr>
         </tbody>
@@ -42,7 +75,7 @@
             <th class="border-thin">No.</th>
             <th class="border-thin">ID Number</th>
             <th class="border-thin">Full Name</th>
-            <th class="border-thin">Course</th>
+            <th class="border-thin" width="60">Course</th>
             <th class="border-thin">E-mail</th>
             <th class="border-thin">CP Number</th>
             <th class="border-thin">Signature</th>
@@ -50,10 +83,7 @@
         <tbody>
 
 
-        <?php 
-            require_once "../config/connect.php";
-        
-            $sched_recno = $_GET['sched_recno'];
+        <?php     
             $x = 1;
             $query = mysqli_query($conn, "SELECT * from tbl_studentinfo stud INNER JOIN tbl_gcat g ON g.gc_idnumber = stud.si_idnumber INNER JOIN tbl_gcatschedule gs ON g.gc_examtime = gs.sched_recno WHERE gs.sched_recno = '$sched_recno' ORDER BY stud.si_lastname,stud.si_firstname,stud.si_midname");
             if(mysqli_num_rows($query)>0){
@@ -85,3 +115,8 @@
 <script>
     window.print()
 </script>
+<?php
+}else{
+    echo '<h1>UNAUTHORIZED!</h1>';
+}
+?>

@@ -14,7 +14,8 @@
             <div class="row">
               <div class="col-md-3">
                 <form autocomplete="off">
-                  <input class="form-control" name="search" placeholder="Search ..." type="text" (keyup)="searchScheduledApplicants($event)"/>
+                  <input class="form-control" name="search" placeholder="Search ..." type="text"
+                    (keyup)="searchScheduledApplicants($event)" />
                 </form>
               </div>
               <div class="col-md-3">
@@ -24,6 +25,12 @@
                     {{ " (" + sched.sched_count + ")" }}
                   </option>
                 </select>
+              </div>
+              <div class="col-md-3">
+                <a href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}"
+                  class="btn btn-sm btn-block btn-success">
+                  Print Attendance
+                </a>
               </div>
               <div class="col-md-3">
                 <button class="btn btn-sm btn-block btn-info" data-toggle="modal" data-target="#addModal">
@@ -87,11 +94,11 @@
           <div class="form-group container">
             <label for="name2">Date And Time</label>
             <div class="row">
-            <input class="form-control col-md-8" name="name2" type="date" style="margin-right: 20px;"/>
-            <select class="form-control col-md-3" name="time" [(ngModel)]="schedTime">
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
-            </select>
+              <input class="form-control col-md-8" name="name2" type="date" style="margin-right: 20px;" />
+              <select class="form-control col-md-3" name="time" [(ngModel)]="schedTime">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
             </div>
           </div>
           <button type="submit" class="btn btn-sm btn-success pull-right">
@@ -110,7 +117,8 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <tr *ngFor=" let sched of scheds | paginate: { id: 'pagination2', itemsPerPage: 5, currentPage: p }; let i = index">
+              <tr
+                *ngFor=" let sched of scheds | paginate: { id: 'pagination2', itemsPerPage: 5, currentPage: p }; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}}</td>
                 <td>{{ sched.sched_count }}</td>

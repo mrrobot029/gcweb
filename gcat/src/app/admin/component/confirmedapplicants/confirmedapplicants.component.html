@@ -26,7 +26,8 @@
               <div class="col-md-2">
                 <label for="">Sort By:</label>
                 <form autocomplete="off" class="flexcontainercolumn">
-                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)" style="margin-top: -5px;">
+                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)"
+                    style="margin-top: -5px;">
                     <option value="id">ID NUMBER</option>
                     <option value="name">NAME</option>
                     <option value="email">EMAIL</option>
@@ -75,7 +76,7 @@
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
                       <button matTooltip="Add Schedule" matTooltipPosition="above" class="btn btn-sm btn-success"
-                        (click)="addScheduleForApplicant(applicant.gc_idnumber)" disabled>
+                        (click)="addScheduleForApplicant(applicant.gc_idnumber)">
                         <i class="material-icons">
                           note_add
                         </i>

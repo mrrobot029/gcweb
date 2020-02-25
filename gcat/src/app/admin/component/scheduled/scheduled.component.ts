@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ɵConsole } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner'
 import { DataService } from "src/app/services/data.service";
 
 @Component({
@@ -7,9 +8,9 @@ import { DataService } from "src/app/services/data.service";
   styleUrls: ["./scheduled.component.scss"]
 })
 export class ScheduledComponent implements OnInit {
-  constructor(private ds: DataService) { }
+  constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
-  schedTime: any;
+  schedTime = 'AM';
   p = 1;
   applicants: any = {};
   search: any = {};
@@ -48,7 +49,7 @@ export class ScheduledComponent implements OnInit {
 
   searchScheduledApplicants(e) {
     e.preventDefault();
-    this.search.value = e.target.elements[0].value;
+    this.search.value = e.target.value;
     this.search.dropDownSched = this.dropDownSched;
     this.ds
       .sendRequest("searchScheduledApplicants", this.search)
@@ -76,15 +77,19 @@ export class ScheduledComponent implements OnInit {
   }
 
   addGCATSchedule(e) {
+    this.spinner.show()
     e.preventDefault();
-    this.schedule.time = e.target.elements[0].value;
-
-    this.ds.sendRequest("addGCATSchedule", this.schedule).subscribe(res => {
+    this.schedule.date = e.target.elements[0].value;
+    this.schedule.time = this.schedTime
+    console.log(this.schedule)
+    let promise = this.ds.sendRequest("addGCATSchedule", this.schedule).toPromise()
+    promise.then(res => {
       if (res.status.remarks) {
         this.getAllSchedules();
       } else {
         this.ds.callSwal("Adding Failed.", "Check the sched info.", "error");
       }
+      this.spinner.hide()
     });
 
     this.schedule = {};

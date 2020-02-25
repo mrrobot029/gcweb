@@ -15,7 +15,7 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <form autocomplete="off">
                   <label for="search" class="p-0 m-0">Search</label>
                   <input class="form-control" [(ngModel)]="searchValue" name="search" type="text"
@@ -23,37 +23,31 @@
                 </form>
               </div>
 
-              <div class="col-md-3">
-                <label for="">SORT BY:</label>
+              <div class="col-md-2">
+                <label for="">Sort By:</label>
                 <form autocomplete="off" class="flexcontainercolumn">
-                  <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="defaultChecked" (click)="setSort('id')"
-                      name="sort" checked />
-                    <label class="custom-control-label" for="defaultChecked">ID NUMBER</label>
-                  </div>
-                  <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="defaultUnchecked" (click)="setSort('name')"
-                      name="sort" />
-                    <label class="custom-control-label" for="defaultUnchecked">NAME</label>
-                  </div>
+                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)" style="margin-top: -5px;">
+                    <option value="id">ID NUMBER</option>
+                    <option value="name">NAME</option>
+                    <option value="email">EMAIL</option>
+                    <option value="program">PROGRAM</option>
+                  </select>
                 </form>
               </div>
+              <div class="col-md-3"></div>
               <div class="col-md-3 ">
                 <label for="time" class="p-0 m-0">Schedule Time</label>
                 <select class="form-control" name="time" [(ngModel)]="schedTime">
                   <option value="">SELECT TIME</option>
                   <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
-                    {{ sched.sched_time }} | <strong>Count:</strong>
+                    {{ sched.sched_date | date : "MMMM dd, y"  }} - {{ sched.sched_time }} | <strong>Count:</strong>
                     {{ " (" + sched.sched_count + ")" }}
                   </option>
                 </select>
               </div>
-              <div class="col-md-3">
-                <br />
-                <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
-              </div>
             </div>
-
+            <br>
+            <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
             <div class="table-responsive" *ngIf="!noapplicants">
               <table class="table table-striped">
                 <thead class=" text-primary">
@@ -81,7 +75,7 @@
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
                       <button matTooltip="Add Schedule" matTooltipPosition="above" class="btn btn-sm btn-success"
-                        (click)="addScheduleForApplicant(applicant.gc_idnumber)">
+                        (click)="addScheduleForApplicant(applicant.gc_idnumber)" disabled>
                         <i class="material-icons">
                           note_add
                         </i>

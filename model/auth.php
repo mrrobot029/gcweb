@@ -406,6 +406,11 @@ class Auth{
 
 
 
+
+
+
+
+
 	// all about gcat
 	function addGCATmember($d) {
 		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->empNo'");
@@ -420,7 +425,7 @@ class Auth{
 	}
 
 	function loginGCATmember($d) {
-		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->username' and (fa_department='GCAT-R' || fa_department='GCAT-AO' || (fa_department = 'CCS' && fa_accounttype = '1'))  LIMIT 1");
+		$this->result = $this->conn->query("SELECT * from tbl_faculty WHERE fa_empnumber='$d->username' and fa_department='GCAT' LIMIT 1");
 
         if ($this->result->num_rows>0) {
             while($res = $this->result->fetch_assoc()){
@@ -485,6 +490,20 @@ class Auth{
 		}
 	}
 	
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
 
 
 

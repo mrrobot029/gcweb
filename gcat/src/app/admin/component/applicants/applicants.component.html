@@ -28,27 +28,19 @@
                 </form>
                 </div>
                 <div class="col-md-2">
-                  <label for="">SORT BY:</label>
+                  <label for="">Sort By:</label>
                   <form autocomplete="off" class="flexcontainercolumn">
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="defaultChecked" (click)="setSort('id')" name="sort" checked>
-                      <label class="custom-control-label" for="defaultChecked">ID NUMBER</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" id="defaultUnchecked" (click)="setSort('name')" name="sort">
-                      <label class="custom-control-label" for="defaultUnchecked">NAME</label>
-                    </div>
+                    <select name="sort" id="sort" class="form-control" (change)="setSort($event)" style="margin-top: -5px;">
+                      <option value="id">ID NUMBER</option>
+                      <option value="name">NAME</option>
+                      <option value="email">EMAIL</option>
+                      <option value="program">PROGRAM</option>
+                    </select>
                   </form>
                 </div>
-              <div class="col-md-6">
-                <br />
-                <pagination-controls
-                  class="pull-right"
-                  (pageChange)="p = $event"
-                ></pagination-controls>
-              </div>
             </div>
-
+            <br>
+            <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
             <div class="table-responsive" *ngIf="!noapplicants">
               <table class="table table-striped">
                 <thead class=" text-primary">

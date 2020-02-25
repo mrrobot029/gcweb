@@ -33,21 +33,28 @@ export class ConfirmedapplicantsComponent implements OnInit {
     await this.getAvailableSchedules();
   }
 
-  setSort(e) {
-    switch (e) {
-      case "id":
-        this.sort = "gc.gc_idnumber";
-        this.ngOnInit();
-        break;
-      case "name":
-        this.sort =
-          "si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber";
-        this.ngOnInit();
-        break;
+  setSort(e){
+    switch(e.target.selectedOptions[0].value){
+      case 'id':
+        this.sort = 'gc.gc_idnumber'
+        this.ngOnInit()
+        break
+      case 'name':
+        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
+        this.ngOnInit()
+        break
+      case 'email':
+        this.sort = 'si.si_email'
+        this.ngOnInit()
+        break
+      case 'program':
+        this.sort = 'gc.gc_course,si.si_lastname'
+        this.ngOnInit()
+        break
       default:
-        this.sort = "gc.gc_idnumber";
+        this.sort = 'gc.gc_idnumber'
     }
-    this.searchValue = "";
+    this.searchValue = ''
   }
 
   getUnscheduledApplicants() {

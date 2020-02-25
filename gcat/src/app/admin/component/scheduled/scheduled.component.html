@@ -13,14 +13,14 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-3">
-                <form (submit)="searchScheduledApplicants($event)" autocomplete="off">
-                  <input class="form-control" name="search" placeholder="Search ..." type="text" />
+                <form autocomplete="off">
+                  <input class="form-control" name="search" placeholder="Search ..." type="text" (keyup)="searchScheduledApplicants($event)"/>
                 </form>
               </div>
               <div class="col-md-3">
                 <select class="form-control" [(ngModel)]="dropDownSched" (change)="getScheduledApplicants()">
                   <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
-                    {{ sched.sched_time }} | <strong>Count:</strong>
+                    {{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}} | <strong>Count:</strong>
                     {{ " (" + sched.sched_count + ")" }}
                   </option>
                 </select>
@@ -33,7 +33,7 @@
               <div class="col-md-3 "></div>
             </div>
             <div class="table-responsive" *ngIf="!noapplicants">
-              <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+              <pagination-controls id="pagination1" class="pull-right" (pageChange)="p = $event"></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -47,7 +47,7 @@
                 <tbody>
                   <tr *ngFor="
                       let applicant of applicants
-                        | paginate: { itemsPerPage: 20, currentPage: p };
+                        | paginate: { id: 'pagination1', itemsPerPage: 20, currentPage: p };
                       let i = index
                     ">
                     <td>{{ 20 * (p - 1) + i + 1 }}</td>
@@ -61,7 +61,7 @@
                 </tbody>
               </table>
 
-              <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+              <pagination-controls id="pagination1" class="pull-right" (pageChange)="p = $event"></pagination-controls>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
               <h1>NO SCHEDULED APPLICANTS!</h1>
@@ -84,9 +84,15 @@
       </div>
       <div class="modal-body">
         <form autocomplete="off" (submit)="addGCATSchedule($event)">
-          <div class="form-group">
+          <div class="form-group container">
             <label for="name2">Date And Time</label>
-            <input class="form-control" name="name2" type="datetime-local" />
+            <div class="row">
+            <input class="form-control col-md-8" name="name2" type="date" style="margin-right: 20px;"/>
+            <select class="form-control col-md-3" name="time" [(ngModel)]="schedTime">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+            </div>
           </div>
           <button type="submit" class="btn btn-sm btn-success pull-right">
             Add Sched
@@ -94,6 +100,7 @@
         </form>
 
         <br /><br />
+        <pagination-controls id="pagination2" class="pull-right" (pageChange)="p = $event"></pagination-controls>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class=" text-primary">
@@ -103,9 +110,9 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <tr *ngFor="let sched of scheds; let i = index">
+              <tr *ngFor=" let sched of scheds | paginate: { id: 'pagination2', itemsPerPage: 5, currentPage: p }; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ sched.sched_time }}</td>
+                <td>{{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}}</td>
                 <td>{{ sched.sched_count }}</td>
 
                 <td>

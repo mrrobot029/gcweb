@@ -388,8 +388,16 @@
                     echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '2') AND  (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') AND gc.gc_examtime='$d->dropDownSched' "));
                 break;
 
+                case 'getDuplicateApplications':
+                    echo json_encode($post->executeWithRes("SELECT si_lastname, si_firstname, si_midname, COUNT(*)
+                    FROM tbl_studentinfo
+                    GROUP BY si_lastname, si_firstname, si_midname
+                    HAVING COUNT(*) > 1"));
+                break;
+
+                //gcat scheduling
                 case 'addGCATSchedule':
-                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_gcatschedule(sched_time) values('$d->time')"));
+                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_gcatschedule(sched_date, sched_time) values('$d->date', '$d->time')"));
                 break;
 
                 case 'addScheduleForApplicant':
@@ -402,17 +410,18 @@
                 break;
 
                 case 'getGCATSchedules':
-                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_time ASC"));
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_date ASC"));
                 break;
 
                 case 'getAvailableSchedules':
-                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule WHERE sched_count < 40  ORDER BY sched_time ASC"));
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule WHERE sched_count < 40  ORDER BY sched_date ASC"));
                 break;
                 
                 case 'getAllSchedules':
-                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_time ASC"));
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_date ASC"));
                 break;
-
+                
+                
                 // print
                 case 'printStudentSIS':
                     echo json_encode($post->printStudentSIS());

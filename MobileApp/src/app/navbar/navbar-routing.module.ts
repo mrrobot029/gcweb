@@ -4,10 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NavbarPage } from './navbar.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/menu/prospectus'
-  },
+  
   {
     path: '',
     component: NavbarPage,
@@ -29,6 +26,10 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'menu',
+    redirectTo: '/prospectus'
   }
 ];
 

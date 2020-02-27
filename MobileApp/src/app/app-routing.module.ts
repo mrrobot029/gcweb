@@ -8,25 +8,13 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'sched',
-        loadChildren: () => import('./sched/sched.module').then( m => m.SchedPageModule)
-    },
-    {
-        path: 'prospectus',
-        loadChildren: () => import('./prospectus/prospectus.module').then( m => m.ProspectusPageModule)
-    },
-    {
-        path: 'profile',
-        loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-    },
-    {
         path: 'login',
         loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
     },
-  {
-    path: 'navbar',
-    loadChildren: () => import('./navbar/navbar.module').then( m => m.NavbarPageModule)
-  }
+    {
+      path: 'menu',
+      loadChildren: () => import('./navbar/navbar.module').then( m => m.NavbarPageModule)
+    }
 
 ];
 

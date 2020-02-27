@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
       if (val) {
         this.credInfo.payload = val;
         this.ds.sendrequest('checkStudent', this.credInfo).subscribe(res => {
-          this.router.navigate(['/sched']);
+          this.router.navigate(['/menu']);
         });
       }
     });
@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
         Swal.fire({ title: 'Success', text: 'Student Verified', icon: 'success'}).then(() => {
           this.storage.set('studentInfo', res.data[0]);
           this.authservice.login(res.payload);
-          this.router.navigate(['/sched']);
+          this.router.navigate(['/menu']);
         });
       } else {
         Swal.fire({ title: 'Login Failed!', text: 'Invalid user credentials.', icon: 'error'});

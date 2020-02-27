@@ -6,6 +6,10 @@ import { NavbarPage } from './navbar.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: '/menu/prospectus'
+  },
+  {
+    path: '',
     component: NavbarPage,
     children: [
       {
@@ -23,8 +27,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
-    redirectTo: '/menu/prospectus'
+    path: 'login',
+    loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
   }
 ];
 

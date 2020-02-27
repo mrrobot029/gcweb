@@ -25,12 +25,22 @@
               <div class="col-md-2">
                 <label for="">Sort By:</label>
                 <form autocomplete="off" class="flexcontainercolumn">
-                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)"
+                  <select name="sort" id="sort" class="form-control" [(ngModel)]="sortValue" (change)="setSort(sortValue)"
                     style="margin-top: -5px;">
                     <option value="id">ID NUMBER</option>
                     <option value="name">NAME</option>
                     <option value="email">EMAIL</option>
                     <option value="program">PROGRAM</option>
+                  </select>
+                </form>
+              </div>
+              <div class="col-md-2">
+                <label for="">Order:</label>
+                <form autocomplete="off" class="flexcontainercolumn">
+                  <select name="sort" id="sort" class="form-control" (change)="setOrder($event)"
+                    style="margin-top: -5px;">
+                    <option value="DESC">DESCENDING</option>
+                    <option value="ASC">ASCENDING</option>
                   </select>
                 </form>
               </div>
@@ -71,15 +81,6 @@
                         <button class="btn btn-sm btn-success" matTooltip="Edit" matTooltipPosition="above">
                           <i class="material-icons">
                             edit
-                          </i>
-                        </button>
-                      </a>
-                      <a href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
-                          applicant.gc_idnumber
-                        }}&key={{ applicant.gc_key }}" target="_blank">
-                        <button class="btn btn-sm btn-success" matTooltip="Print" matTooltipPosition="above">
-                          <i class="material-icons">
-                            print
                           </i>
                         </button>
                       </a>

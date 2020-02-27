@@ -90,7 +90,6 @@ export class ScheduledComponent implements OnInit {
     e.preventDefault();
     this.schedule.date = e.target.elements[0].value;
     this.schedule.time = this.schedTime
-    console.log(this.schedule)
     let promise = this.ds.sendRequest("addGCATSchedule", this.schedule).toPromise()
     promise.then(res => {
       if (res.status.remarks) {

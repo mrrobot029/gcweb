@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from 'ngx-spinner'
 import Swal from 'sweetalert2';
-
 @Component({
   selector: "app-applicants",
   templateUrl: "./applicants.component.html",
@@ -23,7 +22,9 @@ export class ApplicantsComponent implements OnInit {
   fullscreen = false
   applicantCount = 0;
   searchValue = ''
-  sort = 'gc.gc_idnumber';
+  order = 'DESC';
+  sort = 'gc.gc_idnumber ' + this.order;
+  sortValue = 'id';
   ngOnInit() {
     this.search.sort = this.sort;
     if (this.applicants.length == null) {
@@ -37,32 +38,46 @@ export class ApplicantsComponent implements OnInit {
 
     if (this.credentials !== null) {
       this.credType = this.credentials.data[0].fa_department;
-      console.log(this.credType);
     }
   }
 
   setSort(e) {
-    switch (e.target.selectedOptions[0].value) {
+    switch (e) {
       case 'id':
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
         this.ngOnInit()
         break
       case 'name':
-        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
+        this.sort = `si.si_lastname ${this.order},si.si_firstname ASC,si.si_midname,si.si_extname `
         this.ngOnInit()
         break
       case 'email':
-        this.sort = 'si.si_email'
+        this.sort = `si.si_email ${this.order}`
         this.ngOnInit()
         break
       case 'program':
-        this.sort = 'gc.gc_course,si.si_lastname'
+        this.sort = `gc.gc_course ${this.order},si.si_lastname ASC`
         this.ngOnInit()
         break
       default:
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
     }
     this.searchValue = ''
+  }
+
+  setOrder(e){
+    switch(e.target.selectedOptions[0].value){
+      case 'ASC':
+        this.order = 'ASC'
+        this.setSort(this.sortValue)
+        break;
+      case 'DESC':
+        this.order = 'DESC'
+        this.setSort(this.sortValue)
+        break;
+      default:
+        this.order = 'DESC'
+    }
   }
 
   getUnconfirmedApplicants() {

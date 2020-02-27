@@ -351,6 +351,18 @@
                     echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as applicantcount from tbl_gcat"));
                 break;
 
+                case 'getUnconfirmedCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as unconfirmedCount from tbl_gcat WHERE gc_status = 0"));
+                break;
+
+                case 'getConfirmedCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as confirmedCount from tbl_gcat WHERE gc_status = 1"));
+                break;
+
+                case 'getScheduledCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as scheduledCount from tbl_gcat WHERE gc_status = 2"));
+                break;
+
                 case 'updateNewStudent':
                     echo json_encode($auth->updateNewStudent($d));
                 break;
@@ -364,11 +376,11 @@
                 break;
 
                 case 'getUnconfirmedApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '0' ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '0' ORDER BY $d->sort"));
                 break;
 
                 case 'getUnscheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '1' ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '1' ORDER BY $d->sort"));
                 break;
 
                 case 'getAllScheduledApplicantsCount':
@@ -376,7 +388,7 @@
                 break;
 
                 case 'getScheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '2' and gc.gc_examtime='$d->dropDownSched'  ORDER BY si.si_lastname, si.si_firstname,si.si_midname,si.si_extname ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '2' and gc.gc_examtime='$d->dropDownSched'  ORDER BY si.si_lastname, si.si_firstname,si.si_midname,si.si_extname"));
                 break;
 
                 case 'unscheduleApplicant':
@@ -388,11 +400,11 @@
 
                 // ian codes
                 case 'searchUnconfirmedApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '0') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '0') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort"));
                 break;
 
                 case 'searchUnscheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '1') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '1') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort"));
                 break;
 
                 case 'searchScheduledApplicants':

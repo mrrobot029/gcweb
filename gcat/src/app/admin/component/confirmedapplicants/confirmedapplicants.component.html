@@ -26,7 +26,7 @@
               <div class="col-md-2">
                 <label for="">Sort By:</label>
                 <form autocomplete="off" class="flexcontainercolumn">
-                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)"
+                  <select name="sort" id="sort" class="form-control" [(ngModel)]="sortValue" (change)="setSort(sortValue)"
                     style="margin-top: -5px;">
                     <option value="id">ID NUMBER</option>
                     <option value="name">NAME</option>
@@ -35,7 +35,17 @@
                   </select>
                 </form>
               </div>
-              <div class="col-md-3"></div>
+              <div class="col-md-2">
+                <label for="">Order:</label>
+                <form autocomplete="off" class="flexcontainercolumn">
+                  <select name="sort" id="sort" class="form-control" (change)="setOrder($event)"
+                    style="margin-top: -5px;">
+                    <option value="DESC">DESCENDING</option>
+                    <option value="ASC">ASCENDING</option>
+                  </select>
+                </form>
+              </div>
+              <div class="col-md-1"></div>
               <div class="col-md-3 ">
                 <label for="time" class="p-0 m-0">Schedule Time</label>
                 <select class="form-control" name="time" [(ngModel)]="schedTime">

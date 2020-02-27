@@ -12,13 +12,13 @@
   <ul class="nav">
     <li routerLinkActive="active" class="nav-item">
       <a class="nav-link" [routerLink]="['applicants']">
-        <i class="material-icons">group</i>
+        <i class="material-icons">group</i><span class="badge badge-info">{{unconfirmedCount}}</span>
         <p>Unconfirmed Applicants</p>
       </a>
     </li>
     <li routerLinkActive="active" class="nav-item">
       <a class=" nav-link" [routerLink]="['unscheduled']">
-        <i class="material-icons">group_add</i>
+        <i class="material-icons">group_add</i><span class="badge badge-info">{{confirmedCount}}</span>
         <p>Confirmed Applicants</p>
       </a>
     </li>
@@ -26,7 +26,7 @@
       <a class=" nav-link" [routerLink]="['scheduled']">
         <i class="material-icons">
           how_to_reg
-        </i>
+        </i><span class="badge badge-info">{{scheduledCount}}</span>
         <p>Scheduled Applicants</p>
       </a>
     </li>

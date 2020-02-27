@@ -28,28 +28,21 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
+    // const [unconfirmedCount, confirmedCount, scheduledCount] = this.ds.getCount()
+    this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+      this.applicantCount = res.data[0].applicantcount;
+    })
     this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
 
     if (this.credentials !== null) {
       this.credType = this.credentials.data[0].fa_department;
-      console.log(this.credType);
     }
-
-
-
-
-
-    this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
-      this.applicantCount = res.data[0].applicantcount
-    })
     setInterval(() => {
       this.date = new Date;
     }, 1000);
     setInterval(() => {
-      this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
-        this.applicantCount = res.data[0].applicantcount
+      this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+        this.applicantCount = res.data[0].applicantcount;
       })
     }, 60000);
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_GCAT'));

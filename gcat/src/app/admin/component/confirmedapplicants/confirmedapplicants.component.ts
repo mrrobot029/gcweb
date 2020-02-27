@@ -21,8 +21,9 @@ export class ConfirmedapplicantsComponent implements OnInit {
   fullscreen = false;
   applicantCount = 0;
   searchValue = "";
-  sort = "gc.gc_idnumber";
-
+  order = 'DESC';
+  sort = 'gc.gc_idnumber ' + this.order;
+  sortValue = 'id';
   scheds: any;
   async ngOnInit() {
     this.search.sort = this.sort;
@@ -34,28 +35,43 @@ export class ConfirmedapplicantsComponent implements OnInit {
     await this.getAvailableSchedules();
   }
 
-  setSort(e){
-    switch(e.target.selectedOptions[0].value){
+  setSort(e) {
+    switch (e) {
       case 'id':
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
         this.ngOnInit()
         break
       case 'name':
-        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
+        this.sort = `si.si_lastname ${this.order},si.si_firstname ASC,si.si_midname,si.si_extname `
         this.ngOnInit()
         break
       case 'email':
-        this.sort = 'si.si_email'
+        this.sort = `si.si_email ${this.order}`
         this.ngOnInit()
         break
       case 'program':
-        this.sort = 'gc.gc_course,si.si_lastname'
+        this.sort = `gc.gc_course ${this.order},si.si_lastname ASC`
         this.ngOnInit()
         break
       default:
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
     }
     this.searchValue = ''
+  }
+
+  setOrder(e){
+    switch(e.target.selectedOptions[0].value){
+      case 'ASC':
+        this.order = 'ASC'
+        this.setSort(this.sortValue)
+        break;
+      case 'DESC':
+        this.order = 'DESC'
+        this.setSort(this.sortValue)
+        break;
+      default:
+        this.order = 'DESC'
+    }
   }
 
   getUnscheduledApplicants() {

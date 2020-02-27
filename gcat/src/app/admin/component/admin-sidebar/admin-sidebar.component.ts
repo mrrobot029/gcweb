@@ -1,3 +1,4 @@
+import { DataService } from "src/app/services/data.service";
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,15 +9,30 @@ import { Component, OnInit } from '@angular/core';
 export class AdminSidebarComponent implements OnInit {
   credentials: any = {};
   credType: any = "";
-  constructor() { }
+  unconfirmedCount = 0;
+  confirmedCount = 0;
+  scheduledCount = 0;
+  constructor(private ds: DataService) { }
 
   ngOnInit() {
     this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
 
     if (this.credentials !== null) {
       this.credType = this.credentials.data[0].fa_department;
-      console.log(this.credType);
     }
+    this.getCount()
+  }
+
+  getCount(){
+    this.ds.sendRequest('getUnconfirmedCount', null).subscribe(res=>{
+      this.unconfirmedCount = res.data[0].unconfirmedCount;
+    })
+    this.ds.sendRequest('getConfirmedCount', null).subscribe(res=>{
+      this.confirmedCount = res.data[0].confirmedCount;
+    })
+    this.ds.sendRequest('getScheduledCount', null).subscribe(res=>{
+      this.scheduledCount = res.data[0].scheduledCount;
+    })
   }
 
 }

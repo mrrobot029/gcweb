@@ -11,6 +11,7 @@ import { ScheduledComponent } from './component/scheduled/scheduled.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/confirmedapplicants.component';
+import { EventEmitterService } from './event-emitter.service';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/co
     MatTooltipModule
   ],
   providers: [
-    DataService
+    DataService,
+    EventEmitterService
   ]
 })
 export class AdminModule { }

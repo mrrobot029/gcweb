@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, fromEventPattern } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import Swal from "sweetalert2";
 
 @Injectable({
@@ -9,7 +9,20 @@ import Swal from "sweetalert2";
 export class DataService {
   // apiLink = "http://localhost/gordoncollegeweb/";
   apiLink = 'https://gordoncollegeccs.edu.ph/gc/api/'
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) { 
+
+  }
+
+  sendLog(log){
+    this.sendRequest('insertUserLog', log).subscribe(res=>{
+      if(res.status.remarks){
+        console.log('User log added.')
+      } else{
+        console.log('Error creating user log!')
+      }
+    })
+  }
 
   sendRequest(method, data) {
     return this.http.post<any>(

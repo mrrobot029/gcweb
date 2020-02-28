@@ -2,12 +2,15 @@ import { Component, OnInit } from "@angular/core";
 import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from 'ngx-spinner'
 import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
 @Component({
   selector: "app-applicants",
   templateUrl: "./applicants.component.html",
   styleUrls: ["./applicants.component.scss"]
 })
 export class ApplicantsComponent implements OnInit {
+  log:any = {}
+  now = new Date();
 
   credentials: any = {};
   credType: any = "";
@@ -119,6 +122,12 @@ export class ApplicantsComponent implements OnInit {
         icon: 'success',
         title: 'Confirmation Email Sent!',
       }).then(() => {
+        this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+        this.log.activity = `Sent confirmation email to ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+        this.log.idnumber = this.credentials.data[0].fa_empnumber
+        this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+        this.log.department = this.credentials.data[0].fa_department
+        this.ds.sendLog(this.log)
         this.ngOnInit()
       })
     })
@@ -146,6 +155,12 @@ export class ApplicantsComponent implements OnInit {
               'The application has been removed.',
               'success'
             ).then(() => {
+              this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+              this.log.activity = `Deleted applicant ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+              this.log.idnumber = this.credentials.data[0].fa_empnumber
+              this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+              this.log.department = this.credentials.data[0].fa_department
+              this.ds.sendLog(this.log)
               this.ngOnInit()
             })
           } else {
@@ -185,6 +200,12 @@ export class ApplicantsComponent implements OnInit {
               'The application is now confirmed.',
               'success'
             ).then(() => {
+              this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+              this.log.activity = `Confirmed application for ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+              this.log.idnumber = this.credentials.data[0].fa_empnumber
+              this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+              this.log.department = this.credentials.data[0].fa_department
+              this.ds.sendLog(this.log)
               this.ngOnInit()
             })
           } else {
@@ -203,32 +224,4 @@ export class ApplicantsComponent implements OnInit {
     this.fullscreen = false
   }
 
-  addGCATSchedule(idnumber) {
-    let isSchedDateSet: any;
-    let isSchedTimeSet: any;
-
-    isSchedDateSet = this.schedDate ? this.schedDate : null;
-    isSchedTimeSet = this.schedTime ? this.schedTime : null;
-
-    if (isSchedDateSet !== null && isSchedTimeSet !== null) {
-      this.schedule.date = isSchedDateSet;
-      this.schedule.time = isSchedTimeSet;
-      this.schedule.idNumber = idnumber;
-      this.ds.sendRequest("addGCATSchedule", this.schedule).subscribe(res => {
-        if (res.status.remarks) {
-          this.ds
-            .callSwal("Success", "Record updated successfully.", "success")
-            .then(() => {
-              this.getUnconfirmedApplicants();
-            });
-        }
-      });
-    } else {
-      this.ds.callSwal(
-        "Incomplete Info",
-        "Please fill up the schedule date and time.",
-        "error"
-      );
-    }
-  }
 }

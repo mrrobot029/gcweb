@@ -21,10 +21,8 @@ export class ApplicationComponent implements OnInit {
   blur(e){
     if(e == 'div1'){
       this.div1Blur = true;
-      console.log('blur 1')
     } else{
       this.div2Blur = true;
-      console.log('blur 2')
     }
   }
 

@@ -10,6 +10,9 @@ import { formatDate } from '@angular/common';
   styleUrls: ["./confirmedapplicants.component.scss"]
 })
 export class ConfirmedapplicantsComponent implements OnInit {
+  log:any = {}
+  now = new Date();
+  credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
   constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
   schedTime: any = "";
@@ -129,6 +132,12 @@ export class ConfirmedapplicantsComponent implements OnInit {
               "The application is now unconfirmed.",
               "success"
             ).then(() => {
+              this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+              this.log.activity = `Undid application confirmation for ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+              this.log.idnumber = this.credentials.data[0].fa_empnumber
+              this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+              this.log.department = this.credentials.data[0].fa_department
+              this.ds.sendLog(this.log)
               this.ngOnInit();
             });
           } else {
@@ -158,6 +167,12 @@ export class ConfirmedapplicantsComponent implements OnInit {
                 html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
                 icon: "success"})
               .then(() => {
+                this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+                this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}.`
+                this.log.idnumber = this.credentials.data[0].fa_empnumber
+                this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+                this.log.department = this.credentials.data[0].fa_department
+                this.ds.sendLog(this.log)
                 this.getUnscheduledApplicants();
                 this.getAvailableSchedules();
               });

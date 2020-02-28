@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/confirmedapplicants.component';
 import { EventEmitterService } from './event-emitter.service';
+import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { EventEmitterService } from './event-emitter.service';
   ],
   providers: [
     DataService,
-    EventEmitterService
+    EventEmitterService,
+    AdminSidebarComponent
   ]
 })
 export class AdminModule { }

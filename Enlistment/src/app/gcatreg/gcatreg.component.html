@@ -1,7 +1,26 @@
 <ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
+<div *ngIf="!enlistment" class="profily">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+      <h4 fxFlex="100" class="animated fadeInUp">Welcome to <span style="color: #1f6e00 !important;">GCAT.</span></h4>
+  </div>
 
+  <p class="mt-1 animated fadeInUp" style="margin-top: -2.5%">Gordon College Admission Test<span style="color: #1f6e00 !important;"> (G.C.A.T.) registration </span>system.</p>
+
+
+      <img src="assets/logo/gcat.png" width="20%" alt="">
+
+      <h5 class="mt-1 animated fadeInUp">Sorry, GCAT is not available at this moment!</h5>
+
+<p class="mt-1 animated fadeInUp" style="color: #3f51b5;">Application will be available on {{enlistmentStart |  date:'MM/dd/yyyy'}} until {{enlistmentEnd |  date:'MM/dd/yyyy'}}.</p>
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
+</div>
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px" style="display: flex;justify-content: center;width: 100%;margin-top:1%;padding-bottom: 5%;">
+      <button class="heading-button-right animated fadeInUp" mat-stroked-button routerLink="/">Return</button>
+      <!-- <button class="heading-button-right animated fadeInUp" mat-stroked-button style="margin-right: 2%;" [routerLink]="navigateOld">Old Student</button> -->
+</div>
+</div>
 <!-- STUDENT TYPE -->
-  <div class="cahsnewcontainer animated fadeIn">
+  <div class="cahsnewcontainer animated fadeIn" *ngIf="enlistment">
     <mat-card [class.mat-elevation-z24]="!asd" class="card">
       <h1 style="text-align: center;">Gordon College Admission Test (GCAT)</h1>
       <h2 style="text-align: center;">Registration Form {{sem}}<sup>{{sup}}</sup> Semester A.Y. {{acadyear}} </h2>

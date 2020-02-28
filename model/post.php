@@ -493,7 +493,7 @@
             }
 
             function updateSettings($d) {
-                return $this->executeWithoutRes("UPDATE tbl_enlistment SET en_cystart = '$d->en_cystart', en_cyend = '$d->en_cyend', en_schoolyear = '$d->en_schoolyear', en_cy = '$d->en_cy', en_sem = '$d->en_sem', en_enstart = '$d->en_enstart', en_enend = '$d->en_enend' where en_recno = '$d->en_recno'");
+                return $this->executeWithoutRes("UPDATE tbl_enlistment SET en_cystart = '$d->en_cystart', en_cyend = '$d->en_cyend', en_schoolyear = '$d->en_schoolyear', en_cy = '$d->en_cy', en_sem = '$d->en_sem', en_enstart = '$d->en_enstart', en_enend = '$d->en_enend', en_gcatstart = '$d->en_gcatstart', en_gcatend = '$d->en_gcatend' where en_recno = '$d->en_recno'");
             }
 
             function getEnrolledClasses($d) {

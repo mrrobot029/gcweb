@@ -397,6 +397,25 @@
                    }
                 break;
 
+                case 'moveSchedule':
+                    if($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examtime = '$d->moveDate' WHERE gc_examtime = '$d->currentDate'")){
+                        if($post->executeWithoutRes("UPDATE tbl_gcatschedule AS s1 JOIN tbl_gcatschedule AS s2 ON s2.sched_recno = '$d->currentDate'
+                                                                              SET    s1.sched_count = s2.sched_count
+                                                                              WHERE  s1.sched_recno = '$d->moveDate'"))
+                        {
+                            echo json_encode($post->executeWithoutRes("UPDATE tbl_gcatschedule SET sched_count = 0 WHERE sched_recno = '$d->currentDate'"));
+                        }
+                    }
+                 break;
+
+                 case 'insertUserLog':
+                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_userlogs (log_date, log_activity, log_userid, log_username, log_userdepartment) 
+                                                               VALUES ('$d->date', '$d->activity', '$d->idnumber', '$d->name', '$d->department')"));
+                 break;
+
+                 case 'getUserLogs':
+                    echo json_encode($post->executeWithRes("SELECT * FROM tbl_userlogs ORDER BY log_recno DESC LIMIT 100"));
+                 break;
 
                 // ian codes
                 case 'searchUnconfirmedApplicants':

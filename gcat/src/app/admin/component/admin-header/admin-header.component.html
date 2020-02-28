@@ -46,9 +46,15 @@
                     </a>
                 </li>
                 <li class="nav-item" matTooltip="Change Password">
+                    <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#settingsModal">
+                        <i class="material-icons">settings</i><br>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item" matTooltip="Change Password">
                     <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#changePasswordModal">
                         <i class="material-icons">supervised_user_circle</i><br>
-                        {{ credAdmin.data[0].fa_lname + ", " +credAdmin.data[0].fa_fname + " " + credAdmin.data[0].fa_mname  + " "+ credAdmin.data[0].fa_extname }}
+                        {{ credAdmin.data[0].fa_fname }}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -100,6 +106,64 @@
                         Change Password
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="uploadModalLabel">GCAT Settings</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <h4>School Year</h4>
+                    <div class="row mb-2" style="margin-left: 20px;">
+                        <div class="form-group" style="margin-top:8px">
+                        <p>School Year Start:</p>
+                        <input type="date" [(ngModel)]="settings.en_cystart">
+                        </div>
+                        <div class="form-group" style="margin-left: 10px;">
+                        <p >School Year End:</p>
+                        <input type="date" [(ngModel)]="settings.en_cyend">
+                        </div>
+                    </div>
+                    <h4 style="margin-top:30px">Enlistment Period</h4>
+                    <div class="row mb-2" style="margin-left: 20px;">
+                        <div class="form-group" style="margin-top:8px">
+                            <p>GCAT Registration Start:</p>
+                            <input type="date" [(ngModel)]="settings.en_gcatstart">
+                            </div>
+                            <div class="form-group" style="margin-left: 10px;">
+                            <p >GCAT Registration End:</p>
+                            <input type="date" [(ngModel)]="settings.en_gcatend">
+                        </div>
+                    </div>
+                    <h4 style="margin-top:30px">Semester</h4>
+                    <div class="row mb-2" style="margin-left: 20px;">
+                        <div class="form-group" style="margin-top:8px">
+                        <p style="margin-top:8px">Semester:</p>
+                            <select [(ngModel)]="settings.en_sem">
+                                <option value="1">1<sup>st</sup></option>
+                                <option value="2">2<sup>nd</sup></option>
+                                <option value="Mid Year">Mid Year</option>
+                            </select>
+                        </div>
+                        <div class="row mb-2" style="margin-left: 20px;">
+                            <div class="form-group" style="margin-top:8px">
+                                <p style="margin-top:8px">Prospectus Curriculum Year:</p>
+                                    <input type="text" [(ngModel)]="settings.en_cy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2" style="margin-left: 20px;">
+                        <button class="btn btn-success" (click)="update()">SUBMIT</button>
+                    </div>
             </div>
         </div>
     </div>

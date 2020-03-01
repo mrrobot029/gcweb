@@ -367,6 +367,54 @@
                     echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as scheduledCount from tbl_gcat WHERE gc_status = 2"));
                 break;
 
+                case 'getCountByCourse':
+                    echo json_encode($post->executeWithRes("SELECT count(gc_idnumber) as y, gc_course as name FROM tbl_gcat GROUP BY gc_course"));
+                break;
+
+                case 'getCountByCity':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_city as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_city"));
+                break;
+
+                case 'getCountBySHS':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_isshs as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_isshs"));
+                break;
+
+                case 'getCountByHSClass':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_hsclass as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_hsclass"));
+                break;
+
+                case 'getCountByStudentType':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_studenttype as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_studenttype"));
+                break;
+
+                case 'getCountByGender':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_gender as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_gender"));
+                break;
+
+                case 'getCountByAge':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_age as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_age"));
+                break;
+
+                case 'getCountByCitizenship':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_nationality as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_nationality"));
+                break;
+
+                case 'getCountByCivilStatus':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_civilstatus as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_civilstatus"));
+                break;
+
+                case 'getCountByPWD':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_isdisabled as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_isdisabled"));
+                break;
+
+                case 'getCountByDadDeceased':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_daddeceased as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_daddeceased"));
+                break;
+
+                case 'getCountByMomDeceased':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_momdeceased as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_momdeceased"));
+                break;
+
                 case 'updateNewStudent':
                     echo json_encode($auth->updateNewStudent($d));
                 break;

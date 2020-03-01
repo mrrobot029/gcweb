@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+<nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top" style="z-index: 1">
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <a class="navbar-brand" href="javascript:void(0)"></a>
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics">
+                    <a class="nav-link" href="javascript:void(0)" matTooltip="View Statistics" (click)="statistics()">
                         <i class="material-icons">pie_chart</i><br>STATISTICS
                     </a>
                 </li>
@@ -142,6 +142,14 @@
                             <div class="form-group" style="margin-left: 10px;">
                             <p >GCAT Registration End:</p>
                             <input type="date" [(ngModel)]="settings.en_gcatend">
+                        </div>
+                    </div>
+                    <div class="row mb-2" style="margin-left: 20px;">
+                        <p>GCAT Registration Status:</p>
+                    </div>
+                    <div class="row mb-2" style="margin-left: 20px;margin-top:-20px">
+                        <div class="form-group">
+                            <mat-slide-toggle [checked]="settings.en_gcatactive == 1? true:false" (change)="setGcatActive()">{{settings.en_gcatactive == 1? 'ACTIVE':'INACTIVE'}}</mat-slide-toggle>
                         </div>
                     </div>
                     <h4 style="margin-top:30px">Semester</h4>

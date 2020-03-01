@@ -1,30 +1,27 @@
-.pads{
-    height: 100%;
-    min-height: calc(80vh - 56px);
-    padding-top: 150px;
-    backdrop-filter: blur(5px);
+.container{
+    width: 100vw; 
+    height: calc(100vh - 56px);
+    background-color: #e9e9e9f3;
+
 }
 
 .application{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     color: #616161;
     text-align: center;
-    height: 60%;
-    min-height: calc(60vh - 56px);
-    background-color: #e9e9e9f3;
-    margin: 0px 100px;
-    border-radius: 20px;
+    height: 100%;
+    min-height: calc(100vh - 56px);
+    background-color:transparent;
+
 }
 
 .div1{
-    height: calc(60vh - 56px);
     background-color: transparent;
     transition: all .5s ease-in-out;
+    border-radius: 25px;
 }
 .div1:hover{
     background-color: white;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
 }
 
 .blur{
@@ -32,17 +29,15 @@
 }
 
 .div2{
-    height: calc(60vh - 56px);
     background-color: transparent;
     transition: all .5s ease-in-out;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 25px;
 }
 .div2:hover{
     background-color: white;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 .gcat{
     border: 10px double gray;

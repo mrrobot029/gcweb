@@ -1,21 +1,23 @@
-<div class="pads">
-    <div class="application animated fadeIn">
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="0px" fxLayoutAlign="center" [ngStyle.lt-md]="{'max-height':'100%'}">
-            <div fxFlex="50" fxFlex.lt-md="100" [class.blur]="div1Blur" class="div1" (mouseover)="blur('div2')" (mouseout)="blurOff('div2')" fxLayoutAlign="center center" [ngStyle.lt-md]="{'height':'50vh', 'font-size': 'small'}">
-                <div class="gcat" (click)="nav('gcatregistration')">
-                    <h1 style="margin-top: 2vh;" [ngStyle.lt-md]="{'margin-top':'5%'}">G.C.A.T. Registration</h1>
-                    <p class="mt-1 animated fadeInUp" style="margin-top: -2.5%">Gordon College Admission Test<span style="color: #1f6e00 !important;"> (G.C.A.T.) registration </span>system.</p>
-                    <img src="assets/logo/gcat.png" width="30%" alt="">
-                    <br>
-                    <h5 class="mt-1 animated fadeInUp">For applicants that have not yet taken the Gordon College Admission Test, click here to register.</h5>
+<div class="container" fxLayoutAlign="center center">
+    <div class="container-sm" [ngStyle.lt-md]="{'max-height':'100vh','max-width':'100%'}" [ngStyle.gt-sm]="{'height':'70vh','max-width':'70vw'}">
+        <div class="application" fxLayoutAlign.lt-md="center center">
+            <div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="0px" fxLayoutAlign="center" [ngStyle.lt-md]="{'max-height':'45vh'}">
+                <div fxFlex="50" fxFlex.lt-md="100" [class.blur]="div1Blur" class="div1" (mouseover)="blur('div2')" (mouseout)="blurOff('div2')" fxLayoutAlign="center center" [ngStyle.lt-md]="{'height':'50vh', 'font-size': 'small'}">
+                    <div class="gcat" (click)="nav('gcatregistration')">
+                        <h1 [ngStyle.lt-md]="{'margin-top':'5%'}">G.C.A.T. Registration</h1>
+                        <p class="mt-1 animated fadeInUp" style="margin-top: -2.5%">Gordon College Admission Test<span style="color: #1f6e00 !important;"> (G.C.A.T.) registration </span>system.</p>
+                        <img src="assets/logo/gcat.png" width="30%" alt="">
+                        <br>
+                        <h5 class="mt-1 animated fadeInUp">For applicants that have not yet taken the Gordon College Admission Test, click here to register.</h5>
+                    </div>
                 </div>
-            </div>
-            <div fxFlex="100" fxFlex.lt-md="100" [class.blur]="div2Blur" class="div2" (mouseover)="blur('div1')" (mouseout)="blurOff('div1')" fxLayoutAlign="center center" [ngStyle.lt-md]="{'height':'20vh', 'font-size': 'small'}">
-                <div class="profily" (click)="nav('enlistment')">
-                    <h1 style="margin-top: 2vh;" [ngStyle.lt-md]="{'margin-top':'5%'}">G.C. Profily</h1>
-                    <p class="mt-1 animated fadeInUp" style="margin-top: -2.5%">Gordon College's very own <span style="color: #3f51b5 !important;">profiling</span> and <span style="color: #3f51b5 !important;">enlistment</span> system.</p>
-                    <h1 class="icon-greet mb-1 animated fadeIn" style="margin: 0px;"><i style="font-size: 4.93em; color: #3f51b5" class="material-icons" [ngStyle.lt-md]="{'font-size':'3em'}">mood</i></h1>
-                    <h5 class="mt-1 animated fadeInUp">For applicants that have already passed the requisite qualifying examination (GCAT), click here to complete your profile.</h5>
+                <div fxFlex="50" fxFlex.lt-md="100" [class.blur]="div2Blur" class="div2" (mouseover)="blur('div1')" (mouseout)="blurOff('div1')" fxLayoutAlign="center center" [ngStyle.lt-md]="{'height':'45vh', 'font-size': 'small'}">
+                    <div class="profily" (click)="nav('enlistment')">
+                        <h1 [ngStyle.lt-md]="{'margin-top':'5%'}">G.C. Profily</h1>
+                        <p class="mt-1 animated fadeInUp" style="margin-top: -2.5%">Gordon College's very own <span style="color: #3f51b5 !important;">profiling</span> and <span style="color: #3f51b5 !important;">enlistment</span> system.</p>
+                        <h1 class="icon-greet mb-1 animated fadeIn"><i style="font-size: 5em; color: #3f51b5" class="material-icons" [ngStyle.lt-md]="{'font-size':'3em'}">mood</i></h1>
+                        <h5 class="mt-1 animated fadeInUp">For applicants that have already passed the requisite qualifying examination (GCAT), click here to complete your profile.</h5>
+                    </div>
                 </div>
             </div>
         </div>

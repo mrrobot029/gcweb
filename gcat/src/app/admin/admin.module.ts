@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/confirmedapplicants.component';
 import { EventEmitterService } from './event-emitter.service';
 import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.component';
+import { StatisticsComponent } from './dialogs/statistics/statistics.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.c
     ApplicantsComponent,
     ScheduledComponent,
     ConfirmedapplicantsComponent,
+    StatisticsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.c
     DataService,
     EventEmitterService,
     AdminSidebarComponent
-  ]
+  ],
+  entryComponents: [ StatisticsComponent ]
 })
 export class AdminModule { }

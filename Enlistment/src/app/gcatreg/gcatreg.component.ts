@@ -97,6 +97,7 @@ export class GcatregComponent implements OnInit {
   ngOnInit() {
     this.spinner.show()
     this.currentDate.setHours(0,0,0,0)
+    this.currentDate.toLocaleString("en-US", {timeZone: 'Asia/Manila'})
     this.ds.sendRequest('getProvinces', '').subscribe((provinces)=>{
       this.provinces = provinces.data
     });

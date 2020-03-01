@@ -121,3 +121,19 @@ th{
 	border:none;
 	border-top:1px solid;
 }
+
+
+.bg-red {
+    background-color: #ef9a9a ;
+}
+
+
+.bg-blue {
+    background-color: #90caf9 ;
+}
+
+
+
+.bg-green {
+    background-color: #a5d6a7 ;
+}

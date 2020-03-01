@@ -44,22 +44,23 @@
         <table class="table-body">
             <thead>
                 <th class="border-thin">No.</th>
-                <th class="border-thin">Full Name</th>
                 <th class="border-thin">Program</th>
                 <th class="border-thin">Status</th>
                 <th class="border-thin">Exam Schedule</th>
+                
+                <th class="border-thin">Count</th>
             </thead>
             <tbody>
             <?php
-                $sql = "SELECT * FROM tbl_gcat as gcat INNER JOIN tbl_studentinfo as si ON si.si_idnumber=gcat.gc_idnumber LEFT JOIN tbl_gcatschedule as sched ON sched.sched_recno = gcat.gc_examtime ORDER BY si.si_course,gcat.gc_status,sched.sched_date,sched.sched_time ASC";
+                $sql = "SELECT DISTINCT *, count(*) as count FROM tbl_gcat as gcat INNER JOIN tbl_studentinfo as si ON si.si_idnumber=gcat.gc_idnumber LEFT JOIN tbl_gcatschedule as sched ON sched.sched_recno = gcat.gc_examtime GROUP BY si.si_course,gcat.gc_status,sched.sched_date,sched.sched_time ORDER BY si.si_course,gcat.gc_status,sched.sched_date,sched.sched_time";
 
                 $query = mysqli_query($conn,$sql);
                 if(mysqli_num_rows($query)>0){
                     $no = 1;
+                    $count = 0;
                     while($res = mysqli_fetch_assoc($query)){
                         echo "<tr>
                             <td class='border-thin'> $no </td>
-                            <td class='border-thin'>".$res['si_lastname'].", ".$res['si_firstname']." ".$res['si_midname']." ".$res['si_extname']."</td>
                             <td class='border-thin'>".$res['gc_course']."</td>";
 
                             if($res['gc_status'] == 0) {
@@ -83,13 +84,18 @@
                             if($res['sched_date'] == null) {
                                 echo "
                                 <td class='border-thin'>-----</td>
-                                </tr>";
+                           ";
                             }else {
                                 echo "
-                                <td class='border-thin bg-blue'><strong>".$res['sched_date']." ".$res['sched_time']."</strong></td>
-                                </tr>";
+                                <td class='border-thin'><strong>".$res['sched_date']." ".$res['sched_time']."</strong></td>
+                                ";
+
+
                         }
-                        
+
+                        $count = $count + $res['count'];
+                        echo "
+                            <td class='border-thin'>".$res['count']."</td></tr>";
                         $no++;
                     }
                 }

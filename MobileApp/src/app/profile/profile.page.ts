@@ -9,14 +9,14 @@ import { Storage } from '@ionic/storage';
 })
 export class ProfilePage implements OnInit {
 
-  profile: any = {};
+  credStud: any = {};
   age: Number;
 
   constructor(private storage: Storage) { }
 
   ngOnInit() {
     this.storage.get('studentInfo').then((val) => {
-      this.profile = val;
+      this.credStud = val;
       this.computeAge(val.si_bday);
       console.log(this.age)
     })

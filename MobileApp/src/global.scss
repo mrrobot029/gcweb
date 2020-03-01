@@ -26,11 +26,15 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-ion-toolbar{
-    --background: linear-gradient(60deg, #66bb6a, #43a047);
+ion-list-header{
+    --background: #10DC60;
     --color: white;
-    ion-menu-button{
-       --color: white;
+    height: 45px;
+    h4{
+        margin-top: 10px;
+    }
+    h3{
+        margin-top: 10px;
     }
 }
 
@@ -46,4 +50,42 @@ ion-toolbar{
 }
 .adjust{
     margin-top: 70px;
+}
+ion-label{
+    .text-primary{
+        --color: #4caf50;
+    }
+}
+ion-row{
+    ion-col{
+        padding: 5px 0px 0px 0px;
+    }
+}
+ion-content{
+    font-family: 'Open Sans';
+}
+body{
+    font-family: 'Open Sans';
+}
+.avatar{
+    margin: auto;
+    width: 150px;
+    height: 150px;
+}
+.profile{
+    text-align: center; 
+}
+.margin{
+    margin-bottom: 0px;
+}
+.bold{
+    font-weight: bold;
+}
+.list{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.header{
+    margin-top: 0px;
+    margin-bottom: 0px !important;
 }

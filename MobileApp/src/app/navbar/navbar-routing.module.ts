@@ -9,17 +9,17 @@ const routes: Routes = [
     path: '',
     component: NavbarPage,
     children: [
-      {
-        path: 'sched',
-        loadChildren: () => import('../sched/sched.module').then( m => m.SchedPageModule)
+    {
+      path: 'sched',
+      loadChildren: () => import('../sched/sched.module').then( m => m.SchedPageModule)
     },
     {
-        path: 'prospectus',
-        loadChildren: () => import('../prospectus/prospectus.module').then( m => m.ProspectusPageModule)
+      path: 'prospectus',
+      loadChildren: () => import('../prospectus/prospectus.module').then( m => m.ProspectusPageModule)
     },
     {
-        path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
+      path: 'profile',
+      loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
     }
     ]
   },
@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'menu',
+    path: '',
     redirectTo: '/prospectus'
   }
 ];

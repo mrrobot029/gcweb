@@ -7,7 +7,17 @@ const routes: Routes = [
   {
     path: '',
     component: ProspectusPage
+    // children: [
+    //   {
+    //     path: 'year',
+    //     loadChildren: () => import('../year/year.module').then( m => m.YearPageModule)
+    //   }
+    // ]
   }
+  // {
+  //   path: '',
+  //   redirectTo: 'prospectus/year'
+  // }
 ];
 
 @NgModule({

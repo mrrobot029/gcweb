@@ -21,25 +21,6 @@ export class AppComponent {
 
   credStud: any = {};
 
-
-  public appPages = [
-    {
-      title: 'Schedules',
-      url: '/sched',
-      icon: 'calendar'
-    },
-    {
-      title: 'Prospectus',
-      url: '/prospectus',
-      icon: 'school'
-    },
-    {
-      title: 'Profile',
-      url: '/profile',
-      icon: 'person'
-    }
-  ];
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -54,11 +35,7 @@ export class AppComponent {
     console.log(this.router.url);
   }
 
-  logout() {
-    this.storage.clear();
-    this.router.navigate(['/login']);
-  }
-
+  
   
   
 

@@ -4,20 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProspectusPageRoutingModule } from './prospectus-routing.module';
+import { YearPageRoutingModule } from './year-routing.module';
 
-import { ProspectusPage } from './prospectus.page';
-
+import { YearPage } from './year.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProspectusPageRoutingModule
+    YearPageRoutingModule
   ],
-  declarations: [ProspectusPage]
+  declarations: [YearPage]
 })
-export class ProspectusPageModule {
-
-}
+export class YearPageModule {}

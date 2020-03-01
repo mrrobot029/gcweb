@@ -1,21 +1,19 @@
-
+<ion-list-header>
+  <h3>Class Schedule</h3>
+</ion-list-header>
 <ion-content>
-  
-  <div class="main-content">
-    <div class="container-fluid">
-        <div class="card text-center" *ngFor="let class of scheds.data">
-            <div class="card-body">
-                <h4>{{ class.cl_code }} - {{ class.cl_sucode }}</h4>
-                <p>{{ class.su_description }}</p>
-                <p class="card-text">{{ class.cl_time }}</p>
-                <a href="#" class="card-link">{{ class.cl_day }} | {{ class.cl_room }}</a>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-block btn-sm btn-info">View</button>
-            </div>
-        </div>
-    </div>
-  </div>
+  <ng-container *ngFor="let class of scheds.data">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ class.cl_code }} - {{ class.cl_sucode }}</ion-card-title>
+        <ion-card-subtitle>{{ class.su_description }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ class.cl_day }} | {{ class.cl_room }} | {{ class.cl_stime }} - {{ class.cl_etime }}</p>
+        <p>Instructor: {{ class.fa_fname }} {{ class.fa_mname }} {{ class.fa_lname }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 </ion-content>
 
 

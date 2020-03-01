@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,7 +15,10 @@ export class NavbarPage implements OnInit {
   private sidebarVisible: boolean;
 
   constructor(
-    private router: Router, private element: ElementRef) { }
+    private router: Router,
+    private element: ElementRef,
+    private storage: Storage
+    ) { }
 
   ngOnInit() {
     
@@ -23,6 +27,10 @@ export class NavbarPage implements OnInit {
     
   }
 
+  logout() {
+    this.storage.clear();
+    this.router.navigate(['/login']);
+  }
 
   
 

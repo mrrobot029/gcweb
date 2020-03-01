@@ -1,32 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { Router } from '@angular/router'
 import { Storage } from '@ionic/storage';
 
 @Component({
-  selector: 'app-prospectus',
-  templateUrl: './prospectus.page.html',
-  styleUrls: ['./prospectus.page.scss'],
+  selector: 'app-year',
+  templateUrl: './year.page.html',
+  styleUrls: ['./year.page.scss'],
 })
-export class ProspectusPage implements OnInit {
+export class YearPage implements OnInit {
 
- 
-  constructor(private storage: Storage,
-    private ds: DataService) { }
+  studentInfo: any = {};
+  studGrades: any = {};
+  prospectus: any = {};
 
-    studentInfo: any = {};
-    studGrades: any = {};
-    prospectus: any = {};
-  
+  constructor(
+    private storage: Storage,
+    private ds: DataService
+    ) { }
 
   ngOnInit() {
-    this.yearlvl(1);
-  }
-  
-
-  yearlvl(e:number){
-    this.ds.year = e;
-    console.log(this.ds.year)
     this.storage.get('studentInfo').then((val) => {
       console.log(val.si_idnumber);
 
@@ -44,5 +36,7 @@ export class ProspectusPage implements OnInit {
         console.log(this.studGrades);
       });
     });
-  } 
+  }
+  
+
 }

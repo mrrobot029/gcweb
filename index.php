@@ -203,6 +203,10 @@
                     echo json_encode($post->getProspectusCopyF($d));
                 break;
 
+                case 'getProspectusByYr':
+                    echo json_encode($post->getProspectusByYr($d));
+                break;
+
                 // student/sched
                 case 'getStudentSchedule':
                     echo json_encode($post->getStudentSchedule($d));

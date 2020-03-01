@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class DataService {
 
   year:number;
-  apiLink = 'http://localhost/gordoncollegeweb/';
-  // apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
+  // apiLink = 'http://localhost/gordoncollegeweb/';
+  apiLink = 'http://gordoncollegeccs.edu.ph/gc/api/';
 
   constructor(private http: HttpClient) {}
 

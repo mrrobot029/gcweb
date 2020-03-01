@@ -386,14 +386,12 @@ export class EditComponent implements OnInit {
   filterCourse(){
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall2 = courseres.data.filter(c=>c.co_name != this.secondFormGroup.value.course)
-      console.log(this.coursesall2)
     });
   }
 
   filterCourse2(){
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall3 = courseres.data.filter(c=>c.co_name != this.secondFormGroup.value.course).filter(c=>c.co_name != this.secondFormGroup.value.course2)
-      console.log(this.coursesall2)
     });
   }
   
@@ -427,7 +425,6 @@ computeAge(){
   promise.then(res=>{
     this.spinner.hide()
     checkStudent = res.data[0]
-    console.log(checkStudent)
     if(checkStudent.si_firstname == this.firstFormGroup.value.fname && checkStudent.si_lastname == this.firstFormGroup.value.lname && checkStudent.si_midname == this.firstFormGroup.value.mname){
         var timeDiff = Math.abs(Date.now() - new Date(this.firstFormGroup.controls.dob.value).getTime());
         this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
@@ -479,7 +476,6 @@ computeAge(){
           promise = this.ds.sendRequest('reSendMail', student).toPromise()
           promise.then((res)=>{
             this.spinner.hide()
-            console.log(res)
           })
           Swal.fire({
           icon: 'warning',
@@ -532,7 +528,6 @@ computeAge(){
                   promise = this.ds.sendRequest('updateEmail', q).toPromise()
                   promise.then((res)=>{
                     this.spinner.hide()
-                    console.log(res)
                     if(res[0]=='success'){
                       Swal.fire({
                         icon: "success",
@@ -567,22 +562,47 @@ computeAge(){
   })
 }
 
-changeEmail(e){
-  console.log(e)
+validateEmail(){
+  this.spinner.show()
+  let checkStudent:any = {}
+  checkStudent.idNumber = this.student.id
+  let promise1= this.ds.sendRequest('getStudent', checkStudent).toPromise()
+  promise1.then(res=>{
+    checkStudent = res.data[0]
+    this.spinner.hide()
+    if(checkStudent.si_email == this.firstFormGroup.value.email ){
+      return;
+    } else{
+      this.spinner.show()
+      let email: any = {}
+      email.email = this.firstFormGroup.value.email
+      let promise = this.ds.sendRequest('validateEmail', email).toPromise()
+      promise.then((res)=>{
+        this.spinner.hide()
+        if(res.status.remarks){      
+          Swal.fire({
+          icon: 'error',
+          title:'<h2>This email is<br><strong><u>already registered!</u></strong></h2>',
+          text: `This email is already registered to another applicant. Please enter another email or if you own this email, check your inbox if you already recieved a reply from us.`
+        }).then(() => {
+          this.firstFormGroup.controls.email.setValue('')
+        })}
+      })
+    }
+ 
+  })
+ 
 }
 
 onSelection(e){
-  console.log(e)
   switch(e){
     case 'citizen':
-      console.log(this.firstFormGroup.value.citizenship)
       if(this.firstFormGroup.value.citizenship == 'Others'){
         this.citizenshipisother = false;
       } else{
         this.citizenshipisother = true;
         this.firstFormGroup.controls.citizenshipother.setValue('')
       }
-      console.log(this.citizenshipisother)
       break;
 
     case 'govproj':
@@ -746,7 +766,6 @@ submit(){
     this.student.ipgroup = this.fifthFormGroup.value.ipgroup
     this.student.isshs = this.thirdFormGroup.value.isshs
     this.student.hsclass = this.thirdFormGroup.value.hsclass
-    console.log(this.student)
     this.spinner.show()
     let promise = this.ds.sendRequest('insertNewStudent', this.student).toPromise()
     promise.then((res)=>{

@@ -148,7 +148,7 @@
                     <mat-error *ngIf="firstFormGroup.controls.civilstatus.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
                     <mat-form-field fxFlex="33" class="animated fadeInUp">
-                        <input matInput placeholder="Email" type="email" formControlName="email" required readonly>
+                        <input matInput placeholder="Email" type="email" formControlName="email" required (focusout)="validateEmail()">
                         <mat-error *ngIf="firstFormGroup.controls.email.invalid">{{getErrorEmail()}}</mat-error>
                     </mat-form-field>
                     <mat-form-field fxFlex="33" class="animated fadeInUp">

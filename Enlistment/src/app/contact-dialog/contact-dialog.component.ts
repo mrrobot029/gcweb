@@ -51,7 +51,6 @@ export class ContactDialogComponent {
 
   onSubmit() {
 
-  	console.log("FORM SEND");
 
   }
 

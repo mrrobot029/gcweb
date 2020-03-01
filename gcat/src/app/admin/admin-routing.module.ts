@@ -11,19 +11,19 @@ const routes: Routes = [
   { path: '', redirectTo: 'applicants', pathMatch: 'full' },
   {
     path: 'users', component: UsersComponent,
-    // canActivate: [AuthGuard] 
+    canActivate: [AuthGuard] 
   },
   {
     path: 'applicants', component: ApplicantsComponent,
-    //  canActivate: [AuthGuard] 
+     canActivate: [AuthGuard] 
   },
   {
     path: 'unscheduled', component: ConfirmedapplicantsComponent,
-    //  canActivate: [AuthGuard] 
+     canActivate: [AuthGuard] 
   },
   {
     path: 'scheduled', component: ScheduledComponent,
-    // canActivate: [AuthGuard] 
+    canActivate: [AuthGuard] 
   }
 ];
 

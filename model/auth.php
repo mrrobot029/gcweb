@@ -418,8 +418,8 @@ class Auth{
 			return $this->info = array('status'=>array('remarks'=>false, 'message'=>'Employee number already exists.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
 		} else {
 			$pass = $this->encryptPassword("Aa1234567");	
-			$this->conn->query("INSERT INTO tbl_faculty(fa_empnumber,fa_fname,fa_mname,fa_lname,fa_extname,fa_password,fa_department) 
-			VALUES('$d->empNo','$d->empFname','$d->empMname','$d->empLname','$d->empEname','$pass','$d->empType')");
+			$this->conn->query("INSERT INTO tbl_faculty(fa_empnumber,fa_fname,fa_mname,fa_lname,fa_extname,fa_password,fa_department,fa_accounttype) 
+			VALUES('$d->empNo','$d->empFname','$d->empMname','$d->empLname','$d->empEname','$pass','$d->empType', '$d->empAccType')");
 			return $this->info = array('status'=>array('remarks'=>true, 'message'=>'Successfully added.'), 'timestamp'=>date_create(),'prepared_by'=>'F-Society');
 		}
 	}

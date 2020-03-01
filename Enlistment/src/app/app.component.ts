@@ -23,7 +23,6 @@ import { ClickOutsideDirective } from 'ng-click-outside';
 export class AppComponent implements OnDestroy {
 
   onClickedOutside(e: Event) {
-    console.log('Clicked outside:', e);
   }
   showAboutNav = false;
   showAcadNav = false;
@@ -56,7 +55,6 @@ export class AppComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    console.log(this.mobileQuery.matches)
   }
 
   public detectScroll(event: SE) {

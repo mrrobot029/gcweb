@@ -93,7 +93,6 @@ export class ChtmoldComponent implements OnInit {
 
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall=courseres.data;
-      console.log(courseres.data)
     });
 
     this.firstFormGroup = this._formBuilder.group({
@@ -145,7 +144,6 @@ export class ChtmoldComponent implements OnInit {
 getInfo(){
   this.idnum.idNumber = this.firstFormGroup.value.idnumber
   this.ds.sendRequest('getStudent', this.idnum).subscribe((studentinfo)=>{
-    console.log(studentinfo.data)
     if(studentinfo.data[0].si_isenlisted==1&&studentinfo.data[0].si_sem==this.sem){
       Swal.fire({
         icon: 'error',
@@ -193,9 +191,7 @@ computeAge(){
  
 }
 onSelection(e){
-    // console.log(this.thirdFormGroup.controls.interests.value.toString())
-    // console.log(this.thirdFormGroup.controls.talents.value)
-    // console.log(this.thirdFormGroup.controls.sports.value)
+
   switch(e){
     case 'interest' : 
     this.interests = this.thirdFormGroup.controls.interest.value;
@@ -227,7 +223,6 @@ onSelection(e){
     case 'govproj':
           this.x = 0;
           this.govprojs = this.fifthFormGroup.controls.govproj.value;
-          console.log(this.govprojs)
           if(this.govprojs[this.govprojs.length-1]=="Others"){
             this.govprojisother=false
           } else{

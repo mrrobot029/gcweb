@@ -82,14 +82,12 @@ export class CbanewComponent implements OnInit {
     this.currentDate.setHours(0,0,0,0)
     this.ds.sendRequest('getProvinces', '').subscribe((provinces)=>{
       this.provinces = provinces.data
-      console.log(provinces)
     });
     this.ds.sendRequest('getSettings', '').subscribe((settings)=>{
       this.enlistmentStart = new Date(settings.data[0].en_enstart)
       this.enlistmentEnd = new Date(settings.data[0].en_enend)
       if(this.currentDate<this.enlistmentStart||this.currentDate>this.enlistmentEnd){
         this.enlistment = false;
-        console.log(this.enlistment)
       }
       this.acadyear = settings.data[0].en_schoolyear;
       this.sem = settings.data[0].en_sem;
@@ -118,7 +116,6 @@ export class CbanewComponent implements OnInit {
 
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall=courseres.data;
-      console.log(courseres.data)
     });
     this.studentTypeFormGroup = this._formBuilder.group({
       studentType: ['', Validators.required],
@@ -220,11 +217,9 @@ export class CbanewComponent implements OnInit {
   selectProvince(event){
     let target = event.source.selected._element.nativeElement;
     this.firstFormGroup.controls.province1.setValue(target.innerText.trim())
-    console.log(this.firstFormGroup.controls.province1.value)
     this.citySearch.provinceId = this.firstFormGroup.controls.province.value
     this.ds.sendRequest('getCities', this.citySearch).subscribe((cities)=>{
       this.cities = cities.data
-      console.log(cities)
     });
 
   }
@@ -232,11 +227,9 @@ export class CbanewComponent implements OnInit {
   selectCity(event){
     let target = event.source.selected._element.nativeElement;
     this.firstFormGroup.controls.city1.setValue(target.innerText.trim())
-    console.log(this.firstFormGroup.controls.city1.value)
     this.citySearch.cityName = this.firstFormGroup.controls.city.value
     this.ds.sendRequest('getCity', this.citySearch).subscribe((cities)=>{
       this.firstFormGroup.controls.zipcode.setValue(cities.data[0].zipcode)
-      console.log(cities.data[0].zipcode)
     });
     
   }
@@ -260,7 +253,6 @@ export class CbanewComponent implements OnInit {
           text: ''
         }).then(() => {
           this.continue = true;
-          console.log(studentinfo.data[0].si_address)
           this.studentTypeFormGroup.controls.studentType.setValue('old')
           this.isOldStudent = true;
           
@@ -420,9 +412,7 @@ computeAge(){
  
 }
 onSelection(e){
-    // console.log(this.thirdFormGroup.controls.interests.value.toString())
-    // console.log(this.thirdFormGroup.controls.talents.value)
-    // console.log(this.thirdFormGroup.controls.sports.value)
+
   switch(e){
     case 'interest' : 
     this.interests = this.thirdFormGroup.controls.interest.value;
@@ -454,7 +444,6 @@ onSelection(e){
     case 'govproj':
           this.x = 0;
           this.govprojs = this.fifthFormGroup.controls.govproj.value;
-          console.log(this.govprojs)
           if(this.govprojs[this.govprojs.length-1]=="Others"){
             this.govprojisother=false
           } else{
@@ -541,7 +530,6 @@ setreasonstudy(){
 next(){
   this.showErrors1=true;
   this.secondFormGroup.controls.sem.setValue(this.sem)
-  console.log(this.sem)
   }
 
 next2(){
@@ -635,7 +623,6 @@ submit(){
     this.student.fulladdress = this.firstFormGroup.value.houseno+' '+ this.firstFormGroup.value.street+', '+this.firstFormGroup.value.city1+', '+this.firstFormGroup.value.province1;
     this.student.cy = this.cy
     this.ds.sendRequest('insertNewStudent', this.student).subscribe((res)=>{
-      console.log(res)
       Swal.fire({
         icon: res[0],
         title: res[1],

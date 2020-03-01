@@ -10,6 +10,9 @@ import { formatDate } from '@angular/common';
   styleUrls: ["./confirmedapplicants.component.scss"]
 })
 export class ConfirmedapplicantsComponent implements OnInit {
+  log:any = {}
+  now = new Date();
+  credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
   constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
   schedTime: any = "";
@@ -21,8 +24,9 @@ export class ConfirmedapplicantsComponent implements OnInit {
   fullscreen = false;
   applicantCount = 0;
   searchValue = "";
-  sort = "gc.gc_idnumber";
-
+  order = 'DESC';
+  sort = 'gc.gc_idnumber ' + this.order;
+  sortValue = 'id';
   scheds: any;
   async ngOnInit() {
     this.search.sort = this.sort;
@@ -34,28 +38,43 @@ export class ConfirmedapplicantsComponent implements OnInit {
     await this.getAvailableSchedules();
   }
 
-  setSort(e){
-    switch(e.target.selectedOptions[0].value){
+  setSort(e) {
+    switch (e) {
       case 'id':
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
         this.ngOnInit()
         break
       case 'name':
-        this.sort = 'si.si_lastname,si.si_firstname,si.si_midname,si.si_extname,gc.gc_idnumber'
+        this.sort = `si.si_lastname ${this.order},si.si_firstname ASC,si.si_midname,si.si_extname `
         this.ngOnInit()
         break
       case 'email':
-        this.sort = 'si.si_email'
+        this.sort = `si.si_email ${this.order}`
         this.ngOnInit()
         break
       case 'program':
-        this.sort = 'gc.gc_course,si.si_lastname'
+        this.sort = `gc.gc_course ${this.order},si.si_lastname ASC`
         this.ngOnInit()
         break
       default:
-        this.sort = 'gc.gc_idnumber'
+        this.sort = `gc.gc_idnumber ${this.order}`
     }
     this.searchValue = ''
+  }
+
+  setOrder(e){
+    switch(e.target.selectedOptions[0].value){
+      case 'ASC':
+        this.order = 'ASC'
+        this.setSort(this.sortValue)
+        break;
+      case 'DESC':
+        this.order = 'DESC'
+        this.setSort(this.sortValue)
+        break;
+      default:
+        this.order = 'DESC'
+    }
   }
 
   getUnscheduledApplicants() {
@@ -113,6 +132,12 @@ export class ConfirmedapplicantsComponent implements OnInit {
               "The application is now unconfirmed.",
               "success"
             ).then(() => {
+              this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+              this.log.activity = `Undid application confirmation for ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+              this.log.idnumber = this.credentials.data[0].fa_empnumber
+              this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+              this.log.department = this.credentials.data[0].fa_department
+              this.ds.sendLog(this.log)
               this.ngOnInit();
             });
           } else {
@@ -142,6 +167,12 @@ export class ConfirmedapplicantsComponent implements OnInit {
                 html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
                 icon: "success"})
               .then(() => {
+                this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+                this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}.`
+                this.log.idnumber = this.credentials.data[0].fa_empnumber
+                this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+                this.log.department = this.credentials.data[0].fa_department
+                this.ds.sendLog(this.log)
                 this.getUnscheduledApplicants();
                 this.getAvailableSchedules();
               });

@@ -203,6 +203,10 @@
                     echo json_encode($post->getProspectusCopyF($d));
                 break;
 
+                case 'getProspectusByYr':
+                    echo json_encode($post->getProspectusByYr($d));
+                break;
+
                 // student/sched
                 case 'getStudentSchedule':
                     echo json_encode($post->getStudentSchedule($d));
@@ -351,6 +355,66 @@
                     echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as applicantcount from tbl_gcat"));
                 break;
 
+                case 'getUnconfirmedCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as unconfirmedCount from tbl_gcat WHERE gc_status = 0"));
+                break;
+
+                case 'getConfirmedCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as confirmedCount from tbl_gcat WHERE gc_status = 1"));
+                break;
+
+                case 'getScheduledCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as scheduledCount from tbl_gcat WHERE gc_status = 2"));
+                break;
+
+                case 'getCountByCourse':
+                    echo json_encode($post->executeWithRes("SELECT count(gc_idnumber) as y, gc_course as name FROM tbl_gcat GROUP BY gc_course"));
+                break;
+
+                case 'getCountByCity':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_city as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_city"));
+                break;
+
+                case 'getCountBySHS':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_isshs as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_isshs"));
+                break;
+
+                case 'getCountByHSClass':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_hsclass as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_hsclass"));
+                break;
+
+                case 'getCountByStudentType':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_studenttype as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_studenttype"));
+                break;
+
+                case 'getCountByGender':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_gender as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_gender"));
+                break;
+
+                case 'getCountByAge':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_age as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_age"));
+                break;
+
+                case 'getCountByCitizenship':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_nationality as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_nationality"));
+                break;
+
+                case 'getCountByCivilStatus':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_civilstatus as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_civilstatus"));
+                break;
+
+                case 'getCountByPWD':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_isdisabled as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_isdisabled"));
+                break;
+
+                case 'getCountByDadDeceased':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_daddeceased as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_daddeceased"));
+                break;
+
+                case 'getCountByMomDeceased':
+                    echo json_encode($post->executeWithRes("SELECT count(gc.gc_idnumber) as y, si.si_momdeceased as name FROM tbl_gcat gc INNER JOIN tbl_studentinfo si ON gc.gc_idnumber = si.si_idnumber GROUP BY si.si_momdeceased"));
+                break;
+
                 case 'updateNewStudent':
                     echo json_encode($auth->updateNewStudent($d));
                 break;
@@ -364,11 +428,11 @@
                 break;
 
                 case 'getUnconfirmedApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '0' ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '0' ORDER BY $d->sort"));
                 break;
 
                 case 'getUnscheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '1' ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '1' ORDER BY $d->sort"));
                 break;
 
                 case 'getAllScheduledApplicantsCount':
@@ -376,7 +440,7 @@
                 break;
 
                 case 'getScheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '2' and gc.gc_examtime='$d->dropDownSched'  ORDER BY si.si_lastname, si.si_firstname,si.si_midname,si.si_extname ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '2' and gc.gc_examtime='$d->dropDownSched'  ORDER BY si.si_lastname, si.si_firstname,si.si_midname,si.si_extname"));
                 break;
 
                 case 'unscheduleApplicant':
@@ -385,14 +449,33 @@
                    }
                 break;
 
+                case 'moveSchedule':
+                    if($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examtime = '$d->moveDate' WHERE gc_examtime = '$d->currentDate'")){
+                        if($post->executeWithoutRes("UPDATE tbl_gcatschedule AS s1 JOIN tbl_gcatschedule AS s2 ON s2.sched_recno = '$d->currentDate'
+                                                                              SET    s1.sched_count = s2.sched_count
+                                                                              WHERE  s1.sched_recno = '$d->moveDate'"))
+                        {
+                            echo json_encode($post->executeWithoutRes("UPDATE tbl_gcatschedule SET sched_count = 0 WHERE sched_recno = '$d->currentDate'"));
+                        }
+                    }
+                 break;
+
+                 case 'insertUserLog':
+                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_userlogs (log_date, log_activity, log_userid, log_username, log_userdepartment) 
+                                                               VALUES ('$d->date', '$d->activity', '$d->idnumber', '$d->name', '$d->department')"));
+                 break;
+
+                 case 'getUserLogs':
+                    echo json_encode($post->executeWithRes("SELECT * FROM tbl_userlogs ORDER BY log_recno DESC LIMIT 100"));
+                 break;
 
                 // ian codes
                 case 'searchUnconfirmedApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '0') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '0') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort"));
                 break;
 
                 case 'searchUnscheduledApplicants':
-                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '1') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort ASC"));
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE (gc.gc_status = '1') AND (si.si_lastname LIKE '%$d->value%' || si.si_midname LIKE '%$d->value%' || si.si_firstname LIKE '%$d->value%' || gc.gc_idnumber LIKE '%$d->value%' || gc.gc_regtime LIKE '%$d->value%' || gc.gc_course LIKE '%$d->value%' || si.si_email LIKE '%$d->value%') ORDER BY $d->sort"));
                 break;
 
                 case 'searchScheduledApplicants':

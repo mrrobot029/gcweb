@@ -2,6 +2,7 @@ import { Component, OnInit, ɵConsole } from "@angular/core";
 import { NgxSpinnerService } from 'ngx-spinner'
 import { DataService } from "src/app/services/data.service";
 import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: "app-scheduled",
@@ -10,6 +11,10 @@ import Swal from 'sweetalert2';
 })
 export class ScheduledComponent implements OnInit {
   constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
+  log:any = {}
+  now = new Date();
+
+  credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
   schedDate: any;
   schedTime = 'AM';
   p = 1;
@@ -90,10 +95,15 @@ export class ScheduledComponent implements OnInit {
     e.preventDefault();
     this.schedule.date = e.target.elements[0].value;
     this.schedule.time = this.schedTime
-    console.log(this.schedule)
     let promise = this.ds.sendRequest("addGCATSchedule", this.schedule).toPromise()
     promise.then(res => {
       if (res.status.remarks) {
+        this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+        this.log.activity = `Added exam schedule ${formatDate(e.target.elements[0].value, 'MMMM dd, y', 'en-US' )} ${this.schedTime}.`
+        this.log.idnumber = this.credentials.data[0].fa_empnumber
+        this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+        this.log.department = this.credentials.data[0].fa_department
+        this.ds.sendLog(this.log)
         this.getAllSchedules();
       } else {
         this.ds.callSwal("Adding Failed.", "Check the sched info.", "error");
@@ -105,9 +115,19 @@ export class ScheduledComponent implements OnInit {
   }
 
   delGCATSchedule(e) {
+    let oldDate:any = {}
+    oldDate = this.scheds.filter(s => {
+      return s.sched_recno == e
+    })
     this.schedule.recNo = e;
     this.ds.sendRequest("delGCATSchedule", this.schedule).subscribe(res => {
       if (res.status.remarks) {
+        this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+        this.log.activity = `Removed exam schedule ${formatDate(oldDate[0].sched_date, 'MMMM dd, y', 'en-US' )} ${oldDate[0].sched_time}.`
+        this.log.idnumber = this.credentials.data[0].fa_empnumber
+        this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+        this.log.department = this.credentials.data[0].fa_department
+        this.ds.sendLog(this.log)
         this.getAllSchedules();
       } else {
         this.ds.callSwal(
@@ -130,6 +150,12 @@ export class ScheduledComponent implements OnInit {
           title: "Success!",
           html: `Applicant<br><strong>${a.si_fullname}</strong><br>has been unscheduled.`
         }).then(()=>{
+          this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+          this.log.activity = `Uscheduled ${a.si_fullname} - ID Number: ${a.gc_idnumber} for examination.`
+          this.log.idnumber = this.credentials.data[0].fa_empnumber
+          this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+          this.log.department = this.credentials.data[0].fa_department
+          this.ds.sendLog(this.log)
           this.getScheduledApplicants()
           this.getScheduledApplicantsCount()
           this.getAllSchedules()
@@ -146,6 +172,39 @@ export class ScheduledComponent implements OnInit {
         })
       }
       this.spinner.hide()
+    })
+  }
+
+  moveSchedule(d){
+    let oldDate:any = {}
+    oldDate = this.scheds.filter(s => {
+      return s.sched_recno == this.dropDownSched
+    })
+    this.spinner.show()
+    let date:any = {}
+    date.currentDate = this.dropDownSched
+    date.moveDate = d.sched_recno
+    let promise = this.ds.sendRequest('moveSchedule', date).toPromise()
+    promise.then(res=>{
+      if(res.status.remarks){
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          html: `Exam schedule has been moved from <strong>${formatDate(oldDate[0].sched_date, 'MMMM dd, y', 'en-US' )} ${oldDate[0].sched_time}</strong> to <strong>${formatDate(d.sched_date, 'MMMM dd, y', 'en-US' )} ${d.sched_time}</strong>`
+        }).then(()=>{
+          this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+          this.log.activity = `Moved exam schedule from ${formatDate(oldDate[0].sched_date, 'MMMM dd, y', 'en-US' )} ${oldDate[0].sched_time} to ${formatDate(d.sched_date, 'MMMM dd, y', 'en-US' )} ${d.sched_time}.`
+          this.log.idnumber = this.credentials.data[0].fa_empnumber
+          this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+          this.log.department = this.credentials.data[0].fa_department
+          this.ds.sendLog(this.log)
+          setTimeout(()=>{
+            this.spinner.hide()
+            this.dropDownSched = null
+            this.ngOnInit()
+          }, 500)
+        })
+      }
     })
   }
 }

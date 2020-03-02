@@ -17,6 +17,7 @@ export class ConfirmedapplicantsComponent implements OnInit {
   schedDate: any;
   schedTime: any = "";
   p = 1;
+  applicantsConst:any = {}
   applicants: any = {};
   noapplicants = true;
   search: any = {};
@@ -78,13 +79,15 @@ export class ConfirmedapplicantsComponent implements OnInit {
   }
 
   getUnscheduledApplicants() {
+    this.fullscreen = false
     this.spinner.show();
     let promise = this.ds
       .sendRequest("getUnscheduledApplicants", this.search)
       .toPromise();
     promise.then(res => {
       if (res.status.remarks) {
-        this.applicants = res.data;
+        this.applicantsConst = res.data;
+        this.applicants = this.applicantsConst
         this.applicantCount = this.applicants.length;
         this.noapplicants = false;
       } else {
@@ -97,15 +100,9 @@ export class ConfirmedapplicantsComponent implements OnInit {
   searchUnscheduledApplicants(e) {
     e.preventDefault();
     this.search.value = e.target.value;
-    this.ds
-      .sendRequest("searchUnscheduledApplicants", this.search)
-      .subscribe(res => {
-        if (res.status.remarks) {
-          this.applicants = res.data;
-        } else {
-          this.applicants = [];
-        }
-      });
+    this.applicants = this.applicantsConst.filter(a =>{
+      return a.gc_idnumber.includes(e.target.value) || a.si_lastname.toUpperCase().includes(e.target.value.toUpperCase()) || a.si_firstname.toUpperCase().includes(e.target.value.toUpperCase()) || `${a.si_lastname.toUpperCase()} ${a.si_firstname}`.includes(e.target.value.toUpperCase()) || a.si_email.toUpperCase().includes(e.target.value.toUpperCase())
+    })
     this.p = 1;
   }
 
@@ -152,10 +149,12 @@ export class ConfirmedapplicantsComponent implements OnInit {
   }
 
   addScheduleForApplicant(applicant) {  
+    this.fullscreen = true;
+    this.spinner.show()
     if (this.schedTime !== "") {
       this.schedule.time = this.schedTime;
-      this.ds
-      .sendRequest("getScheduleCount", this.schedule).subscribe(res =>{
+      let promise = this.ds.sendRequest("getScheduleCount", this.schedule).toPromise()
+      promise.then(res =>{
         if(res.data[0].sched_count>=40){
           Swal.fire({
             title: `ERROR`, 
@@ -170,30 +169,32 @@ export class ConfirmedapplicantsComponent implements OnInit {
           let selectedsched = this.scheds.filter(s => {
             return s.sched_recno == this.schedTime
           })
-          this.ds
-            .sendRequest("addScheduleForApplicant", this.schedule)
-            .subscribe(res => {
-              console.log(res)
+          let promise2 = this.ds.sendRequest("addScheduleForApplicant", this.schedule).toPromise()
+            promise2.then(async res => {
               if (res.status.remarks) {
+                await this.getUnscheduledApplicants()
+                await this.getAvailableSchedules();
+                this.spinner
                   Swal.fire({
                     title: `${applicant.si_fullname}`, 
                     html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
                     icon: "success"})
                   .then(() => {
+                    this.fullscreen = false;
                     this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
                     this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}.`
                     this.log.idnumber = this.credentials.data[0].fa_empnumber
                     this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
                     this.log.department = this.credentials.data[0].fa_department
                     this.ds.sendLog(this.log)
-                    this.getUnscheduledApplicants();
-                    this.getAvailableSchedules();
                   });
               }
             });
         }
       })
     } else {
+      this.spinner.hide()
+      this.fullscreen = false;
       this.ds.callSwal(
         "Incomplete Info",
         "Please select schedule time.",

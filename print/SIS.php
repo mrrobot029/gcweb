@@ -26,10 +26,14 @@
   $decryptedkey=openssl_decrypt ($key, $ciphering,  
               $decryption_key, $options, $decryption_iv); 
   if($id == $decryptedkey){
+    $statusQuery = mysqli_query($conn, "SELECT gc_status FROM tbl_gcat WHERE gc_idnumber = '$id'");
+    $status = mysqli_fetch_row($statusQuery);
     $query = mysqli_query($conn,"SELECT * FROM tbl_studentinfo WHERE si_idnumber = '$id'");
     if(mysqli_num_rows($query)>0){
+      if($status[0] == '0'){
         $sqlUpdateStatus = "UPDATE tbl_gcat SET gc_status = 1 WHERE gc_idnumber = '$id'";
-        if(mysqli_query($conn, $sqlUpdateStatus)){
+        mysqli_query($conn, $sqlUpdateStatus);
+      }
           while($res = mysqli_fetch_assoc($query)){
   
   
@@ -124,7 +128,7 @@
             $ipgroup = $res['si_ipgroup'];
         }
       }
-    }
+    
 
 ?>
 <!DOCTYPE html>

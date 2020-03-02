@@ -19,7 +19,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.es.getCount())
   this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
   this.ds.sendRequest('getUnconfirmedCount', null).subscribe(res => {
     let unconfirmedCount = res.data[0].unconfirmedCount
@@ -154,7 +153,6 @@ export class StatisticsComponent implements OnInit {
 
   
   chart1(a,b,c){
-    console.log(a,b,c)
     let chart = new CanvasJS.Chart("chartContainer", {
       theme: "light2",
       animationEnabled: true,

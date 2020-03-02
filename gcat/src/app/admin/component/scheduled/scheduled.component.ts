@@ -18,6 +18,7 @@ export class ScheduledComponent implements OnInit {
   schedDate: any;
   schedTime = 'AM';
   p = 1;
+  applicantsConst: any = {};
   applicants: any = {};
   search: any = {};
   schedule: any = {};
@@ -44,17 +45,21 @@ export class ScheduledComponent implements OnInit {
   }
 
   getScheduledApplicants() {
+    this.spinner.show()
     this.search.dropDownSched = this.dropDownSched;
-    this.ds.sendRequest("getScheduledApplicants", this.search).subscribe(res => {
+    let promise = this.ds.sendRequest("getScheduledApplicants", this.search).toPromise()
+    promise.then(async res => {
       if (res.data) {
-
-        this.applicants = res.data;
+        this.applicantsConst = res.data;
+        this.applicants = this.applicantsConst;
         this.applicantCountOnDate = res.data.length
         this.noapplicants = false;
+        this.spinner.hide()
       } else {
         this.applicants = [];
         this.applicantCountOnDate = 0
         this.noapplicants = true;
+        this.spinner.hide()
       }
 
 
@@ -64,20 +69,10 @@ export class ScheduledComponent implements OnInit {
   searchScheduledApplicants(e) {
     e.preventDefault();
     this.search.value = e.target.value;
-    this.search.dropDownSched = this.dropDownSched;
-    this.ds
-      .sendRequest("searchScheduledApplicants", this.search)
-      .subscribe(res => {
-        if (res.status.remarks) {
-          this.applicants = res.data;
-          this.applicantCountOnDate = res.data.length
-          this.noapplicants = false;
-        } else {
-          this.applicants = [];
-          this.applicantCountOnDate = 0
-          this.noapplicants = true;
-        }
-      });
+    this.applicants = this.applicantsConst.filter(a =>{
+      return a.gc_idnumber.includes(e.target.value) || a.si_lastname.toUpperCase().includes(e.target.value.toUpperCase()) || a.si_firstname.toUpperCase().includes(e.target.value.toUpperCase()) || `${a.si_lastname.toUpperCase()} ${a.si_firstname}`.includes(e.target.value.toUpperCase()) || a.si_email.toUpperCase().includes(e.target.value.toUpperCase())
+    })
+    this.p = 1;
   }
 
   getAllSchedules() {
@@ -143,8 +138,12 @@ export class ScheduledComponent implements OnInit {
   unschedule(a){
     this.spinner.show()
     let promise = this.ds.sendRequest('unscheduleApplicant', a).toPromise()
-    promise.then(res => {
+    promise.then(async res => {
+      await this.getScheduledApplicants()
+      await this.getScheduledApplicantsCount()
+      await this.getAllSchedules()
       if(res.status.remarks){
+        this.spinner.hide()
         Swal.fire({
           icon: "success",
           title: "Success!",
@@ -156,9 +155,6 @@ export class ScheduledComponent implements OnInit {
           this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
           this.log.department = this.credentials.data[0].fa_department
           this.ds.sendLog(this.log)
-          this.getScheduledApplicants()
-          this.getScheduledApplicantsCount()
-          this.getAllSchedules()
         })
       } else{
         Swal.fire({
@@ -171,7 +167,6 @@ export class ScheduledComponent implements OnInit {
           this.getScheduledApplicantsCount()
         })
       }
-      this.spinner.hide()
     })
   }
 

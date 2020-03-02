@@ -59,24 +59,30 @@
             }
         }
         $authenticated = true;
-        $updateStatus = "UPDATE tbl_gcat SET gc_status = '1' WHERE gc_idnumber = '$id'";
-        if(mysqli_query($conn, $updateStatus)){
-            $mail->addAddress('gcat@gordoncollegeccs.edu.ph');
-            $mail->Subject = "GCAT Registration Confirmation";
-            $mail->Body = "Applicant <b>{$fname} {$lname}</b> has acknowledged receipt of his/her confirmation email.<br>";
-            if($status[0] == '0'){
-                if ($mail->send()) {
-                    $confirmation = true;
-                } else {
-                    $confirmation = false;
+        if($status[0] == '0'){
+            $updateStatus = "UPDATE tbl_gcat SET gc_status = '1' WHERE gc_idnumber = '$id'";
+            if(mysqli_query($conn, $updateStatus)){
+                $mail->addAddress('gcat@gordoncollegeccs.edu.ph');
+                $mail->Subject = "GCAT Registration Confirmation";
+                $mail->Body = "Applicant <b>{$fname} {$lname}</b> has acknowledged receipt of his/her confirmation email.<br>";
+                if($status[0] == '0'){
+                    if ($mail->send()) {
+                        $confirmation = true;
+                    } else {
+                        $confirmation = false;
+                    }
+                } else{
+                    $alreadyConfirmed = true;
                 }
+                
             } else{
-                $alreadyConfirmed = true;
+                $confirmation = false;
             }
-            
-        } else{
-            $confirmation = false;
         }
+        else{        
+            $alreadyConfirmed = true;
+        }
+
     } else{
         $authenticated = false;
     }

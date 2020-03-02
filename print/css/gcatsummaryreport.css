@@ -1,0 +1,139 @@
+
+.flexcontainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    }
+
+body{
+	font-family: Segoe, 'Segoe UI'; 
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	background:#ffffff;  
+	color:#000000;
+	
+	font-size:0.875rem;
+}
+
+table{
+	border : 0;
+	width:100%;	
+} 
+
+div {
+
+font-size: 0.4375rem;
+}
+
+.txt{
+	
+	font-size:0.625rem;
+}
+
+.table-body{
+	border-collapse: collapse;
+}
+
+.border-thin {
+	border: 1px solid black;
+	padding-left:4px;
+}
+
+.header-td{
+	width:33.3%;
+}
+
+.left{
+	text-align:left;
+}
+
+.center{
+	text-align: center;
+}
+.right{
+	text-align: right;
+}
+.darken{
+	background-color:#DDDDDD;
+}
+.m-top{
+	margin-top:-20px;
+}
+.m-top1{
+	margin-top:-13px;
+}
+.txt-box{
+	border:none;
+	border-bottom:1px solid;
+}
+.nodisplay{
+	border:0;
+}
+
+.tbl-subjects{
+	font-size:0.6875rem;
+}
+.m-top2{
+	margin-top:-2px;
+}
+
+@media print{
+	html, body{
+		height: 100%;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+td{
+	font-size: 0.7rem;
+}
+
+th{
+    font-size: 0.8rem;
+}
+
+
+.twobytwopic {
+    position: absolute;right:0;top:0;
+    background-color: white;
+    width: 192px;
+    height: 192px;
+    border: 1px solid black;
+    margin-left: auto;
+    text-align: center;
+}
+
+
+.verticalmargin{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.top-border {
+	border:none;
+	border-top:1px solid;
+}
+
+
+.bg-red {
+    background-color: #ef9a9a ;
+}
+
+
+.bg-blue {
+    background-color: #90caf9 ;
+}
+
+
+
+.bg-green {
+    background-color: #a5d6a7 ;
+}

@@ -1,4 +1,5 @@
-<section id="about" class="mat-typography" style="margin: 0!important">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap" rel="stylesheet">
+<section id="about" class="mat-typography" style="margin: 0!important; font-family: 'Open Sans'">
       <div class="container animated fadeIn">
 
 		<div id="contentarrow" *ngIf="!mobileQuery.matches">
@@ -10,11 +11,11 @@
 		</div>
       	<div class="about-section about-heading section-header" [ngStyle.lt-md]="{'height':'35vh'}" fxLayout="column" fxLayoutAlign="center center" #contentstart1>
             <div>
-            <h1 [ngStyle.lt-md]="{'margin-bottom': '15px'}" [ngStyle.xs]="{'font-size': '28px'}"><span style="color:#119950">GORDON COLLEGE </span><br *ngIf='break'>OLONGAPO CITY</h1>
+            <h1 [ngStyle.lt-md]="{'margin-bottom': '15px'}" [ngStyle.xs]="{'font-size': '28px'}" style="font-family: 'Open Sans';font-weight: bold"><span style="color:#119950">GORDON COLLEGE </span><br *ngIf='break'>OLONGAPO CITY</h1>
             </div>
             <div>
-			<p [ngStyle.xs]="{'font-size': '18px'}" [ngStyle.sm]="{'font-size': '22px'}" style="font-family: 'soleil', 'sans-serif';font-size:20px">"Serving the community with a culture of excellence."</p>
-			<h4 class="school-date" style="padding-bottom: 5%">Since 1999</h4>
+			<p [ngStyle.xs]="{'font-size': '18px'}" [ngStyle.sm]="{'font-size': '22px'}" style="font-family: 'Open Sans';font-size:20px">"Serving the community with a culture of excellence."</p>
+			<h4 class="school-date" style="padding-bottom: 5%" style="font-family: 'Open Sans'">Since 1999</h4>
 	        </div>
         </div>
 
@@ -47,13 +48,8 @@
         <!-- </div> -->
       </div>
 </section>
-<section id="home-vmg" style="margin: 0!important">
+<section id="home-vmg" style="margin: 0!important; font-family: 'Open Sans'">
 	<div class="container">
-		<header class="section-header">
-			<h3 style="margin:0 !important">History</h3>
-			<p style="width: 40vw; margin-left: calc(50% - 20vw);" [style.width.vw]="mobileQuery.matches? 100 : 40" [style.marginLeft.%]="mobileQuery.matches? 0 : ''"> A local government-funded college in Olongapo City, Philippines. It was founded on February 24, 1999 by virtue of City Ordinance No. 9, and is composed of four colleges: College of Computer Studies; College of Business and Accountancy; College of Education Arts and Sciences; College of Allied Health Studies. Other academic units include the Institute of Graduate Studies, Technical-Vocational Unit, and Senior High School</p>
-		</header>
-
 		<div fxLayout="row" fxLayout.lt-md="column" fxLayoutWrap="nowrap" fxLayoutGap="30px">
 			<div fxFlex="50" fxFlex.lt-md="100">
 				<header class="section-header">
@@ -68,5 +64,9 @@
 				</header>
 			</div>
 		</div>
+		<header class="section-header">
+			<h3 style="margin:0 !important">Goals</h3>
+			<p style="width: 40vw; margin-left: calc(50% - 20vw);margin-bottom: 0px;" [style.width.vw]="mobileQuery.matches? 100 : 40" [style.marginLeft.%]="mobileQuery.matches? 0 : ''"> A local government-funded college in Olongapo City, Philippines. It was founded on February 24, 1999 by virtue of City Ordinance No. 9, and is composed of four colleges: College of Computer Studies; College of Business and Accountancy; College of Education Arts and Sciences; College of Allied Health Studies. Other academic units include the Institute of Graduate Studies, Technical-Vocational Unit, and Senior High School</p>
+		</header>
 	</div>
 </section>

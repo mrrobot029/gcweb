@@ -2,32 +2,19 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'sched',
-        loadChildren: () => import('./sched/sched.module').then( m => m.SchedPageModule)
-    },
-    {
-        path: 'prospectus',
-        loadChildren: () => import('./prospectus/prospectus.module').then( m => m.ProspectusPageModule)
-    },
-    {
-        path: 'profile',
-        loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-    },
-    {
-        path: 'login',
-        loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-    },
   {
-    path: 'navbar',
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'full'
+  },
+  {
+      path: 'login',
+      loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'menu',
     loadChildren: () => import('./navbar/navbar.module').then( m => m.NavbarPageModule)
   }
-
 ];
 
 @NgModule({

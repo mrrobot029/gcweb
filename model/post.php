@@ -367,9 +367,7 @@
 
         // students/schedule
         function getStudentSchedule($d){
-            return $this->executeWithRes("SELECT tbl_classes.cl_code, tbl_classes.cl_sucode, tbl_classes.cl_room,tbl_classes.cl_stime,tbl_classes.cl_etime,tbl_classes.cl_day, tbl_faculty.fa_fname, tbl_faculty.fa_mname,tbl_faculty.fa_lname, tbl_faculty.fa_extname from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode
-            INNER JOIN tbl_faculty ON tbl_classes.cl_facultyid = tbl_faculty.fa_empnumber 
-            WHERE tbl_enrolledsubjects.es_idnumber=$d->si_idnumber group by es_clcode");
+            return $this->executeWithRes("SELECT tbl_classes.cl_code, tbl_classes.cl_sucode, tbl_classes.cl_room,tbl_classes.cl_stime,tbl_classes.cl_etime,tbl_classes.cl_day, tbl_faculty.fa_fname, tbl_faculty.fa_mname,tbl_faculty.fa_lname, tbl_faculty.fa_extname, tbl_subjects.su_description from tbl_classes LEFT JOIN tbl_enrolledsubjects ON tbl_classes.cl_code = tbl_enrolledsubjects.es_clcode INNER JOIN tbl_faculty ON tbl_classes.cl_facultyid = tbl_faculty.fa_empnumber INNER JOIN tbl_subjects ON tbl_classes.cl_sucode = tbl_subjects.su_code WHERE tbl_enrolledsubjects.es_idnumber=$d->si_idnumber group by es_clcode");
         }
 
         // students/prospectus
@@ -378,6 +376,9 @@
         }
         function getProspectusCopyF($d){
             return $this->executeWithRes("SELECT * FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_cy WHERE tbl_subjects.su_course='$d->si_course' AND tbl_subjects.su_yrlevel=$d->year AND tbl_subjects.su_sem=$d->sem AND tbl_studentinfo.si_idnumber='$d->si_idnumber'");
+        }
+        function getProspectusByYr($d){
+            return $this->executeWithRes("SELECT tbl_subjects.su_recno, tbl_subjects.su_code, tbl_subjects.su_description, tbl_subjects.su_lecunits, tbl_subjects.su_labunits, tbl_subjects.su_rleunits, tbl_subjects.su_sem FROM tbl_subjects LEFT JOIN tbl_studentinfo ON tbl_subjects.su_cy = tbl_studentinfo.si_cy WHERE su_course='$d->si_course' AND tbl_studentinfo.si_idnumber='$d->si_idnumber' AND su_yrlevel='$d->year' ORDER BY su_yrlevel ASC, su_sem ASC");
         }
         
         // students/grades
@@ -493,7 +494,7 @@
             }
 
             function updateSettings($d) {
-                return $this->executeWithoutRes("UPDATE tbl_enlistment SET en_cystart = '$d->en_cystart', en_cyend = '$d->en_cyend', en_schoolyear = '$d->en_schoolyear', en_cy = '$d->en_cy', en_sem = '$d->en_sem', en_enstart = '$d->en_enstart', en_enend = '$d->en_enend' where en_recno = '$d->en_recno'");
+                return $this->executeWithoutRes("UPDATE tbl_enlistment SET en_cystart = '$d->en_cystart', en_cyend = '$d->en_cyend', en_schoolyear = '$d->en_schoolyear', en_cy = '$d->en_cy', en_sem = '$d->en_sem', en_enstart = '$d->en_enstart', en_enend = '$d->en_enend', en_gcatstart = '$d->en_gcatstart', en_gcatend = '$d->en_gcatend', en_gcatactive = '$d->en_gcatactive', en_enlistmentactive = '$d->en_enlistmentactive' where en_recno = '$d->en_recno'");
             }
 
             function getEnrolledClasses($d) {

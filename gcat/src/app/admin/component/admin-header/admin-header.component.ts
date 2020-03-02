@@ -3,6 +3,10 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DataService } from "src/app/services/data.service";
 import { AuthService } from 'src/app/services/auth.service';
+import { formatDate } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material';
+import { StatisticsComponent } from '../../dialogs/statistics/statistics.component';
 
 @Component({
   selector: 'app-admin-header',
@@ -10,10 +14,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./admin-header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
-
+  log:any = {}
+  now = new Date();
   credentials: any = {};
   credType: any = "";
-
+  settings
   queryVar: any = {};
 
   date = new Date()
@@ -23,33 +28,30 @@ export class AdminHeaderComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
 
-  constructor(private router: Router, private element: ElementRef, private ds: DataService, private auth: AuthService) {
+  constructor(private router: Router, private element: ElementRef, private ds: DataService, private auth: AuthService, private spinner: NgxSpinnerService, private dialog: MatDialog) {
     this.sidebarVisible = false;
   }
 
   ngOnInit() {
+    // const [unconfirmedCount, confirmedCount, scheduledCount] = this.ds.getCount()
+    this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+      this.applicantCount = res.data[0].applicantcount;
+    })
 
+    this.ds.sendRequest('getSettings', null).subscribe(res=>{
+      this.settings = res.data[0];
+    })
 
     this.credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
-
     if (this.credentials !== null) {
       this.credType = this.credentials.data[0].fa_department;
-      console.log(this.credType);
     }
-
-
-
-
-
-    this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
-      this.applicantCount = res.data[0].applicantcount
-    })
     setInterval(() => {
       this.date = new Date;
     }, 1000);
     setInterval(() => {
-      this.ds.sendRequest('getApplicantCount', null).subscribe(res => {
-        this.applicantCount = res.data[0].applicantcount
+      this.ds.sendRequest('getApplicantCount', null).subscribe(res=>{
+        this.applicantCount = res.data[0].applicantcount;
       })
     }, 60000);
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_GCAT'));
@@ -77,6 +79,12 @@ export class AdminHeaderComponent implements OnInit {
         'Cancel'
     }).then((res) => {
       if (res.value) {
+        this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+        this.log.activity = "User logged out."
+        this.log.idnumber = this.credentials.data[0].fa_empnumber
+        this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+        this.log.department = this.credentials.data[0].fa_department
+        this.ds.sendLog(this.log)
         localStorage.removeItem('gcweb_GCAT');
         this.auth.setUserLoggedIn(false);
         this.router.navigate(['/login']);
@@ -180,6 +188,47 @@ export class AdminHeaderComponent implements OnInit {
       body.classList.add('nav-open');
       this.mobile_menu_visible = 1;
     }
+  }
+
+  update(){
+    this.spinner.show()
+    this.settings.en_schoolyear = new Date(this.settings.en_cystart).getFullYear().toString() + '-' + new Date(this.settings.en_cyend).getFullYear().toString()
+    let promise = this.ds.sendRequest('updateSettings', this.settings).toPromise()
+    promise.then((res)=>{
+      if (res.status.remarks) {
+        this.spinner.hide()
+        Swal.fire({
+          icon: 'success',
+          title: 'Update Success!',
+          text: 'Settings have been updated.'
+        }).then(() => {
+          this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+          this.log.activity = `Updated GCAT Registration settings.`
+          this.log.idnumber = this.credentials.data[0].fa_empnumber
+          this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+          this.log.department = this.credentials.data[0].fa_department
+          this.ds.sendLog(this.log)
+          this.ngOnInit()
+        });
+      } else {
+        }
+    });
+  }
+
+  setGcatActive(){
+    if(this.settings.en_gcatactive==1){
+      this.settings.en_gcatactive=0
+    } else{
+      this.settings.en_gcatactive=1
+    }
+    console.log(this.settings)
+  }
+
+  statistics(){
+    const dialogRef = this.dialog.open(StatisticsComponent, {
+      width: '80vw',
+      height: '90vh',
+    });
   }
 
 }

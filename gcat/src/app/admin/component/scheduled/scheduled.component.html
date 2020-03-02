@@ -59,7 +59,10 @@
                   Select schedule date first!
                 </a>
               </div>
-              <div class="col-md-3">
+              <div
+                *ngIf="credentials.data[0].fa_accounttype == 1"
+                class="col-md-3"
+              >
                 <button
                   class="btn btn-sm btn-block btn-info"
                   data-toggle="modal"
@@ -70,10 +73,26 @@
               </div>
               <div class="col-md-3 "></div>
             </div>
-            <div class="table-responsive" *ngIf="!noapplicants">
+            <div
+              class="table-responsive"
+              *ngIf="!noapplicants"
+              style="margin-top: 20px;"
+            >
+              <div
+                *ngIf="credentials.data[0].fa_accounttype == 1"
+                class="col-md-3"
+                class="pull-right"
+              >
+                <button
+                  class="btn btn-sm btn-block btn-danger"
+                  data-toggle="modal"
+                  data-target="#moveModal"
+                >
+                  Move Schedule
+                </button>
+              </div>
               <pagination-controls
                 id="pagination1"
-                class="pull-right"
                 (pageChange)="p = $event"
               ></pagination-controls>
               <table class="table table-striped">
@@ -137,6 +156,7 @@
   </div>
 </div>
 
+<!-- ADD MODAL -->
 <div
   class="modal fade"
   id="addModal"
@@ -225,6 +245,81 @@
                   >
                     <i class="material-icons">
                       delete
+                    </i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOVE MODAL -->
+<div
+  class="modal fade"
+  id="moveModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="uploadModalLabel">Schedules</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pagination-controls
+          id="pagination2"
+          class="pull-right"
+          (pageChange)="p = $event"
+        ></pagination-controls>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class=" text-primary">
+              <th>No.</th>
+              <th>Date&Time</th>
+              <th>Count</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let sched of scheds
+                    | paginate
+                      : { id: 'pagination2', itemsPerPage: 5, currentPage: p };
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>
+                  {{ sched.sched_date | date: "MMMM dd, y" }} -
+                  {{ sched.sched_time }}
+                </td>
+                <td>{{ sched.sched_count }}</td>
+
+                <td>
+                  <button
+                    style="align-self: flex-start; margin-left: auto;"
+                    class="btn btn-sm btn-warning"
+                    matTooltip="Delete Applicant"
+                    matTooltipPosition="above"
+                    (click)="moveSchedule(sched)"
+                    [disabled]="sched.sched_count != 0"
+                  >
+                    <i class="material-icons">
+                      sync_alt
                     </i>
                   </button>
                 </td>

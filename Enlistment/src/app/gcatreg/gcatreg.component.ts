@@ -97,6 +97,7 @@ export class GcatregComponent implements OnInit {
   ngOnInit() {
     this.spinner.show()
     this.currentDate.setHours(0,0,0,0)
+    this.currentDate.toLocaleString("en-US", {timeZone: 'Asia/Manila'})
     this.ds.sendRequest('getProvinces', '').subscribe((provinces)=>{
       this.provinces = provinces.data
     });
@@ -104,9 +105,9 @@ export class GcatregComponent implements OnInit {
     let promise = this.ds.sendRequest('getSettings', '').toPromise()
     promise.then((settings) => {
       this.spinner.hide()
-      this.enlistmentStart = new Date(settings.data[0].en_enstart)
-      this.enlistmentEnd = new Date(settings.data[0].en_enend)
-      if(this.currentDate<this.enlistmentStart||this.currentDate>this.enlistmentEnd){
+      this.enlistmentStart = new Date(settings.data[0].en_gcatstart)
+      this.enlistmentEnd = new Date(settings.data[0].en_gcatend)
+      if(settings.data[0].en_gcatactive == 0){
         this.enlistment = false;
       }
       this.acadyear = settings.data[0].en_schoolyear;
@@ -269,14 +270,12 @@ export class GcatregComponent implements OnInit {
   filterCourse(){
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall2 = courseres.data.filter(c=>c.co_name != this.secondFormGroup.value.course)
-      console.log(this.coursesall2)
     });
   }
 
   filterCourse2(){
     this.ds.sendRequest('getCourses',this.departmentall).subscribe((courseres)=>{
       this.coursesall3 = courseres.data.filter(c=>c.co_name != this.secondFormGroup.value.course).filter(c=>c.co_name != this.secondFormGroup.value.course2)
-      console.log(this.coursesall2)
     });
   }
 
@@ -287,7 +286,6 @@ export class GcatregComponent implements OnInit {
     let promise = this.ds.sendRequest('validateEmail', email).toPromise()
     promise.then((res)=>{
       this.spinner.hide()
-      console.log(res)
       if(res.status.remarks){      
         Swal.fire({
         icon: 'error',
@@ -362,7 +360,6 @@ computeAge(){
         promise = this.ds.sendRequest('reSendMail', student).toPromise()
         promise.then((res)=>{
           this.spinner.hide()
-          console.log(res)
         })
         Swal.fire({
         icon: 'warning',
@@ -415,7 +412,6 @@ computeAge(){
                 promise = this.ds.sendRequest('updateEmail', q).toPromise()
                 promise.then((res)=>{
                   this.spinner.hide()
-                  console.log(res)
                   if(res[0]=='success'){
                     Swal.fire({
                       icon: "success",
@@ -459,21 +455,17 @@ computeAge(){
 }
 
 changeEmail(e){
-  console.log(e)
 }
 
 onSelection(e){
-  console.log(e)
   switch(e){
     case 'citizen':
-      console.log(this.firstFormGroup.value.citizenship)
       if(this.firstFormGroup.value.citizenship == 'Others'){
         this.citizenshipisother = false;
       } else{
         this.citizenshipisother = true;
         this.firstFormGroup.controls.citizenshipother.setValue('')
       }
-      console.log(this.citizenshipisother)
       break;
 
     case 'govproj':

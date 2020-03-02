@@ -7,7 +7,7 @@
   
   #footer .footer-top {
     background: #111;
-    padding: 60px 0 30px 0;
+    padding: 60px 60px 30px 60px;
   }
   
   #footer .footer-top .footer-info {
@@ -19,7 +19,7 @@
     margin: 0 0 20px 0;
     padding: 2px 0 2px 10px;
     line-height: 1;
-    font-family: Roboto;
+    font-family: 'Open Sans';
     font-weight: 700;
     letter-spacing: 3px;
     border-left: 4px solid #18d26e;
@@ -29,7 +29,7 @@
     font-size: 14px;
     line-height: 24px;
     margin-bottom: 0;
-    font-family: Roboto;
+    font-family: 'Open Sans';
     color: #eee;
   }
   

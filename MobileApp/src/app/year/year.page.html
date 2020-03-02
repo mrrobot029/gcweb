@@ -1,0 +1,53 @@
+<ion-content fullscreen>
+  <ion-list>
+    <ion-list-header>
+      <h3>First Semester</h3>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 1">
+        <ion-label>
+          <h3>{{ subj.su_code }}</h3>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <h3>Second Semester</h3>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 2">
+        <ion-label>
+          <h3>{{ subj.su_code }}</h3>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <h3>Midyear</h3>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 3">
+        <ion-label>
+          <h3>{{ subj.su_code }}</h3>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

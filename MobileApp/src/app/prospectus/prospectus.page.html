@@ -1,326 +1,69 @@
-
-
+<ion-row>
+  <ion-col size="3">
+    <ion-button expand="full" (click)="yearlvl(1)">1st Year</ion-button>
+  </ion-col>
+  <ion-col size="3">
+    <ion-button expand="full" (click)="yearlvl(2)">2nd Year</ion-button>
+  </ion-col>
+  <ion-col size="3">
+    <ion-button expand="full" (click)="yearlvl(3)">3rd Year</ion-button>
+  </ion-col>
+  <ion-col size="3">
+    <ion-button expand="full" (click)="yearlvl(4)">4th  Year</ion-button>
+  </ion-col>
+</ion-row>
 <ion-content>
-  
-  <app-navbar></app-navbar>
-  <div class="main-content">
-    <div class="container-fluid">
-      <div class="card" >
-        <div class="card-header card-header-success">
-          <h4 class="card-title">First Year</h4>
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">First Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 1 && subject.su_sem == 1">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">Second Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 1 && subject.su_sem == 2">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container *ngFor="let subject of prospectus.data">
-              <div class="card"*ngIf="subject.su_yrlevel == 1 && subject.su_sem == 3">
-                <div class="card-header card-header-success">
-                  <h5 class="card-title">Midyear</h5>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" >
-                      <div class="card" >
-                        <div class="card-header card-header-success">
-                          <h5 class="card-title">{{ subject.su_code }}</h5>
-                          <h6 class="card-category">{{ subject.su_description }}</h6>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                          <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                          <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_recno }}</p></ng-container></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </div>  
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="card" >
-        <div class="card-header card-header-success">
-          <h4 class="card-title">Second Year</h4>
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">First Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 2 && subject.su_sem == 1">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">Second Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 2 && subject.su_sem == 2">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container *ngFor="let subject of prospectus.data">
-              <div class="card"*ngIf="subject.su_yrlevel == 2 && subject.su_sem == 3">
-                <div class="card-header card-header-success">
-                  <h5 class="card-title">Midyear</h5>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" >
-                      <div class="card" >
-                        <div class="card-header card-header-success">
-                          <h5 class="card-title">{{ subject.su_code }}</h5>
-                          <h6 class="card-category">{{ subject.su_description }}</h6>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                          <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                          <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </div>  
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="card" >
-        <div class="card-header card-header-success">
-          <h4 class="card-title">Third Year</h4>
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">First Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 3 && subject.su_sem == 1">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">Second Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 3 && subject.su_sem == 2">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container *ngFor="let subject of prospectus.data">
-              <div class="card"*ngIf="subject.su_yrlevel == 3 && subject.su_sem == 3">
-                <div class="card-header card-header-success">
-                  <h5 class="card-title">Midyear</h5>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" >
-                      <div class="card" >
-                        <div class="card-header card-header-success">
-                          <h5 class="card-title">{{ subject.su_code }}</h5>
-                          <h6 class="card-category">{{ subject.su_description }}</h6>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                          <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                          <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </div>  
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="card" >
-        <div class="card-header card-header-success">
-          <h4 class="card-title">Fourth Year</h4>
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">First Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 4 && subject.su_sem == 1">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h5 class="card-title">Second Semester</h5>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" *ngFor="let subject of prospectus.data">
-                    <div class="card" *ngIf="subject.su_yrlevel == 4 && subject.su_sem == 2">
-                      <div class="card-header card-header-success">
-                        <h5 class="card-title">{{ subject.su_code }}</h5>
-                        <h6 class="card-category">{{ subject.su_description }}</h6>
-                      </div>
-                      <div class="card-body">
-                        <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                        <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                        <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container *ngFor="let subject of prospectus.data">
-              <div class="card"*ngIf="subject.su_yrlevel == 4 && subject.su_sem == 3">
-                <div class="card-header card-header-success">
-                  <h5 class="card-title">Midyear</h5>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-6 col-sm-4 col-md-6 col-md-4" >
-                      <div class="card" >
-                        <div class="card-header card-header-success">
-                          <h5 class="card-title">{{ subject.su_code }}</h5>
-                          <h6 class="card-category">{{ subject.su_description }}</h6>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Lec Units: {{ subject.su_lecunits }} | Lab Units: {{ subject.su_labunits }} | RLE Units: {{ subject.su_rleunits }}</p>
-                          <p class="card-text">Prerequisite/s: {{ subject.su_prereq }}</p>
-                          <p class="card-text">Grade: <ng-container *ngFor="let grade of studGrades.data"><p *ngIf="grade.es_sucode == subject.su_code">{{ grade.es_fgrade }}</p></ng-container></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </div>  
-        </div>
-      </div>
-    </div>
-  </div>
+  <ion-list>
+    <ion-list-header>
+      <h4>First Semester</h4>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 1">
+        <ion-label>
+          <h2>{{ subj.su_code }}</h2>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <h4>Second Semester</h4>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 2">
+        <ion-label>
+          <h3>{{ subj.su_code }}</h3>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <h4>Midyear</h4>
+    </ion-list-header>
+    <ng-container *ngFor="let subj of prospectus.data">
+      <ion-item *ngIf="subj.su_sem == 3">
+        <ion-label>
+          <h4>{{ subj.su_code }}</h4>
+          <p>{{ subj.su_description }}</p>
+          <p>Lec Units: {{ subj.su_lecunits }} | Lab Units: {{ subj.su_labunits }} | RLE Units: {{ subj.su_rleunits }}</p>
+          <ng-container *ngFor="let grades of studGrades.data">
+            <h4 *ngIf="grades.es_sucode == subj.su_code">Grade: {{ studGrades.es_fgrade }}</h4>
+          </ng-container>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
 </ion-content>
 <!-- <table class="table table-striped">
             <thead class=" text-primary">

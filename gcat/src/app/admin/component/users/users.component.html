@@ -49,6 +49,44 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">User Logss</h4>
+              <p class="card-category">For Admission Portal</p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                <table class="table table-striped">
+                  <thead class=" text-primary">
+                    <th>Date</th>
+                    <th>User ID&Name</th>
+                    <th>Activity</th>
+                    <th>Department</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="
+                        let userlog of userlogs
+                          | paginate: { itemsPerPage: 10, currentPage: p };
+                        let i = index
+                      ">
+                      <td>{{userlog.log_date}}</td>
+                      <td>{{userlog.log_userid}} : {{userlog.log_username}}</td>
+                      <td>{{userlog.log_activity}}</td>
+                      <td>{{userlog.log_userdepartment}}</td>
+                    </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -88,6 +126,7 @@
             <select class="form-control" name="name2" type="text" required>
               <option value="GCAT-AO">Admission Officer</option>
               <option value="GCAT-R">Registrar</option>
+              <option value="GCAT-R1">Registrar Admin</option>
             </select>
           </div>
           <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>

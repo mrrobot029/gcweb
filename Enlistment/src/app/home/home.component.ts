@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    console.log(this.innerWidth)
     if(this.innerWidth < 1280){
     this.showvid = false
   } else{
@@ -35,7 +34,6 @@ export class HomeComponent implements OnInit {
   } else{
     this.showvid = true
   }
-  console.log(this.innerWidth+' changed')
 }
 
 }

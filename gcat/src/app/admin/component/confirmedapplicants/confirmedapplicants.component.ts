@@ -151,33 +151,48 @@ export class ConfirmedapplicantsComponent implements OnInit {
     this.fullscreen = false;
   }
 
-  addScheduleForApplicant(applicant) {
+  addScheduleForApplicant(applicant) {  
     if (this.schedTime !== "") {
       this.schedule.time = this.schedTime;
-      this.schedule.idNumber = applicant.gc_idnumber;
-      let selectedsched = this.scheds.filter(s => {
-        return s.sched_recno == this.schedTime
-      })
       this.ds
-        .sendRequest("addScheduleForApplicant", this.schedule)
-        .subscribe(res => {
-          if (res.status.remarks) {
-              Swal.fire({
-                title: `${applicant.si_fullname}`, 
-                html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
-                icon: "success"})
-              .then(() => {
-                this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
-                this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}.`
-                this.log.idnumber = this.credentials.data[0].fa_empnumber
-                this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
-                this.log.department = this.credentials.data[0].fa_department
-                this.ds.sendLog(this.log)
-                this.getUnscheduledApplicants();
-                this.getAvailableSchedules();
-              });
-          }
-        });
+      .sendRequest("getScheduleCount", this.schedule).subscribe(res =>{
+        if(res.data[0].sched_count>=40){
+          Swal.fire({
+            title: `ERROR`, 
+            html: `<strong>Applicant count cannot exceed 40!</strong>`, 
+            icon: "error"})
+            .then(() => {
+              this.getUnscheduledApplicants();
+              this.getAvailableSchedules();
+            })
+        } else{
+          this.schedule.idNumber = applicant.gc_idnumber;
+          let selectedsched = this.scheds.filter(s => {
+            return s.sched_recno == this.schedTime
+          })
+          this.ds
+            .sendRequest("addScheduleForApplicant", this.schedule)
+            .subscribe(res => {
+              console.log(res)
+              if (res.status.remarks) {
+                  Swal.fire({
+                    title: `${applicant.si_fullname}`, 
+                    html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sched_count-1}</strong>`, 
+                    icon: "success"})
+                  .then(() => {
+                    this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
+                    this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sched_date, 'MMMM dd, y', 'en-US' )} ${selectedsched[0].sched_time}.`
+                    this.log.idnumber = this.credentials.data[0].fa_empnumber
+                    this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
+                    this.log.department = this.credentials.data[0].fa_department
+                    this.ds.sendLog(this.log)
+                    this.getUnscheduledApplicants();
+                    this.getAvailableSchedules();
+                  });
+              }
+            });
+        }
+      })
     } else {
       this.ds.callSwal(
         "Incomplete Info",

@@ -499,6 +499,11 @@
                     echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examtime='$d->time',gc_status=2 WHERE gc_idnumber='$d->idNumber'"));
                 break;
 
+                case 'getScheduleCount':
+                    echo json_encode($post->executeWithRes("SELECT sched_count FROM tbl_gcatschedule WHERE sched_recno = '$d->time'"));
+                break;
+               
+
                 case 'delGCATSchedule':
                     echo json_encode($post->executeWithoutRes("DELETE from tbl_gcatschedule WHERE sched_recno='$d->recNo' "));
                 break;

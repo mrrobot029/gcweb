@@ -18,15 +18,25 @@
               <div class="col-md-4">
                 <form autocomplete="off">
                   <label for="search" class="p-0 m-0">Search</label>
-                  <input class="form-control" [(ngModel)]="searchValue" name="search" type="text"
-                    (keyup)="searchUnconfirmedApplicants($event)" />
+                  <input
+                    class="form-control"
+                    [(ngModel)]="searchValue"
+                    name="search"
+                    type="text"
+                    (keyup)="searchUnconfirmedApplicants($event)"
+                  />
                 </form>
               </div>
               <div class="col-md-2">
                 <label for="">Sort By:</label>
                 <form autocomplete="off" class="flexcontainercolumn">
-                  <select name="sort" id="sort" class="form-control" (change)="setSort($event)"
-                    style="margin-top: -5px;">
+                  <select
+                    name="sort"
+                    id="sort"
+                    class="form-control"
+                    (change)="setSort($event)"
+                    style="margin-top: -5px;"
+                  >
                     <option value="id">ID NUMBER</option>
                     <option value="name">NAME</option>
                     <option value="email">EMAIL</option>
@@ -35,8 +45,11 @@
                 </form>
               </div>
             </div>
-            <br>
-            <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
+            <br />
+            <pagination-controls
+              (pageChange)="p = $event"
+              maxSize="15"
+            ></pagination-controls>
             <div class="table-responsive" *ngIf="!noapplicants">
               <table class="table table-striped">
                 <thead class=" text-primary">
@@ -50,11 +63,13 @@
                   <th>Action</th>
                 </thead>
                 <tbody>
-                  <tr *ngFor="
+                  <tr
+                    *ngFor="
                       let applicant of applicants
                         | paginate: { itemsPerPage: 20, currentPage: p };
                       let i = index
-                    ">
+                    "
+                  >
                     <td>{{ 20 * (p - 1) + i + 1 }}</td>
                     <td>{{ applicant.gc_idnumber }}</td>
                     <td>{{ applicant.si_fullname }}</td>
@@ -65,16 +80,23 @@
                       {{ applicant.gc_regtime | date: "MM-dd-yyyy hh:mm" }}
                     </td>
                     <td class="flexcontainer">
-                      <a href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                      <a
+                        href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
                           applicant.gc_idnumber
-                        }}/{{ applicant.gc_key }}" target="_blank">
-                        <button class="btn btn-sm btn-success" matTooltip="Edit" matTooltipPosition="above">
+                        }}/{{ applicant.gc_key }}"
+                        target="_blank"
+                      >
+                        <button
+                          class="btn btn-sm btn-success"
+                          matTooltip="Edit"
+                          matTooltipPosition="above"
+                        >
                           <i class="material-icons">
                             edit
                           </i>
                         </button>
                       </a>
-                      <a href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
+                      <!-- <a href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
                           applicant.gc_idnumber
                         }}&key={{ applicant.gc_key }}" target="_blank">
                         <button class="btn btn-sm btn-success" matTooltip="Print" matTooltipPosition="above">
@@ -82,27 +104,50 @@
                             print
                           </i>
                         </button>
-                      </a>
-                      <button class="btn btn-sm btn-success" (click)="confirmApplication(applicant)"
-                        matTooltip="Confirm Application" matTooltipPosition="above">
+                      </a> -->
+                      <button
+                        class="btn btn-sm btn-success"
+                        (click)="confirmApplication(applicant)"
+                        matTooltip="Confirm Application"
+                        matTooltipPosition="above"
+                      >
                         <i class="material-icons">
                           check_circle
                         </i>
                       </button>
-                      <button *ngIf="applicant.gc_mailstatus == 0 && credType=='CCS' " class="btn btn-sm btn-success"
-                        (click)="sendMail(applicant)" matTooltip="Send Confirmation Email" matTooltipPosition="above">
+                      <button
+                        *ngIf="
+                          applicant.gc_mailstatus == 0 && credType == 'CCS'
+                        "
+                        class="btn btn-sm btn-success"
+                        (click)="sendMail(applicant)"
+                        matTooltip="Send Confirmation Email"
+                        matTooltipPosition="above"
+                      >
                         <i class="material-icons">
                           email
                         </i>
                       </button>
-                      <button *ngIf="applicant.gc_mailstatus == 1 && credType=='CCS' " class="btn btn-sm btn-warning"
-                        (click)="sendMail(applicant)" matTooltip="Send Confirmation Email" matTooltipPosition="above">
+                      <button
+                        *ngIf="
+                          applicant.gc_mailstatus == 1 && credType == 'CCS'
+                        "
+                        class="btn btn-sm btn-warning"
+                        (click)="sendMail(applicant)"
+                        matTooltip="Send Confirmation Email"
+                        matTooltipPosition="above"
+                      >
                         <i class="material-icons">
                           email
                         </i>
                       </button>
-                      <button *ngIf="credType=='CCS'" class="btn btn-sm btn-danger flex-right"
-                        (click)="delete(applicant)" matTooltip="Delete Applicant" matTooltipPosition="above">
+                      <button
+                        *ngIf="credType == 'CCS'"
+                        class="btn btn-sm btn-danger flex-right"
+                        (click)="delete(applicant)"
+                        matTooltip="Delete Applicant"
+                        matTooltipPosition="above"
+                      >
                         <i class="material-icons">
                           delete
                         </i>
@@ -111,8 +156,13 @@
                   </tr>
                 </tbody>
               </table>
-              <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
-                <pagination-controls maxSize="20" (pageChange)="p = $event"></pagination-controls>
+              <div
+                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+              >
+                <pagination-controls
+                  maxSize="20"
+                  (pageChange)="p = $event"
+                ></pagination-controls>
               </div>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">

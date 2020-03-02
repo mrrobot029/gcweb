@@ -6,7 +6,7 @@
           <div class="card-header card-header-success">
             <h4 class="card-title ">
               List of Scheduled Applicants - Total Count:
-              <strong>{{applicantCountOnDate}}/{{ applicantCount }}</strong>
+              <strong>{{ applicantCountOnDate }}/{{ applicantCount }}</strong>
             </h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
@@ -14,38 +14,68 @@
             <div class="row">
               <div class="col-md-3">
                 <form autocomplete="off">
-                  <input class="form-control" name="search" placeholder="Search ..." type="text"
-                    (keyup)="searchScheduledApplicants($event)" />
+                  <input
+                    class="form-control"
+                    name="search"
+                    placeholder="Search ..."
+                    type="text"
+                    (keyup)="searchScheduledApplicants($event)"
+                  />
                 </form>
               </div>
               <div class="col-md-3">
-                <select class="form-control" [(ngModel)]="dropDownSched" (change)="getScheduledApplicants()">
+                <select
+                  class="form-control"
+                  [(ngModel)]="dropDownSched"
+                  (change)="getScheduledApplicants()"
+                >
                   <option value="">--SELECT DATE--</option>
-                  <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
-                    {{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}} | <strong>Count:</strong>
+                  <option
+                    *ngFor="let sched of scheds"
+                    value="{{ sched.sched_recno }}"
+                  >
+                    {{ sched.sched_date | date: "MMMM dd, y" }} -
+                    {{ sched.sched_time }} | <strong>Count:</strong>
                     {{ " (" + sched.sched_count + ")" }}
                   </option>
                 </select>
               </div>
               <div class="col-md-3">
-                <a *ngIf="dropDownSched" href="http://localhost/gordoncollegeweb/print/gcatattendance.php?sched_recno={{dropDownSched}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D" target="_blank"
-                  class="btn btn-sm btn-block btn-success">
+                <a
+                  *ngIf="dropDownSched"
+                  href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatattendance.php?sched_recno={{
+                    dropDownSched
+                  }}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+                  target="_blank"
+                  class="btn btn-sm btn-block btn-success"
+                >
                   Print Attendance
                 </a>
-                <a *ngIf="!dropDownSched" href="javascript:void(0)"
-                  class="btn btn-sm btn-block btn-disabled">
+                <a
+                  *ngIf="!dropDownSched"
+                  href="javascript:void(0)"
+                  class="btn btn-sm btn-block btn-disabled"
+                >
                   Select schedule date first!
                 </a>
               </div>
               <div class="col-md-3">
-                <button class="btn btn-sm btn-block btn-info" data-toggle="modal" data-target="#addModal">
+                <button
+                  class="btn btn-sm btn-block btn-info"
+                  data-toggle="modal"
+                  data-target="#addModal"
+                >
                   Schedules
                 </button>
               </div>
               <div class="col-md-3 "></div>
             </div>
             <div class="table-responsive" *ngIf="!noapplicants">
-              <pagination-controls id="pagination1" class="pull-right" (pageChange)="p = $event"></pagination-controls>
+              <pagination-controls
+                id="pagination1"
+                class="pull-right"
+                (pageChange)="p = $event"
+              ></pagination-controls>
               <table class="table table-striped">
                 <thead class=" text-primary">
                   <th>No.</th>
@@ -57,11 +87,18 @@
                   <th>Action</th>
                 </thead>
                 <tbody>
-                  <tr *ngFor="
+                  <tr
+                    *ngFor="
                       let applicant of applicants
-                        | paginate: { id: 'pagination1', itemsPerPage: 20, currentPage: p };
+                        | paginate
+                          : {
+                              id: 'pagination1',
+                              itemsPerPage: 20,
+                              currentPage: p
+                            };
                       let i = index
-                    ">
+                    "
+                  >
                     <td>{{ 20 * (p - 1) + i + 1 }}</td>
                     <td>{{ applicant.gc_idnumber }}</td>
                     <td>{{ applicant.si_fullname }}</td>
@@ -69,18 +106,26 @@
                     <td>{{ applicant.gc_gpa }}</td>
                     <td>{{ applicant.gc_regtime }}</td>
                     <td>
-                      <button matTooltip="Undo Schedule" matTooltipPosition="above" class="btn btn-sm btn-danger"
-                      (click)="unschedule(applicant)">
-                      <i class="material-icons">
-                        undo
-                      </i>
-                    </button>
-                  </td>
+                      <button
+                        matTooltip="Undo Schedule"
+                        matTooltipPosition="above"
+                        class="btn btn-sm btn-danger"
+                        (click)="unschedule(applicant)"
+                      >
+                        <i class="material-icons">
+                          undo
+                        </i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
 
-              <pagination-controls id="pagination1" class="pull-right" (pageChange)="p = $event"></pagination-controls>
+              <pagination-controls
+                id="pagination1"
+                class="pull-right"
+                (pageChange)="p = $event"
+              ></pagination-controls>
             </div>
             <div *ngIf="noapplicants" style="text-align: center;">
               <h1>NO SCHEDULED APPLICANTS!</h1>
@@ -92,12 +137,24 @@
   </div>
 </div>
 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="uploadModalLabel">Schedules</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -106,8 +163,17 @@
           <div class="form-group container">
             <label for="name2">Date And Time</label>
             <div class="row">
-              <input class="form-control col-md-8" name="name2" type="date" style="margin-right: 20px;" />
-              <select class="form-control col-md-3" name="time" [(ngModel)]="schedTime">
+              <input
+                class="form-control col-md-8"
+                name="name2"
+                type="date"
+                style="margin-right: 20px;"
+              />
+              <select
+                class="form-control col-md-3"
+                name="time"
+                [(ngModel)]="schedTime"
+              >
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
               </select>
@@ -119,7 +185,11 @@
         </form>
 
         <br /><br />
-        <pagination-controls id="pagination2" class="pull-right" (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls
+          id="pagination2"
+          class="pull-right"
+          (pageChange)="p = $event"
+        ></pagination-controls>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class=" text-primary">
@@ -130,15 +200,29 @@
             </thead>
             <tbody>
               <tr
-                *ngFor=" let sched of scheds | paginate: { id: 'pagination2', itemsPerPage: 5, currentPage: p }; let i = index">
+                *ngFor="
+                  let sched of scheds
+                    | paginate
+                      : { id: 'pagination2', itemsPerPage: 5, currentPage: p };
+                  let i = index
+                "
+              >
                 <td>{{ i + 1 }}</td>
-                <td>{{ sched.sched_date | date : "MMMM dd, y"  }} - {{sched.sched_time}}</td>
+                <td>
+                  {{ sched.sched_date | date: "MMMM dd, y" }} -
+                  {{ sched.sched_time }}
+                </td>
                 <td>{{ sched.sched_count }}</td>
 
                 <td>
-                  <button style="align-self: flex-start; margin-left: auto;" class="btn btn-sm btn-danger"
-                    matTooltip="Delete Applicant" matTooltipPosition="above"
-                    (click)="delGCATSchedule(sched.sched_recno)"  [disabled]="sched.sched_count != 0">
+                  <button
+                    style="align-self: flex-start; margin-left: auto;"
+                    class="btn btn-sm btn-danger"
+                    matTooltip="Delete Applicant"
+                    matTooltipPosition="above"
+                    (click)="delGCATSchedule(sched.sched_recno)"
+                    [disabled]="sched.sched_count != 0"
+                  >
                     <i class="material-icons">
                       delete
                     </i>

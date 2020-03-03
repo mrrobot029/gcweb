@@ -45,9 +45,7 @@
             <thead>
                 <th class="border-thin">No.</th>
                 <th class="border-thin">Program</th>
-                <th class="border-thin">Status</th>
-                <th class="border-thin">Exam Schedule</th>
-                
+                <th class="border-thin">Status</th>                
                 <th class="border-thin">Count</th>
             </thead>
             <tbody>
@@ -78,20 +76,6 @@
                                 <td class='border-thin bg-blue'><strong>Scheduled</strong></td>
                                 ";
                             }
-                         
-
-                            
-                            if($res['sched_date'] == null) {
-                                echo "
-                                <td class='border-thin'>-----</td>
-                           ";
-                            }else {
-                                echo "
-                                <td class='border-thin'><strong>".$res['sched_date']." ".$res['sched_time']."</strong></td>
-                                ";
-
-
-                        }
 
                         $count = $count + $res['count'];
                         echo "

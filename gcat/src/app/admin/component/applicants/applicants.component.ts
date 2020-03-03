@@ -18,6 +18,7 @@ export class ApplicantsComponent implements OnInit {
   schedDate: any;
   schedTime: any;
   p = 1;
+  applicantsConst: any = {};
   applicants: any = {};
   noapplicants = true;
   search: any = {};
@@ -88,7 +89,8 @@ export class ApplicantsComponent implements OnInit {
     let promise = this.ds.sendRequest("getUnconfirmedApplicants", this.search).toPromise()
     promise.then(res => {
       if (res.status.remarks) {
-        this.applicants = res.data;
+        this.applicantsConst = res.data;
+        this.applicants = this.applicantsConst
         this.noapplicants = false;
         this.applicantCount = res.data.length
       } else {
@@ -101,16 +103,10 @@ export class ApplicantsComponent implements OnInit {
   searchUnconfirmedApplicants(e) {
     e.preventDefault();
     this.search.value = e.target.value;
-    this.ds
-      .sendRequest("searchUnconfirmedApplicants", this.search)
-      .subscribe(res => {
-        if (res.status.remarks) {
-          this.applicants = res.data;
-        } else {
-          this.applicants = [];
-        }
-      });
-    this.p = 1
+    this.applicants = this.applicantsConst.filter(a =>{
+      return a.gc_idnumber.includes(e.target.value) || a.si_lastname.toUpperCase().includes(e.target.value.toUpperCase()) || a.si_firstname.toUpperCase().includes(e.target.value.toUpperCase()) || `${a.si_lastname.toUpperCase()} ${a.si_firstname}`.includes(e.target.value.toUpperCase()) || a.si_email.toUpperCase().includes(e.target.value.toUpperCase())
+    })
+    this.p = 1;
   }
 
   sendMail(a) {

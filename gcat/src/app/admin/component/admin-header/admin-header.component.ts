@@ -221,7 +221,6 @@ export class AdminHeaderComponent implements OnInit {
     } else{
       this.settings.en_gcatactive=1
     }
-    console.log(this.settings)
   }
 
   statistics(){

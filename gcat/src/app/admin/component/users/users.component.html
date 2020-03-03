@@ -1,6 +1,5 @@
 <div class="main-content">
   <div class="container-fluid">
-
     <div>
       <div class="row">
         <div class="col-md-12">
@@ -12,7 +11,11 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-12">
-                  <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#addModal">
+                  <button
+                    class="btn btn-sm btn-info"
+                    data-toggle="modal"
+                    data-target="#addModal"
+                  >
                     Add Member
                   </button>
                 </div>
@@ -29,19 +32,26 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let member of gcatmembers; let i = index">
-                      <td>{{i+1}}</td>
-                      <td>{{member.fa_empnumber}}</td>
-                      <td>{{member.fa_lname}}, {{member.fa_fname}} {{member.fa_mname}} {{member.fa_extname}}</td>
-                      <td>{{member.fa_daterecorded}}</td>
-                      <td>{{member.fa_department}}</td>
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ member.fa_empnumber }}</td>
                       <td>
-                        <button class="btn btn-sm btn-danger" (click)="deleteGCATmember(i)">
+                        {{ member.fa_lname }}, {{ member.fa_fname }}
+                        {{ member.fa_mname }} {{ member.fa_extname }}
+                      </td>
+                      <td>{{ member.fa_daterecorded }}</td>
+                      <td>{{ member.fa_department }}</td>
+                      <td>
+                        <button
+                          class="btn btn-sm btn-danger"
+                          (click)="deleteGCATmember(i)"
+                        >
                           <i class="material-icons">
                             delete
                           </i>
                         </button>
                       </td>
                     </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -55,12 +65,14 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-success">
-              <h4 class="card-title ">User Logss</h4>
+              <h4 class="card-title ">User Logs</h4>
               <p class="card-category">For Admission Portal</p>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
                 <table class="table table-striped">
                   <thead class=" text-primary">
                     <th>Date</th>
@@ -69,16 +81,21 @@
                     <th>Department</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="
+                    <tr
+                      *ngFor="
                         let userlog of userlogs
                           | paginate: { itemsPerPage: 10, currentPage: p };
                         let i = index
-                      ">
-                      <td>{{userlog.log_date}}</td>
-                      <td>{{userlog.log_userid}} : {{userlog.log_username}}</td>
-                      <td>{{userlog.log_activity}}</td>
-                      <td>{{userlog.log_userdepartment}}</td>
+                      "
+                    >
+                      <td>{{ userlog.log_date }}</td>
+                      <td>
+                        {{ userlog.log_userid }} : {{ userlog.log_username }}
+                      </td>
+                      <td>{{ userlog.log_activity }}</td>
+                      <td>{{ userlog.log_userdepartment }}</td>
                     </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -86,16 +103,27 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="uploadModalLabel">Add Member</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -103,23 +131,23 @@
         <form autocomplete="off" (submit)="addGCATmember($event)">
           <div class="form-group">
             <label for="name2">Employee Number</label>
-            <input class="form-control" name="name2" type="number" required>
+            <input class="form-control" name="name2" type="number" required />
           </div>
           <div class="form-group">
             <label for="name2">First Name</label>
-            <input class="form-control" name="name2" type="text" required>
+            <input class="form-control" name="name2" type="text" required />
           </div>
           <div class="form-group">
             <label for="name2">Middle Name</label>
-            <input class="form-control" name="name2" type="text" required>
+            <input class="form-control" name="name2" type="text" required />
           </div>
           <div class="form-group">
             <label for="name2">Last Name</label>
-            <input class="form-control" name="name2" type="text" required>
+            <input class="form-control" name="name2" type="text" required />
           </div>
           <div class="form-group">
             <label for="name2">Extension Name</label>
-            <input class="form-control" name="name2" type="text" required>
+            <input class="form-control" name="name2" type="text" required />
           </div>
           <div class="form-group">
             <label for="name2">Account Type</label>
@@ -129,7 +157,9 @@
               <option value="GCAT-R1">Registrar Admin</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-sm btn-success pull-right">Submit</button>
+          <button type="submit" class="btn btn-sm btn-success pull-right">
+            Submit
+          </button>
         </form>
       </div>
     </div>

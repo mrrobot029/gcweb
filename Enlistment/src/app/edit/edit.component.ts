@@ -767,7 +767,7 @@ submit(){
     this.student.isshs = this.thirdFormGroup.value.isshs
     this.student.hsclass = this.thirdFormGroup.value.hsclass
     this.spinner.show()
-    let promise = this.ds.sendRequest('insertNewStudent', this.student).toPromise()
+    let promise = this.ds.sendRequest('updateStudent', this.student).toPromise()
     promise.then((res)=>{
       this.spinner.hide()
       Swal.fire({

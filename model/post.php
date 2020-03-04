@@ -551,7 +551,7 @@
             }
 
             // GCAT INSERT
-            function insertNewStudent($d){
+            function updateStudent($d){
                 $lname = $this->conn->real_escape_string($d->lname);
                 $fname = $this->conn->real_escape_string($d->fname);
                 $mname = $this->conn->real_escape_string($d->mname);
@@ -810,10 +810,135 @@
                         $valid[2]=$this->conn->error;
                         return $valid;
                     }
+                } else{
+                    $valid[0]='error';
+                    $valid[1]='ERROR';
+                    $valid[2]=$this->conn->error;
+                    return $valid;
                 } 
+            }
                 
                 // insertnewstudent 
-                else{
+        function insertNewStudent($d){
+                $lname = $this->conn->real_escape_string($d->lname);
+                $fname = $this->conn->real_escape_string($d->fname);
+                $mname = $this->conn->real_escape_string($d->mname);
+                $extname = $this->conn->real_escape_string($d->nameext);
+                $address = $this->conn->real_escape_string($d->fulladdress);
+                $addressnum = '';
+                if(isset($d->addressnum)){
+                    $addressnum = $this->conn->real_escape_string($d->addressnum);
+                }
+                $addressst = '';
+                if(isset($d->addressst)){
+                    $addressst = $this->conn->real_escape_string($d->addressst);
+                }
+                $addresscity = '';
+                if(isset($d->addresscity)){
+                    $addresscity = $this->conn->real_escape_string($d->addresscity);
+                }
+                $addressprovince = '';
+                if(isset($d->addressprovince)){
+                    $addressprovince = $this->conn->real_escape_string($d->addressprovince);
+                }
+                $zipcode = $this->conn->real_escape_string($d->addresszip);
+                $gender = $this->conn->real_escape_string($d->gender);
+                $bday = $this->conn->real_escape_string($d->dob);
+                $email = $this->conn->real_escape_string($d->email);
+                $contact = $this->conn->real_escape_string($d->mobile);
+                $entrancescore = '';
+                $course = $this->conn->real_escape_string($d->course);
+                $course2 = '';
+                if(isset($d->course2)){
+                    $course2 = $this->conn->real_escape_string($d->course2);
+                }
+                $course3 = '';
+                if(isset($d->course3)){
+                    $course3 = $this->conn->real_escape_string($d->course3);
+                }
+                $elem = $this->conn->real_escape_string($d->elem);
+                $elemyear = $this->conn->real_escape_string($d->elemyear);
+                $highschool = $this->conn->real_escape_string($d->highschool);
+                $highschoolyear = $this->conn->real_escape_string($d->highschoolyear);
+                $highschoolgpa = $this->conn->real_escape_string($d->highschoolgpa);
+                $english = $this->conn->real_escape_string($d->english);
+                $math = $this->conn->real_escape_string($d->math);
+                $science = $this->conn->real_escape_string($d->science);
+                $tertiary = $this->conn->real_escape_string($d->tertiary);
+                $tertiaryyear = $this->conn->real_escape_string($d->tertiaryyear);
+                $tertiarycourse = $this->conn->real_escape_string($d->tertiarycourse);
+                $vocational = $this->conn->real_escape_string($d->vocational);
+                $vocationalyear = $this->conn->real_escape_string($d->vocationalyear);
+                $vocationalcourse = $this->conn->real_escape_string($d->vocationalcourse);
+                $nc = $this->conn->real_escape_string($d->nc);
+                $nclvl = $this->conn->real_escape_string($d->nclvl);
+                $honors = '';
+                if(isset($d->honors)){
+                    $honors = $this->conn->real_escape_string($d->honors);
+                }
+                $lrn = '';
+                if(isset($d->lrn)){
+                    $lrn = $this->conn->real_escape_string($d->lrn);
+                }
+
+                $strand = '';
+                if(isset($d->strand)){
+                    $strand = $this->conn->real_escape_string($d->strand);
+                }
+                $brothers = $this->conn->real_escape_string($d->brothers);
+                $sisters = $this->conn->real_escape_string($d->sisters);
+                $siblings = $this->conn->real_escape_string($d->siblings);
+                $motherdead = $this->conn->real_escape_string($d->motherdead);
+                $mother = $this->conn->real_escape_string($d->mother);
+                $motheroccupation = $this->conn->real_escape_string($d->motheroccupation);
+                $mothereducation = $this->conn->real_escape_string($d->mothereducation);
+                $momcontact = $this->conn->real_escape_string($d->mothercontact);
+                $fatherdead = $this->conn->real_escape_string($d->fatherdead);
+                $father = $this->conn->real_escape_string($d->father);
+                $fatheroccupation = $this->conn->real_escape_string($d->fatheroccupation);
+                $fathereducation = $this->conn->real_escape_string($d->fathereducation);
+                $dadcontact = $this->conn->real_escape_string($d->fathercontact);
+                $guardname = $this->conn->real_escape_string($d->guardian);
+                $guardrel = $this->conn->real_escape_string($d->relationship);
+                $guardadd = $this->conn->real_escape_string($d->guardianadd);
+                $emergencynumber = $this->conn->real_escape_string($d->emergencynumber);
+                $govprojs = '';
+                $govproj = '';
+                if(isset($d->govproj)){
+                    $govprojs = $d->govproj;
+                    if($govprojs==''){
+                        $govproj = '';
+                    } else{
+                        $govproj = implode(", ", $govprojs);
+                    }
+                }
+                $govprojother='';
+                if(isset($d->govprojother)){
+                    $govprojother = $this->conn->real_escape_string($d->govprojother);
+                }
+                $famincome = $this->conn->real_escape_string($d->famincome);
+                $disabled = $this->conn->real_escape_string($d->disabled);
+                $disability ='';
+                if(isset($d->disability)){
+                    $disability = $this->conn->real_escape_string($d->disability);
+                }
+                $household='';
+                if(isset($d->household)){
+                    $household = $this->conn->real_escape_string($d->household);
+                }
+                $pob = $this->conn->real_escape_string($d->pob);
+                $civilstatus = $this->conn->real_escape_string($d->civilstatus);
+                $citizenship = $this->conn->real_escape_string($d->citizenship);
+                $age = $this->conn->real_escape_string($d->age);
+                $type = $this->conn->real_escape_string($d->type);
+                $cy = $this->conn->real_escape_string($d->cy);
+                $department = $this->conn->real_escape_string($d->department);
+                $sem = $this->conn->real_escape_string($d->sem);
+                $yearenrolled = $this->conn->real_escape_string($d->schoolyear);
+                $ipgroup = $this->conn->real_escape_string($d->ipgroup);
+                $isshs = $this->conn->real_escape_string($d->isshs);
+                $hsclass = $this->conn->real_escape_string($d->hsclass);
+                $counten=0;
                     $insertNewStudent = "INSERT INTO tbl_studentinfo
                     (si_lastname,
                     si_firstname,
@@ -1035,249 +1160,7 @@
                 
                 
 
-            }             // /GCAT INSERT END
-
-
-
-
-            function updateStudentInfo($d){
-                $recno = $d->recno;
-                $lname = $d->lname;
-                $fname = $d->fname;
-                $mname = $d->mname;
-                $extname = $d->nameext;
-                $address = $d->fulladdress;
-                $zipcode = $d->addresszip;
-                $gender = $d->gender;
-                $bday = $d->dob;
-                $email = $d->email;
-                $contact = $d->mobile;
-                $entrancescore = '';
-                $course = $d->course;
-                $course2 = '';
-                $religion = '';
-                if(isset($d->religion)){
-                    $religion = $d->religion;
-                }
-                if(isset($d->course2)){
-                    $course2 = $d->course2;
-                }
-                $course3 = '';
-                if(isset($d->course3)){
-                    $course3 = $d->course3;
-                }
-                $reason = $d->reasoncourse;
-                if($reason == 'Other'){
-                    if(isset($d->courseother)){
-                        $reason = $d->courseother;
-                    }
-                }
-                $reasongc = $d->reasonschool;
-                if($reasongc == 'Other'){
-                    if(isset($d->schoolother)){
-                        $reasongc = $d->schoolother;
-                    }
-                }
-                $scholarship = $d->scholar;
-                $scholartype = $d->scholartype;
-                $sponsor = '';
-                if(isset($d->sponsor)){
-                    $sponsor = $d->sponsor;
-                }
-                $sponsoroccupation = $d->sponsoroccupation;
-                if(isset($d->sponsoroccupation)){
-                    $sponsoroccupation = $d->sponsoroccupation;
-                }
-                $transferee = $d->transferee;
-                $transferschool = $d->transfercourselevel;
-                $highschool = $d->highschool;
-                $highschoolgpa = $d->highschoolgpa;
-                $honors = '';
-                if(isset($d->honors)){
-                    $honors = $d->honors;
-                }
-                $orgs = '';
-                if(isset($d->orgs)){
-                    $orgs = $d->orgs;
-                }
-                $interest = '';
-                $interests = '';
-                if(isset($d->interests)){
-                    $interest = $d->interests;
-                    if($interest==''){
-                        $interests = '';
-                    } else{
-                        $interests = implode(", ", $interest);
-                    }
-                }
-                if(isset($d->interestother)){
-                    $interests = $interests.', '.$d->interestother;
-                }
-                $talent =  '';
-                $talents = '';
-                if(isset($d->talents)){
-                    $talent =  $d->talents;
-                    if($talent==''){
-                        $talents = '';
-                    } else{
-                        $talents = implode(", ", $talent);
-                    }
-                }
-                if(isset($d->talentsother)){
-                        $talents = $talents.', '.$d->talentsother;
-                }
-                $device = '';
-                $devices = '';
-                if(isset($d->device)){
-                        $device = $d->device;
-                        $devices = implode(",", $device);
-                }
-                $department = $d->department;
-                $siblings = $d->siblings;
-                $mother = $d->mother;
-                $motheroccupation = $d->motheroccupation;
-                $momcontact = $d->mothercontact;
-                $father = $d->father;
-                $fatheroccupation = $d->fatheroccupation;
-                $dadcontact = $d->fathercontact;
-                $emergencynumber = $d->emergencynumber;
-                $yearenrolled = $d->schoolyear;
-                $regular = $d->regular;
-                $sem = $d->sem;
-                $sports = '';
-                $sport = '';
-                if(isset($d->sport)){
-                    $sports = $d->sport;
-                    if($sports==''){
-                        $sport = '';
-                    } else{
-                        $sport = implode(", ", $sports);
-                    }
-                }
-                if(isset($d->sportother)){
-                    $sport = $sport.', '.$d->sportother;
-                }
-                $lrn = '';
-                if(isset($d->lrn)){
-                    $lrn = $d->lrn;
-                }
-
-                $strand = '';
-                if(isset($d->strand)){
-                    $strand = $d->strand;
-                }
-                $competitions = '';
-                if(isset($d->competitions)){
-                    $competitions = $d->competitions;
-                }
-                $spouse='';
-                if(isset($d->spouse)){
-                    $spouse = $d->spouse;
-                }
-                $spousecontact='';
-                if(isset($d->spousecontact)){
-                    $spousecontact = $d->spousecontact;
-                }
-                $guardname = $d->guardian;
-                $guardrel = $d->relationship;
-                $guardadd = $d->guardianadd;
-                $govprojs = '';
-                $govproj = '';
-                if(isset($d->govproj)){
-                    $govprojs = $d->govproj;
-                    if($govprojs==''){
-                        $govproj = '';
-                    } else{
-                        $govproj = implode(", ", $govprojs);
-                    }
-                }
-                $govprojother='';
-                if(isset($d->govprojother)){
-                    $govprojother = $d->govprojother;
-                }
-                $famincome = $d->famincome;
-                $disabled = $d->disabled;
-                $disability ='';
-                if(isset($d->disability)){
-                    $disability = $d->disability;
-                }
-                $counten=0;
-
-                $household='';
-                if(isset($d->household)){
-                    $household = $d->household;
-                }
-                $pob = $d->pob;
-                $civilstatus = $d->civilstatus;
-                $age = $d->age;
-                $year = $d->year;
-                $type = $d->type;
-                if(isset($d->recno)){
-                    $updateStudent = "UPDATE tbl_studentinfo SET si_idnumber = '$d->idnumber', si_lastname = '$lname', si_firstname = '$fname', si_midname = '$mname', si_extname = '$extname', si_address = '$address',  si_gender = '$gender', si_bday = '$bday', si_email = '$email', si_mobile = '$contact', si_course = '$course', si_coursechoice = '$course2', si_coursechoice2 = '$course3', si_reason = '$reason', si_siblings = '$siblings', si_momname = '$mother', si_dadname = '$father', si_emergencycontact = '$emergencynumber', si_device = '$devices', si_entranceexam = '$entrancescore', si_lastschool = '$highschool', si_average = '$highschoolgpa', si_istransferee = '$transferee', si_transfercourselevel = '$transferschool', si_reasonstudy = '$reasongc', si_scholartype = '$scholartype', si_support = '$sponsor', si_supportoccupation = '$sponsoroccupation', si_specialaward = '$honors', si_organization = '$orgs', si_competition = '$competitions', si_interest = '$interests', si_talent = '$talents',si_schoolyear = '$yearenrolled',si_isregular = '$regular', si_yrlevel = '$year', si_sem = '$sem', si_enrolledyear = '$yearenrolled', si_isenrolled = 0, si_isenlisted = 1, si_sport = '$sport', si_momoccupation = '$motheroccupation', si_dadoccupation = '$fatheroccupation', si_lrn = '$lrn', si_strand = '$strand', si_guardname = '$guardname', si_guardrel = '$guardrel', si_guardadd = '$guardadd', si_govproj = '$govproj', si_govprojothers = '$govprojother', si_famincome = '$famincome', si_isdisabled = '$disabled', si_disability = '$disability', si_householdno = '$household', si_zipcode = '$zipcode', si_momcontact = '$momcontact', si_dadcontact = '$dadcontact', si_spouse = '$spouse', si_spousecontact = '$spousecontact', si_department = '$department', si_pob = '$pob', si_civilstatus = '$civilstatus', si_age = '$age', si_studenttype = '$type', si_religion = '$religion' WHERE si_recno = '$d->recno'";
-
-                    if($this->conn->query($updateStudent)){
-                        $valid[0]='success';
-                        $valid[1]='Successfully Updated';
-                        $valid[2]='';
-                        return $valid;
-                    }else{
-                        $valid[0]='error';
-                        $valid[1]=$this->conn->error;
-                        $valid[2]=$this->conn->error;
-                        return $valid;
-                    }    
-
-                } else{
-                $verify = "SELECT * FROM tbl_studentinfo WHERE si_idnumber='$d->idnumber'";
-                $updateStudent = "UPDATE tbl_studentinfo SET si_lastname = '$lname', si_firstname = '$fname', si_midname = '$mname', si_extname = '$extname', si_address = '$address',  si_gender = '$gender', si_bday = '$bday', si_email = '$email', si_mobile = '$contact', si_course = '$course', si_coursechoice = '$course2', si_coursechoice2 = '$course3', si_reason = '$reason', si_siblings = '$siblings', si_momname = '$mother', si_dadname = '$father', si_emergencycontact = '$emergencynumber', si_device = '$devices', si_entranceexam = '$entrancescore', si_lastschool = '$highschool', si_average = '$highschoolgpa', si_istransferee = '$transferee', si_transfercourselevel = '$transferschool', si_reasonstudy = '$reasongc', si_scholartype = '$scholartype', si_support = '$sponsor', si_supportoccupation = '$sponsoroccupation', si_specialaward = '$honors', si_organization = '$orgs', si_competition = '$competitions', si_interest = '$interests', si_talent = '$talents',si_schoolyear = '$yearenrolled',si_isregular = '$regular', si_yrlevel = '$year', si_sem = '$sem', si_enrolledyear = '$yearenrolled', si_isenrolled = 0, si_isenlisted = 1, si_sport = '$sport', si_momoccupation = '$motheroccupation', si_dadoccupation = '$fatheroccupation', si_lrn = '$lrn', si_strand = '$strand', si_guardname = '$guardname', si_guardrel = '$guardrel', si_guardadd = '$guardadd', si_govproj = '$govproj', si_govprojothers = '$govprojother', si_famincome = '$famincome', si_isdisabled = '$disabled', si_disability = '$disability', si_householdno = '$household', si_zipcode = '$zipcode', si_momcontact = '$momcontact', si_dadcontact = '$dadcontact', si_spouse = '$spouse', si_spousecontact = '$spousecontact', si_department = '$department', si_pob = '$pob', si_civilstatus = '$civilstatus', si_age = '$age', si_studenttype = '$type', si_religion = '$religion' WHERE si_idnumber = '$d->idnumber'";
-                $verification = $this->conn->query($verify);
-                $verified = $verification->num_rows;
-                if($verified!=0){
-                    if($this->conn->query($updateStudent)){
-                        $valid[0]='success';
-                        $valid[1]='Successfully Updated';
-                        $valid[2]='Please proceed to the enlistment admin for your printed form.';
-                        return $valid;
-                    }else{
-                        $valid[0]='error';
-                        $valid[1]=$this->conn->error;
-                        $valid[2]=$this->conn->error;
-                        return $valid;
-                    }    
-                } else{
-                        $valid[0]='error';
-                        $valid[1]='ID NUMBER NOT YET REGISTERED';
-                        $valid[2]='Please select New Student before filling up the form.';
-                        return $valid;
-                }
-            }
-            
-        }
-
-            function reenlist($d){
-                $idnumber = $d->idnumber;
-                $year = $d->year;
-                $sem = $d->sem;
-                $regular = $d->regular;
-                $schoolyear = $d->schoolyear;
-                $mobile = $d->mobile;
-                $email = $d->email;
-
-                $reenlistStudent = "UPDATE tbl_studentinfo SET si_yrlevel = '$year', si_sem = '$sem', si_isregular = '$regular', si_schoolyear = '$schoolyear', si_mobile = '$mobile', si_email = '$email', si_isenlisted = 1, si_isenrolled = 0 WHERE si_idnumber = '$idnumber'";
-                if($this->conn->query($reenlistStudent)){
-                    $valid[0]='success';
-                    return $valid;
-                }else{
-                    return $this->conn->error;
-                }
-            }
-
-
-
-
-
-
-
+                        // /GCAT INSERT END
 
 
             function updateId($d){
@@ -1318,8 +1201,8 @@
                 return $this->executeWithRes("SELECT * from tbl_studentinfo WHERE si_idnumber = '$idNumber'");
             }
 
-            function getApplicants() {
-                return $this->executeWithRes("SELECT gc.*, si.si_email as si_email, si.si_mobile as si_mobile, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY gc.gc_regtime ASC");
+            function getApplicants($d) {
+                return $this->executeWithRes("SELECT gc.*, si.si_email as si_email, si.si_mobile as si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname) as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber ORDER BY $d->sort");
             }
 
 
@@ -1368,10 +1251,10 @@
                 $mail->Port       = 587;          
                 $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
                 $mail->isHTML(true);     
-                $email = $d->email;
-                $id = $d->idNumber;
-                $fname = $d->fname;
-                $lname = $d->lname;
+                $email = $d->si_email;
+                $id = $d->gc_idnumber;
+                $fname = $d->si_firstname;
+                $lname = $d->si_lastname;
                 $updateEmail = "UPDATE tbl_studentinfo SET si_email = '$email' WHERE si_idnumber = '$id'";
                 if($this->conn->query($updateEmail)){
                     // id encryption

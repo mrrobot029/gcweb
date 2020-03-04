@@ -14,6 +14,8 @@ import { ConfirmedapplicantsComponent } from './component/confirmedapplicants/co
 import { EventEmitterService } from './event-emitter.service';
 import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.component';
 import { StatisticsComponent } from './dialogs/statistics/statistics.component';
+import { AllapplicantsComponent } from './component/allapplicants/allapplicants.component';
+import { EditemailComponent } from './dialogs/editemail/editemail.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { StatisticsComponent } from './dialogs/statistics/statistics.component';
     ScheduledComponent,
     ConfirmedapplicantsComponent,
     StatisticsComponent,
+    AllapplicantsComponent,
+    EditemailComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,6 @@ import { StatisticsComponent } from './dialogs/statistics/statistics.component';
     EventEmitterService,
     AdminSidebarComponent
   ],
-  entryComponents: [ StatisticsComponent ]
+  entryComponents: [ StatisticsComponent, EditemailComponent ]
 })
 export class AdminModule { }

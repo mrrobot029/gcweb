@@ -1,0 +1,21 @@
+    
+    <div class="form-group">
+        <label for="name2">ID Number</label>
+        <input class="form-control" [(ngModel)]="student.gc_idnumber" type="text" required readonly/>
+    </div>
+    <div class="form-group">
+        <label for="name2">Old Email</label>
+        <input class="form-control" [(ngModel)]="student.si_email" type="email" required readonly/>
+    </div>
+    <div class="form-group">
+        <label for="name2">New Email</label>
+        <input class="form-control" [(ngModel)]="emailNew" type="email" required (focusout)="validateEmail()"/>
+    </div>
+    <div class="form-group">
+        <label for="name2">Confirm Email</label>
+        <input class="form-control" [(ngModel)]="emailConfirm" type="email" required (keyup)="confirmEmail()"/>
+        <p *ngIf="emailConfirm" [ngStyle]="matched ? {'color': 'green'} : { 'color':'red'}">{{confirmEmail()}}</p>
+    </div>
+    <button class="btn btn-sm btn-success pull-right" (click)="updateEmail(student)">
+        Change Email
+    </button>

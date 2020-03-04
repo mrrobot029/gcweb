@@ -1,0 +1,166 @@
+<div class="main-content">
+    <ngx-spinner type="ball-clip-rotate-multiple" [fullScreen]="fullscreen">
+      <p class="loading" style="color: white;">Please wait...</p>
+    </ngx-spinner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">
+                List of Unconfirmed Applicants - Total Count:
+                <strong>{{ applicants.length }}</strong>
+              </h4>
+              <p class="card-category">For GCAT Schedule</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <form autocomplete="off">
+                    <label for="search" class="p-0 m-0">Search</label>
+                    <input
+                      class="form-control"
+                      [(ngModel)]="searchValue"
+                      name="search"
+                      type="text"
+                      (keyup)="searchApplicants($event)"
+                    />
+                  </form>
+                </div>
+                <div class="col-md-2">
+                  <label for="">Sort By:</label>
+                  <form autocomplete="off" class="flexcontainercolumn">
+                    <select
+                      name="sort"
+                      id="sort"
+                      class="form-control"
+                      [(ngModel)]="sortValue"
+                      (change)="setSort(sortValue)"
+                      style="margin-top: -5px;"
+                    >
+                      <option value="id">ID NUMBER</option>
+                      <option value="name">NAME</option>
+                      <option value="email">EMAIL</option>
+                      <option value="program">PROGRAM</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="col-md-2">
+                  <label for="">Order:</label>
+                  <form autocomplete="off" class="flexcontainercolumn">
+                    <select
+                      name="order"
+                      id="order"
+                      class="form-control"
+                      (change)="setOrder($event)"
+                      style="margin-top: -5px;"
+                    >
+                      <option value="DESC">DESCENDING</option>
+                      <option value="ASC">ASCENDING</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="col-md-2">
+                    <label for="">Status:</label>
+                    <form autocomplete="off" class="flexcontainercolumn">
+                        <select
+                          name="order"
+                          id="order"
+                          class="form-control"
+                          (change)="searchApplicantStatus($event)"
+                          style="margin-top: -5px;"
+                          [(ngModel)]="searchValueStatus"
+                        >
+                          <option value="">ALL</option>
+                          <option value="0">UNCONFIRMED</option>
+                          <option value="1">CONFIRMED</option>
+                          <option value="2">SCHEDULED</option>
+                        </select>
+                      </form>
+                  </div>            
+              </div>
+              <br />
+              <pagination-controls
+                (pageChange)="p = $event"
+                maxSize="15"
+              ></pagination-controls>
+              <div class="table-responsive" *ngIf="!noapplicants">
+                <table class="table table-striped">
+                  <thead class=" text-primary">
+                    <th>No.</th>
+                    <th>ID No.</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Program</th>
+                    <th>GPA</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let applicant of applicants
+                          | paginate: { itemsPerPage: 20, currentPage: p };
+                        let i = index
+                      "
+                    >
+                      <td>{{ 20 * (p - 1) + i + 1 }}</td>
+                      <td>{{ applicant.gc_idnumber }}</td>
+                      <td>{{ applicant.si_fullname }}</td>
+                      <td>{{ applicant.si_email }}</td>
+                      <td>{{ applicant.gc_course }}</td>
+                      <td>{{ applicant.gc_gpa }}</td>
+                      <td [ngStyle]="applicant.gc_status == 0 ? {'color': 'red'}: applicant.gc_status == 1 ? {'color': 'blue'} : { 'color':'green'}">
+                        {{ applicant.gc_status == 0 ? 'Unconfirmed' : applicant.gc_status == 1 ? 'Confirmed' : 'Scheduled' }}
+                      </td>
+                      <td class="flexcontainer">
+                        <a
+                          href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                            applicant.gc_idnumber
+                          }}/{{ applicant.gc_key }}"
+                          target="_blank"
+                        >
+                          <button
+                            class="btn btn-sm btn-success"
+                            matTooltip="Edit"
+                            matTooltipPosition="above"
+                          >
+                            <i class="material-icons">
+                              edit
+                            </i>
+                          </button>
+                        </a>
+                        <button
+                          class="btn btn-sm btn-success"
+                          (click)="editEmail(applicant)"
+                          matTooltip="Edit Email"
+                          matTooltipPosition="above"
+                        >
+                          <i class="material-icons">
+                            alternate_email
+                          </i>
+                        </button>
+
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div
+                  style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                >
+                  <pagination-controls
+                    maxSize="20"
+                    (pageChange)="p = $event"
+                  ></pagination-controls>
+                </div>
+              </div>
+              <div *ngIf="noapplicants" style="text-align: center;">
+                <h1>NO APPLICANTS!</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

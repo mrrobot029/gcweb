@@ -1,49 +1,42 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { DataService } from "../services/data.service";
 
 @Injectable({
   providedIn: "root"
 })
-export class EventEmitterService {
-  private unconfirmedCountSource = new BehaviorSubject(0);
-  private confirmedCountSource = new BehaviorSubject(0);
-  private scheduledCountSource = new BehaviorSubject(0);
-  constructor(private ds: DataService) {
-    this.ds.sendRequest("getUnconfirmedCount", null).subscribe(res => {
-      this.unconfirmedCountSource.next(res.data[0].unconfirmedCount);
-    });
-    this.ds.sendRequest("getConfirmedCount", null).subscribe(res => {
-      this.confirmedCountSource.next(res.data[0].confirmedCount);
-    });
-    this.ds.sendRequest("getScheduledCount", null).subscribe(res => {
-      this.scheduledCountSource.next(res.data[0].scheduledCount);
-    });
+export class EventEmitterService{
+  private unconfirmedCount
+  private confirmedCount 
+  private scheduledCount
+  constructor() {
+
   }
 
-  getCount() {
-    this.ds.sendRequest("getUnconfirmedCount", null).subscribe(res => {
-      this.unconfirmedCountSource.next(res.data[0].unconfirmedCount);
-    });
-    this.ds.sendRequest("getConfirmedCount", null).subscribe(res => {
-      this.confirmedCountSource.next(res.data[0].confirmedCount);
-    });
-    this.ds.sendRequest("getScheduledCount", null).subscribe(res => {
-      this.scheduledCountSource.next(res.data[0].scheduledCount);
-    });
+  
+  setUnconfirmedCount(e){
+    this.unconfirmedCount = e
   }
 
-  getUnconfirmedCount() {
-    return this.unconfirmedCountSource.asObservable();
-  }
-  getConfirmedCount() {
-    return this.confirmedCountSource.asObservable();
-  }
-  getScheduledCount() {
-    return this.scheduledCountSource.asObservable();
+  setConfirmedCount(e){
+    this.confirmedCount = e
   }
 
-  setUnconfirmedCount(e) {
-    this.unconfirmedCountSource.next(e);
+  setScheduledCount(e){
+    this.scheduledCount = e
   }
+
+  getUnconfirmedCount(){
+    console.log(this.unconfirmedCount)
+    return this.unconfirmedCount
+  }
+
+  getConfirmedCount(){
+    return this.confirmedCount
+  }
+
+  getScheduledCount(){
+    return this.scheduledCount
+  }
+  
+
 }

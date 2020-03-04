@@ -297,6 +297,10 @@
                 case 'insertNewStudent':
                     echo json_encode($post->insertNewStudent($d));
                 break;
+
+                case 'updateStudent':
+                    echo json_encode($post->updateStudent($d));
+                break;
                 
                 case 'updateStudentInfo':
                     echo json_encode($post->updateStudentInfo($d));
@@ -348,7 +352,7 @@
                 break;
 
                 case 'getApplicants':
-                    echo json_encode($post->getApplicants());
+                    echo json_encode($post->getApplicants($d));
                 break;
 
                 case 'getApplicantCount':
@@ -527,6 +531,10 @@
                 break;
 
                 //one time use - send mail to all registered via google forms
+                case 'changeEmail':
+                    echo json_encode($post->executeWithoutRes("UPDATE tbl_studentinfo SET si_email = '$d->newEmail' WHERE si_idnumber = '$d->gc_idnumber'"));
+                break;
+                
                 case 'getMail':
                     echo json_encode($post->getMail());
                 break;

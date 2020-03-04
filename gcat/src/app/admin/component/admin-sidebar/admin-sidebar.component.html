@@ -10,8 +10,14 @@
 
 <div class="sidebar-wrapper">
   <ul class="nav">
-    <li routerLinkActive="active" class="nav-item">
+    <li routerLinkActive="active" class="nav-item" *ngIf="credType=='CCS'">
       <a class="nav-link" [routerLink]="['applicants']">
+        <i class="material-icons">group</i>
+        <p>All Applicants</p>
+      </a>
+    </li>
+    <li routerLinkActive="active" class="nav-item">
+      <a class="nav-link" [routerLink]="['unconfirmed']">
         <i class="material-icons">group</i><span class="badge badge-info">{{unconfirmedCount}}</span>
         <p>Unconfirmed Applicants</p>
       </a>

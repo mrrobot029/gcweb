@@ -13,6 +13,7 @@ export class AdminSidebarComponent implements OnInit {
   unconfirmedCount = 0;
   confirmedCount = 0;
   scheduledCount = 0;
+  allapplicants = 0
   constructor(private ds: DataService, private es: EventEmitterService) { }
 
   ngOnInit() {

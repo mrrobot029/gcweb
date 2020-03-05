@@ -7,8 +7,8 @@ import { from } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  apiLink: string = "https://gordoncollegeccs.edu.ph/gc/api/";
-  // apiLink: string = "http://localhost/gordoncollegeweb/";
+  // apiLink: string = "https://gordoncollegeccs.edu.ph/gc/api/";
+  apiLink: string = "http://localhost/gordoncollegeweb/";
   // private serviceUrl = 'https://jsonplaceholder.typicode.com/users';
   
   constructor(private http: HttpClient) { }

@@ -107,9 +107,9 @@ export class GcatregComponent implements OnInit {
       this.spinner.hide()
       this.enlistmentStart = new Date(settings.data[0].en_gcatstart)
       this.enlistmentEnd = new Date(settings.data[0].en_gcatend)
-      // if(settings.data[0].en_gcatactive == 0){
-      //   this.enlistment = false;
-      // }
+      if(settings.data[0].en_gcatactive == 0){
+        this.enlistment = false;
+      }
       this.acadyear = settings.data[0].en_schoolyear;
       this.sem = settings.data[0].en_sem;
       this.cy = settings.data[0].en_cy;

@@ -796,7 +796,10 @@
                                                 $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
                                                 return $valid;
                                             } else {
-                                                echo "Mailer Error : " . $mail->ErrorInfo;
+                                                $valid[0]='error';
+                                                $valid[1]='ERROR';
+                                                $valid[2]='Error sending mail!';
+                                                return $valid;
                                             }
                                         } else{
                                             $valid[0]='error';
@@ -816,6 +819,10 @@
                     $valid[2]=$this->conn->error;
                     return $valid;
                 } 
+                $valid[0]='error';
+                $valid[1]='ERROR';
+                $valid[2]=$this->conn->error;
+                return $valid;
             }
                 
                 // insertnewstudent 
@@ -1136,7 +1143,10 @@
                                                 $valid[2]="Please save/take note of this temporary ID number. We have also sent an email to {$email} for your printable Form SR01.";
                                                 return $valid;
                                             } else {
-                                                echo "Mailer Error : " . $mail->ErrorInfo;
+                                                $valid[0]='error';
+                                                $valid[1]='ERROR';
+                                                $valid[2]='Error sending mail!';
+                                                return $valid;
                                             }
                                         } else{
                                             $valid[0]='error';

@@ -439,6 +439,10 @@
                     echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '1' ORDER BY $d->sort"));
                 break;
 
+                case 'getUnscheduledSubApplicants':
+                    echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_subdate = '0' ORDER BY $d->sort"));
+                break;
+
                 case 'getAllScheduledApplicantsCount':
                     echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as scheduledCount FROM tbl_gcat WHERE gc_status = 2"));
                 break;
@@ -507,7 +511,6 @@
                     echo json_encode($post->executeWithRes("SELECT sched_count FROM tbl_gcatschedule WHERE sched_recno = '$d->time'"));
                 break;
                
-
                 case 'delGCATSchedule':
                     echo json_encode($post->executeWithoutRes("DELETE from tbl_gcatschedule WHERE sched_recno='$d->recNo' "));
                 break;
@@ -522,6 +525,38 @@
                 
                 case 'getAllSchedules':
                     echo json_encode($post->executeWithRes("SELECT * from tbl_gcatschedule ORDER BY sched_date ASC"));
+                break;
+
+                //submission schedule
+                case 'addGCATSubSchedule':
+                    echo json_encode($post->executeWithoutRes("INSERT INTO tbl_gcatsubmitsched(sub_date) values('$d->date')"));
+                break;
+
+                case 'addSubScheduleForApplicant':
+                    $post->executeWithoutRes("UPDATE tbl_gcatsubmitsched SET sub_count = sub_count + 1 WHERE sub_recno = '$d->time'");
+                    echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_subdate='$d->time' WHERE gc_idnumber='$d->idNumber'"));
+                break;
+
+                case 'unscheduleSubApplicant':
+                    if($post->executeWithoutRes("UPDATE tbl_gcat SET gc_subdate=0 WHERE gc_idnumber = '$d->gc_idnumber'")){
+                        echo json_encode($post->executeWithoutRes("UPDATE tbl_gcatsubmitsched SET sub_count = sub_count-1 WHERE sub_recno = '$d->gc_examtime'"));
+                    }
+                 break;
+
+                case 'getSubScheduleCount':
+                    echo json_encode($post->executeWithRes("SELECT sub_count FROM tbl_gcatsubmitsched WHERE sub_recno = '$d->time'"));
+                break;
+
+                case 'delGCATSubSchedule':
+                    echo json_encode($post->executeWithoutRes("DELETE from tbl_gcatsubmitsched WHERE sub_recno='$d->recNo' "));
+                break;
+
+                case 'getAvailableSubSchedules':
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatsubmitsched WHERE sub_count < 300  ORDER BY sub_date ASC"));
+                break;
+                
+                case 'getAllSubSchedules':
+                    echo json_encode($post->executeWithRes("SELECT * from tbl_gcatsubmitsched ORDER BY sub_date ASC"));
                 break;
                 
                 

@@ -1,0 +1,241 @@
+<div class="main-content">
+    <ngx-spinner type="ball-clip-rotate-multiple" [fullScreen]="fullscreen">
+      <p class="loading" style="color: white;">Please wait...</p>
+    </ngx-spinner>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title ">
+                List of Unscheduled Applicants - Total Count:
+                <strong>{{ applicantCount }}</strong>
+              </h4>
+              <p class="card-category">For GCAT Schedule</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <form autocomplete="off">
+                    <label for="search" class="p-0 m-0">Search</label>
+                    <input class="form-control" [(ngModel)]="searchValue" name="search" type="text"
+                      (keyup)="searchUnscheduledApplicants($event)" />
+                  </form>
+                </div>
+  
+                <div class="col-md-2">
+                  <label for="">Sort By:</label>
+                  <form autocomplete="off" class="flexcontainercolumn">
+                    <select name="sort" id="sort" class="form-control" [(ngModel)]="sortValue" (change)="setSort(sortValue)"
+                      style="margin-top: -5px;">
+                      <option value="id">ID NUMBER</option>
+                      <option value="name">NAME</option>
+                      <option value="email">EMAIL</option>
+                      <option value="program">PROGRAM</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="col-md-2">
+                  <label for="">Order:</label>
+                  <form autocomplete="off" class="flexcontainercolumn">
+                    <select name="order" id="order" class="form-control" (change)="setOrder($event)"
+                      style="margin-top: -5px;">
+                      <option value="DESC">DESCENDING</option>
+                      <option value="ASC">ASCENDING</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3 ">
+                  <label for="time" class="p-0 m-0">Schedule Time For Submission</label>
+                  <select class="form-control" name="time" [(ngModel)]="schedTime">
+                    <option value="">SELECT TIME</option>
+                    <option *ngFor="let sched of scheds" value="{{ sched.sub_recno }}">
+                      {{ sched.sub_date | date : "MMMM dd, y"  }} | <strong>Count:</strong>
+                      {{ " (" + sched.sub_count + ")" }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-9">
+                    <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
+                </div>
+                <div class="col-md-3">
+                    <button
+                      class="btn btn-sm btn-block btn-info"
+                      data-toggle="modal"
+                      data-target="#addModal"
+                    >
+                      Submission Schedules
+                    </button>
+                </div>
+              </div>
+            
+              <div class="table-responsive" *ngIf="!noapplicants">
+                <table class="table table-striped">
+                  <thead class=" text-primary">
+                    <th>No.</th>
+                    <th>ID No.</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Program</th>
+                    <th>GPA</th>
+                    <th>Registration Time</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="
+                        let applicant of applicants
+                          | paginate: { itemsPerPage: 20, currentPage: p };
+                        let i = index
+                      ">
+                      <td>{{ 20 * (p - 1) + i + 1 }}</td>
+                      <td>{{ applicant.gc_idnumber }}</td>
+                      <td>{{ applicant.si_fullname }}</td>
+                      <td>{{ applicant.si_email }}</td>
+                      <td>{{ applicant.gc_course }}</td>
+                      <td>{{ applicant.gc_gpa }}</td>
+                      <td>{{ applicant.gc_regtime }}</td>
+                      <td>
+                        <button matTooltip="Schedule for Submission" matTooltipPosition="above" class="btn btn-sm btn-success"
+                          (click)="addScheduleForApplicant(applicant)">
+                          <i class="material-icons">
+                            note_add
+                          </i>
+                        </button>
+                        <a href="https://gordoncollegeccs.edu.ph/gc/home/#/edit/{{
+                            applicant.gc_idnumber
+                          }}/{{ applicant.gc_key }}" target="_blank">
+                          <button class="btn btn-sm btn-success" matTooltip="Edit" matTooltipPosition="above">
+                            <i class="material-icons">
+                              edit
+                            </i>
+                          </button>
+                        </a>
+                        <a href="https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={{
+                            applicant.gc_idnumber
+                          }}&key={{ applicant.gc_key }}" target="_blank">
+                          <button class="btn btn-sm btn-success" matTooltip="Print" matTooltipPosition="above">
+                            <i class="material-icons">
+                              print
+                            </i>
+                          </button>
+                        </a>
+                        <button matTooltip="Undo Confirmation" matTooltipPosition="above" class="btn btn-sm btn-danger"
+                          (click)="unconfirmApplicant(applicant)">
+                          <i class="material-icons">
+                            undo
+                          </i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+                  <pagination-controls maxSize="20" (pageChange)="p = $event"></pagination-controls>
+                </div>
+              </div>
+              <div *ngIf="noapplicants" style="text-align: center;">
+                <h1>NO CONFIRMED APPLICANTS!</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD MODAL -->
+
+  <div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="uploadModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="uploadModalLabel">Schedules</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form autocomplete="off" (submit)="addGCATSchedule($event)">
+          <div class="form-group container">
+            <label for="name2">Date And Time</label>
+            <div class="row">
+              <input
+                class="form-control col-md-8"
+                name="name2"
+                type="date"
+                style="margin-right: 20px;"
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-sm btn-success pull-right">
+            Add Sched
+          </button>
+        </form>
+
+        <br /><br />
+        <pagination-controls
+          id="pagination2"
+          class="pull-right"
+          (pageChange)="p = $event"
+        ></pagination-controls>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class=" text-primary">
+              <th>No.</th>
+              <th>Date&Time</th>
+              <th>Count</th>
+              <th>Action</th>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let sched of schedules
+                    | paginate
+                      : { id: 'pagination2', itemsPerPage: 5, currentPage: p };
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>
+                  {{ sched.sub_date | date: "MMMM dd, y" }}
+                </td>
+                <td>{{ sched.sub_count }}</td>
+
+                <td>
+                  <button
+                    style="align-self: flex-start; margin-left: auto;"
+                    class="btn btn-sm btn-danger"
+                    matTooltip="Delete Applicant"
+                    matTooltipPosition="above"
+                    (click)="delGCATSchedule(sched.sub_recno)"
+                    [disabled]="sched.sub_count != 0"
+                  >
+                    <i class="material-icons">
+                      delete
+                    </i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

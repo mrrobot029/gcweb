@@ -6,6 +6,7 @@ import { ScheduledComponent } from "./component/scheduled/scheduled.component";
 import { ConfirmedapplicantsComponent } from "./component/confirmedapplicants/confirmedapplicants.component";
 import { AuthGuard } from "../services/auth.guard";
 import { AllapplicantsComponent } from './component/allapplicants/allapplicants.component';
+import { ApplicantsforsubmissionComponent } from './component/applicantsforsubmission/applicantsforsubmission.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "applicants", pathMatch: "full" },
@@ -25,8 +26,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "unscheduled",
+    path: "confirmed",
     component: ConfirmedapplicantsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "unscheduled",
+    component: ApplicantsforsubmissionComponent,
     canActivate: [AuthGuard]
   },
   {

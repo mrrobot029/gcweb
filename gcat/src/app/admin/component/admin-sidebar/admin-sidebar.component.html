@@ -24,6 +24,12 @@
     </li>
     <li routerLinkActive="active" class="nav-item">
       <a class=" nav-link" [routerLink]="['unscheduled']">
+        <i class="material-icons">group_add</i><span class="badge badge-info">{{confirmedCount}} - Requirement Submission</span>
+        <p>Unscheduled Applicants</p>
+      </a>
+    </li>
+    <li routerLinkActive="active" class="nav-item">
+      <a class=" nav-link" [routerLink]="['confirmed']">
         <i class="material-icons">group_add</i><span class="badge badge-info">{{confirmedCount}}</span>
         <p>Confirmed Applicants</p>
       </a>
@@ -33,7 +39,7 @@
         <i class="material-icons">
           how_to_reg
         </i><span class="badge badge-info">{{scheduledCount}}</span>
-        <p>Scheduled Applicants</p>
+        <p>Scheduled Applicants(For Exam)</p>
       </a>
     </li>
     <li routerLinkActive="active" class="nav-item" *ngIf="credType=='CCS' 

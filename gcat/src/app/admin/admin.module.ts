@@ -16,6 +16,7 @@ import { AdminSidebarComponent } from './component/admin-sidebar/admin-sidebar.c
 import { StatisticsComponent } from './dialogs/statistics/statistics.component';
 import { AllapplicantsComponent } from './component/allapplicants/allapplicants.component';
 import { EditemailComponent } from './dialogs/editemail/editemail.component';
+import { ApplicantsforsubmissionComponent } from './component/applicantsforsubmission/applicantsforsubmission.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { EditemailComponent } from './dialogs/editemail/editemail.component';
     StatisticsComponent,
     AllapplicantsComponent,
     EditemailComponent,
+    ApplicantsforsubmissionComponent,
   ],
   imports: [
     CommonModule,

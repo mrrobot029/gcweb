@@ -774,20 +774,14 @@
                                         if($this->conn->query($sqlgcat)){
                                             // email
                                             $mail->addAddress($email);
-                                            $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                                            $mail->Subject = "Gordon College Admission Test(GCAT) Edit Information";
                                             $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
-                                            $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
+                                            $mail->Body .="Your information was updated successfully.<br>";
                                             $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
-                                            $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
-                                            // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
-                                            $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
-                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
-                                            $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                                            $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                                            $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                                            $mail->Body .="<b>Confirm your registration and get your schedule for submission of requirements by clicking on this link:</b><br>";
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
-                                            $mail->Body .="Thank you.<br><br>";
+                                            $mail->Body .="If you still need to edit your data, you can visit the link below:<br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                                             $mail->Body .="Sincerely,<br>";
                                             $mail->Body .="Gordon College Olongapo";
                                             if ($mail->send()) {
@@ -1104,7 +1098,7 @@
 
                     if($this->conn->query($insertNewStudent)){
                         $insertid = $this->conn->insert_id;
-                        $tempid = $insertid + 200000;
+                        $tempid = $insertid + 300000;
                         $sqlid = "UPDATE tbl_studentinfo set si_idnumber = '$tempid' where si_recno = '$insertid'";
                         if($this->conn->query($sqlid)){
                             // id encryption
@@ -1126,15 +1120,10 @@
                                             $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
                                             $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                                             $mail->Body .="This is your temporary id number: <b>{$tempid}</b>.<br><br>";
-                                            $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
-                                            // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$tempid}&key={$key}</b><br><br>";
-                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$tempid}&key={$key}</a></b><br><br>";
+                                            $mail->Body .="<b>Confirm your registration and get your schedule for submission of requirements by clicking on this link:</b><br>";
+                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}</a></b><br><br>";
                                             $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}</a></b><br><br>";
-                                            $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                                            $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                                            $mail->Body .="Confirm your registration by clicking on this link: <br>";
-                                            $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}</a></b><br><br>";
                                             $mail->Body .="Sincerely,<br>";
                                             $mail->Body .="Gordon College Olongapo";
                                             if ($mail->send()) {
@@ -1241,7 +1230,7 @@
                         $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
                         $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                         $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
-                        $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
+                        $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation2.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation2.php?id={$id}&key={$key}</a></b><br><br>";
                         $mail->Body .="Sincerely,<br>";
                         $mail->Body .="Gordon College Olongapo";
                         if ($mail->send()) {
@@ -1306,7 +1295,7 @@
             }
 
             function validateEmail($d){
-                return $this->executeWithRes("SELECT si_email from tbl_studentinfo WHERE si_email = '$d->email'");
+                return $this->executeWithRes("SELECT si_email from tbl_studentinfo WHERE si_email = '$d->si_email'");
             }
 
             function validateEdit($d){
@@ -1364,15 +1353,10 @@
                     $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
                     $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                     $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
-                    $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
-                    // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                    $mail->Body .="<b>Confirm your registration and get your schedule for submission of requirements by clicking on this link:</b><br>";
+                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                     $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
                     $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
-                    $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                    $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                    $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
-                    $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                     $mail->Body .="Sincerely,<br>";
                     $mail->Body .="Gordon College Olongapo";
                     if ($mail->send()) {
@@ -1420,15 +1404,10 @@
                 $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
                 $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                 $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
-                $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
-                // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
-                $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
-                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
-                $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                $mail->Body .="<b>Confirm your registration and get your schedule for submission of requirements by clicking on this link:</b><br>";
                 $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
+                $mail->Body .="If you still need to edit your data, you can visit the link below:<br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
                 $mail->Body .="Sincerely,<br>";
                 $mail->Body .="Gordon College Olongapo";
                 if ($mail->send()) {
@@ -1471,15 +1450,10 @@
                 $mail->Body = "Hello <b>{$fname} {$lname}</b>!<br>";
                 $mail->Body .="Your registration for taking the GCAT exam was successful.<br>";
                 $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
-                $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
-                // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
-                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                $mail->Body .="<b>Confirm your registration and get your schedule for submission of requirements by clicking on this link:</b><br>";
+                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                 $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
                 $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
-                $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
-                $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
-                $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
                 $mail->Body .="Sincerely,<br>";
                 $mail->Body .="Gordon College Olongapo";
                 if ($mail->send()) {

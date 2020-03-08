@@ -105,19 +105,26 @@ export class EditComponent implements OnInit {
       this.parameters.key = params.get('key')
       let promise= this.ds.sendRequest('validateEdit', this.parameters).toPromise()
       promise.then((res)=>{
-        this.student1 = res.data[0]
-        if(res=="error"){
+        if(res==='error'||res.status.remarks==false){
           Swal.fire({
             icon: 'error',
             title:'<h2>ID and Key did not match!</h2>',
             text: 'Please check your email if you have copied the correct link.'
+          }).then(()=>{
+            this.router.navigate(['application']);
           })
         } else{
+          // this.student1 = res.data[0]
           Swal.fire({
             icon: 'success',
             title: 'WELCOME '+res.data[0].si_firstname+'!',
             text: ''
           }).then(()=>{
+            Swal.fire({
+              icon: 'info',
+              title:'<h2>Please make sure to input a<br><strong><u>valid email address.</u></strong></h2>',
+              text: 'We will send a confirmation message to your email address upon completing this form, so it is very important that you can access the email address that you enter.'
+            })
             this.firstFormGroup.controls.lname.setValue(res.data[0].si_lastname.toUpperCase())
             this.firstFormGroup.controls.fname.setValue(res.data[0].si_firstname.toUpperCase())
             this.firstFormGroup.controls.mname.setValue(res.data[0].si_midname.toUpperCase())
@@ -241,12 +248,6 @@ export class EditComponent implements OnInit {
         default:
           break;
       }})
-
-    Swal.fire({
-      icon: 'info',
-      title:'<h2>Please make sure to input a<br><strong><u>valid email address.</u></strong></h2>',
-      text: 'We will send a confirmation message to your email address upon completing this form, so it is very important that you can access the email address that you enter.'
-    })
 
     this.departmentall.dept='';
 
@@ -507,10 +508,10 @@ computeAge(){
               allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
               let q:any = {}
-              q.idNumber = res.data[0].si_idnumber
-              q.email = result.value
-              q.fname = res.data[0].si_firstname
-              q.lastname = res.data[0].si_lastname
+              q.gc_idnumber = res.data[0].si_idnumber
+              q.si_email = result.value
+              q.si_firstname = res.data[0].si_firstname
+              q.si_lastname = res.data[0].si_lastname
               this.spinner.show()
               promise = this.ds.sendRequest('validateEmail', q).toPromise()
               promise.then((res)=>{
@@ -575,7 +576,7 @@ validateEmail(){
     } else{
       this.spinner.show()
       let email: any = {}
-      email.email = this.firstFormGroup.value.email
+      email.si_email = this.firstFormGroup.value.email
       let promise = this.ds.sendRequest('validateEmail', email).toPromise()
       promise.then((res)=>{
         this.spinner.hide()

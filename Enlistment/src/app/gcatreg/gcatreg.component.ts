@@ -282,7 +282,7 @@ export class GcatregComponent implements OnInit {
   validateEmail(){
     this.spinner.show()
     let email: any = {}
-    email.email = this.firstFormGroup.value.email
+    email.si_email = this.firstFormGroup.value.email
     let promise = this.ds.sendRequest('validateEmail', email).toPromise()
     promise.then((res)=>{
       this.spinner.hide()
@@ -355,6 +355,8 @@ computeAge(){
             }).then(() => {
               this.router.navigate(['application']);
             });
+          } else{
+            
           }
         })
         promise = this.ds.sendRequest('reSendMail', student).toPromise()
@@ -391,10 +393,10 @@ computeAge(){
             allowOutsideClick: () => !Swal.isLoading()
           }).then((result) => {
             let q:any = {}
-            q.idNumber = res.data[0].si_idnumber
-            q.email = result.value
-            q.fname = res.data[0].si_firstname
-            q.lastname = res.data[0].si_lastname
+            q.gc_idnumber = res.data[0].si_idnumber
+            q.si_email = result.value
+            q.si_firstname = res.data[0].si_firstname
+            q.si_lastname = res.data[0].si_lastname
             this.spinner.show()
             promise = this.ds.sendRequest('validateEmail', q).toPromise()
             promise.then((res)=>{
@@ -415,7 +417,7 @@ computeAge(){
                   if(res[0]=='success'){
                     Swal.fire({
                       icon: "success",
-                      html: `<h2>Your email address has been changed to <br><b>${q.email}</b>!</h2><br>`+
+                      html: `<h2>Your email address has been changed to <br><b>${q.si_email}</b>!</h2><br>`+
                              "Please check your inbox for our email containing a link to your printable <b>Form SR01</b>."
                     }).then(() => {
                       this.router.navigate(['application']);

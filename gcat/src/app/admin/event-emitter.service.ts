@@ -26,7 +26,6 @@ export class EventEmitterService{
   }
 
   getUnconfirmedCount(){
-    console.log(this.unconfirmedCount)
     return this.unconfirmedCount
   }
 

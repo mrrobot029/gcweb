@@ -1,5 +1,5 @@
 <?php
-            $report = $_GET['report'];
+            $sub_recno = $_GET['sub_recno'];
             require_once "../config/connect.php";
             $sql = "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'";
             $query = mysqli_query($conn,$sql);
@@ -13,12 +13,11 @@
                 $es_start = explode("-",$start);
                 $es_end = explode("-",$end);
             }
-            $sqlGetSchedule = "SELECT * FROM tbl_gcatschedule WHERE sched_recno = '$sched_recno'";
+            $sqlGetSchedule = "SELECT * FROM tbl_gcatsubmitsched WHERE sub_recno = '$sub_recno'";
             $queryGetSchedule = mysqli_query($conn,$sqlGetSchedule);
             if(mysqli_num_rows($queryGetSchedule)>0){
                 while($res = mysqli_fetch_assoc($queryGetSchedule)){
-                $sched_date = strtotime($res['sched_date']);
-                $sched_time = $res['sched_time'];
+                $sub_date = strtotime($res['sub_date']);
                 }
             } else{
                 echo $conn->error;
@@ -48,7 +47,7 @@ if($id == $decryptedkey){
 <head>
     <meta charset="UTF-8">
     <title>GCAT Examinees Attendance</title>
-    <link rel="stylesheet" type="text/css" href="css/GCATAttendance.css">
+    <link rel="stylesheet" type="text/css" href="css/GCATSubmissionAttendance.css">
 </head>
 
 <body style="width: 99%!important; height: 100%!important;">
@@ -76,7 +75,7 @@ if($id == $decryptedkey){
         <tbody>
             <tr>
                 <td class="center" colspan="3">
-                    <h2>GCAT A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
+                    <h2>GCAT Examinees A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
 
 if($es_sem == '1'){
   echo "1st";
@@ -87,57 +86,40 @@ if($es_sem == '1'){
 }
 
 ?> Semester</h2>
-<?php switch($report){
-        case 'stats':
-            $tbody = "";
-            $title = "STATISTICS REPORT";
-            $thead = "
-                <th class='border-thin'>No.</th>
-                <th class='border-thin'>ID Number</th>
-                <th class='border-thin'>Full Name</th>
-                <th class='border-thin' width='60'>Course</th>
-                <th class='border-thin'>E-mail</th>
-                <th class='border-thin'>CP Number</th>
-                <th class='border-thin'>Signature</th>
-            ";  
-            $x = 1;
-            $query = mysqli_query($conn, "SELECT * from tbl_studentinfo stud INNER JOIN tbl_gcat g ON g.gc_idnumber = stud.si_idnumber INNER JOIN tbl_gcatschedule gs ON g.gc_examtime = gs.sched_recno WHERE gs.sched_recno = '$sched_recno' ORDER BY stud.si_lastname,stud.si_firstname,stud.si_midname");
-            if(mysqli_num_rows($query)>0){
-                while($res = mysqli_fetch_assoc($query)){
-                    $idnumber = $res['si_idnumber'];
-                    $fullname = $res['si_lastname'].", ".$res['si_firstname'].", ".$res['si_midname'];
-                    $course = $res['si_course'];
-                    $email = $res['si_email'];
-                    $mobile = $res['si_mobile'];
-                    $tbody .= `
-                    <td class="border-thin">$x</td>
-                    <td class="border-thin">$idnumber</td>
-                    <td class="border-thin">$fullname</td>
-                    <td class="border-thin">$course</td>
-                    <td class="border-thin">$email</td>
-                    <td class="border-thin">$mobile</td>
-                    <td class="border-thin"></td>
-                    `;
-                    $x++;
-                }
-            }
-
-    }
-?>
-                    <h3><?php echo $title; ?></h3>
+                    <h3>Submission Date: <?php echo date('F d, Y', $sub_date); ?></h3>
                 </td>
             </tr>
         </tbody>
     </table>
     <table width="100%" class="table-body">
         <thead>
-           <?php echo $thead; ?>
+            <th class="border-thin">No.</th>
+            <th class="border-thin">ID Number</th>
+            <th class="border-thin">Full Name</th>
+            <th class="border-thin">Remarks</th>
         </thead>
         <tbody>
 
+
+        <?php     
+            $x = 1;
+            $query = mysqli_query($conn, "SELECT * from tbl_studentinfo stud INNER JOIN tbl_gcat g ON g.gc_idnumber = stud.si_idnumber INNER JOIN tbl_gcatsubmitsched gs ON g.gc_subdate = gs.sub_recno WHERE gs.sub_recno = '$sub_recno' ORDER BY stud.si_idnumber ASC");
+            if(mysqli_num_rows($query)>0){
+                while($res = mysqli_fetch_assoc($query)){
+
+        ?>
             <tr>
-                <?php echo $tbody ?>
+                <td class="border-thin"><?php echo $x; ?></td>
+                <td class="border-thin"><?php echo $res['si_idnumber']; ?></td>
+                <td class="border-thin"><?php echo $res['si_lastname']; ?>, <?php echo $res['si_firstname']; ?> <?php echo $res['si_midname']; ?> <?php echo $res['si_extname']; ?></td>
+                <td class="border-thin"></td>
             </tr>
+
+        <?php 
+                    $x++;
+                }
+            }
+        ?>
         </tbody>
     </table>
 </body>

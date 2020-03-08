@@ -1,6 +1,17 @@
 <?php
             $report = $_GET['report'];
+            $sub_recno = $_GET['sched_recno'];
             require_once "../config/connect.php";
+            date_default_timezone_set ('Asia/Manila');
+            $sqlGetSchedule = "SELECT * FROM tbl_gcatsubmitsched WHERE sub_recno = '$sub_recno'";
+            $queryGetSchedule = mysqli_query($conn,$sqlGetSchedule);
+            if(mysqli_num_rows($queryGetSchedule)>0){
+                while($res = mysqli_fetch_assoc($queryGetSchedule)){
+                $sub_date = strtotime($res['sub_date']);
+                }
+            } else{
+                echo $conn->error;
+            }
             $sql = "SELECT * FROM tbl_enlistment WHERE en_isactive='ACTIVE'";
             $query = mysqli_query($conn,$sql);
             if(mysqli_num_rows($query)>0){
@@ -86,6 +97,8 @@ $unconfirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_
 $confirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1"));
 $scheduled = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2"));
 $result = $conn->query("SELECT gc_course, count(gc_idnumber) as courseCount FROM tbl_gcat GROUP BY gc_course");
+$unscheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1 and gc_subdate = $sub_recno"));
+$scheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2 and gc_subdate = $sub_recno"));
 while($res = $result->fetch_array()){
   $countByCourse[] = $res;
 }
@@ -126,7 +139,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             </tr>
         </tbody>
     </table>
-
+            <!-- general -->
             <table class="table-body">
                 <thead>
                     <th class="border-thin">Unconfirmed</th>
@@ -144,6 +157,26 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
                 </tr>
                 </tbody>
             </table>
+
+            <!-- daily -->
+            <h3>Report for Submission Date - <?php echo date('F d, Y', $sub_date); ?></h3>
+            <table class="table-body">
+                <thead>
+                    <th class="border-thin">Unscheduled</th>
+                    <th class="border-thin">Scheduled</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="border-thin"><?php echo $unscheduledDaily; ?></td>
+                    <td class="border-thin"><?php echo $scheduledDaily; ?></td>
+                <tr>
+                <tr>
+                    <td colspan="3" class="border-thin" style="text-align: right;">Total(Scheduled/Total): <strong><?php echo $scheduledDaily; ?>/<?php echo $unscheduledDaily + $scheduledDaily; ?><strong></td>
+                </tr>
+                </tbody>
+            </table>
+
+    <!-- percourse -->
        <br>
             <table class="txt table-body">
             <tbody>
@@ -154,6 +187,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
                 </tr>
             </tbody>
             </table>
+            
             <table class="table-body">
                 <thead>
                     <th class="border-thin">No.</th>
@@ -165,6 +199,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
                 </tbody>
             </table>
 
+            <!-- perdepartment -->
             <table class="txt table-body">
             <tbody>
                 <tr>

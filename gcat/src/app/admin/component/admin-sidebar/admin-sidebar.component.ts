@@ -13,6 +13,7 @@ export class AdminSidebarComponent implements OnInit {
   unconfirmedCount = 0;
   confirmedCount = 0;
   scheduledCount = 0;
+  unscheduledSubCount = 0;
   allapplicants = 0
   constructor(private ds: DataService, private es: EventEmitterService) { }
 
@@ -38,6 +39,9 @@ export class AdminSidebarComponent implements OnInit {
     })
     this.ds.sendRequest('getScheduledCount', null).subscribe(res => {
       this.scheduledCount= res.data[0].scheduledCount
+    })
+    this.ds.sendRequest('getUncheduledSubCount', null).subscribe(res => {
+      this.unscheduledSubCount= res.data[0].unscheduledSubCount
     })
   }
 }

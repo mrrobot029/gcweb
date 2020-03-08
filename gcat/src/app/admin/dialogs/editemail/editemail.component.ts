@@ -30,7 +30,6 @@ export class EditemailComponent{
 
     this.student = this.data
     this.emailOld = this.data.si_email
-    console.log(this.data)
   }
 
   validateEmail(){

@@ -364,7 +364,7 @@
                 break;
 
                 case 'getConfirmedCount':
-                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as confirmedCount from tbl_gcat WHERE gc_status = 1"));
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as confirmedCount from tbl_gcat WHERE gc_status = 1 and gc_subdate != 0"));
                 break;
 
                 case 'getScheduledCount':
@@ -447,6 +447,10 @@
                     echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as scheduledCount FROM tbl_gcat WHERE gc_status = 2"));
                 break;
 
+                case 'getUncheduledSubCount':
+                    echo json_encode($post->executeWithRes("SELECT COUNT(gc_idnumber) as unscheduledSubCount FROM tbl_gcat WHERE gc_status = 1 AND gc_subdate = 0"));
+                break;
+
                 case 'getScheduledApplicants':
                     echo json_encode($post->executeWithRes("SELECT gc.*, si.si_email, si.si_mobile, si.si_firstname, si.si_lastname, CONCAT(si.si_lastname,', ',si.si_firstname,', ',si.si_midname,' ',si.si_extname)  as si_fullname FROM tbl_gcat as gc INNER JOIN tbl_studentinfo as si on si.si_idnumber = gc.gc_idnumber WHERE  gc.gc_status = '2' and gc.gc_examtime='$d->dropDownSched'  ORDER BY si.si_lastname, si.si_firstname,si.si_midname,si.si_extname"));
                 break;
@@ -456,6 +460,12 @@
                        echo json_encode($post->executeWithoutRes("UPDATE tbl_gcatschedule SET sched_count = sched_count-1 WHERE sched_recno = '$d->gc_examtime'"));
                    }
                 break;
+
+                case 'unscheduleSubApplicant':
+                    if($post->executeWithoutRes("UPDATE tbl_gcat SET gc_subdate = 0 WHERE gc_idnumber = '$d->gc_idnumber'")){
+                        echo json_encode($post->executeWithoutRes("UPDATE tbl_gcatsubmitsched SET sub_count = sub_count-1 WHERE sub_recno = '$d->gc_subdate'"));
+                    }
+                 break;
 
                 case 'moveSchedule':
                     if($post->executeWithoutRes("UPDATE tbl_gcat SET gc_examtime = '$d->moveDate' WHERE gc_examtime = '$d->currentDate'")){
@@ -533,8 +543,9 @@
                 break;
 
                 case 'addSubScheduleForApplicant':
-                    $post->executeWithoutRes("UPDATE tbl_gcatsubmitsched SET sub_count = sub_count + 1 WHERE sub_recno = '$d->time'");
-                    echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_subdate='$d->time' WHERE gc_idnumber='$d->idNumber'"));
+                    echo json_encode($post->addSubScheduleForApplicant($d));
+                    // $post->executeWithoutRes("UPDATE tbl_gcatsubmitsched SET sub_count = sub_count + 1 WHERE sub_recno = '$d->time'");
+                    // echo json_encode($post->executeWithoutRes("UPDATE tbl_gcat SET gc_subdate='$d->time' WHERE gc_idnumber='$d->idNumber'"));
                 break;
 
                 case 'unscheduleSubApplicant':

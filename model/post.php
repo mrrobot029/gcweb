@@ -1133,7 +1133,7 @@
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$tempid}/{$key}</a></b><br><br>";
                                             $mail->Body .="Please secure <b>3 printed copies</b> of your Form SR01 to be submitted to the <b>Registrar's Office</b>.<br>";
                                             $mail->Body .="Submission of SR01 forms will start on <b>March 02, 2020</b>.<br><br>";
-                                            $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                                            $mail->Body .="Confirm your registration by clicking on this link: <br>";
                                             $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$tempid}&key={$key}</a></b><br><br>";
                                             $mail->Body .="Sincerely,<br>";
                                             $mail->Body .="Gordon College Olongapo";
@@ -1189,6 +1189,87 @@
                 $valid[2]=$this->conn->error;
                 return $valid;
             }                
+            }
+
+            function addSubScheduleForApplicant($d){
+                $updateGcatSchedTbl = "UPDATE tbl_gcatsubmitsched SET sub_count = sub_count + 1 WHERE sub_recno = '$d->time'";
+                if($this->conn->query($updateGcatSchedTbl)){
+                    $updateGcatTbl = "UPDATE tbl_gcat SET gc_subdate='$d->time' WHERE gc_idnumber='$d->gc_idnumber'";
+                    if($this->conn->query($updateGcatTbl)){
+                        $mail = new PHPMailer(true);
+                        $mail->isSMTP();                                            // Send using SMTP
+                        $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+                        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                        $mail->Username   = 'gcat@gordoncollegeccs.edu.ph';                     // SMTP username
+                        $mail->Password   = 'infinitycore4477';                               // SMTP password
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                        $mail->Port       = 587;          
+                        $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
+                        $mail->isHTML(true);     
+                        $id = $d->gc_idnumber;
+                        $email = $d->si_email;
+                        $fname = $d->si_fullname;
+                        // id encryption
+                        $key = $d->gc_key;
+                            // email
+                        $mail->addAddress($email);
+                        $mail->Subject = "Gordon College Admission Test(GCAT) Registration";
+                        $mail->Body = "Hello <b>{$fname}</b> - Temporary ID Number: <b>{$id}</b>!<br>";
+                        $mail->Body .="This is to inform you that you are advised to submit your GCAT registration requirements to be submitted on <b>{$d->date} - 8:00AM to 3:00PM</b>:<br>";
+                        $mail->Body .="1. Three (3) copies of <a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>GCAT Printed Application Forms</a><br>";
+                        $mail->Body .="2. Three (3) pieces 2x2 ID photos<br>";
+                        $mail->Body .="3. Valid ID Card<br>";
+                        $mail->Body .="4. F138/TOR (optional on this Submission but will be part of required documents when qualified to undergo program screening )<br><br>";
+                        $mail->Body .="In case that you will not be able to submit your application personally, you may authorize your parent (mother and/or father) or your legal guardian to submit the requirements on your behalf by presenting these additional requirements:<br>";
+                        $mail->Body .="5. Authorization letter from you<br>";
+                        $mail->Body .="6. Copy of your VALID ID<br>";
+                        $mail->Body .="7. Copy of VALID ID of your authorized representative<br><br>";
+                        $mail->Body .="<b>DATE OF SUBMISSION : {$d->date}</b><br>";
+                        $mail->Body .="<b>TIME : 8:00am - 3:00 pm</b><br><br>";
+                        $mail->Body .="Procedure:<br>";
+                        $mail->Body .="1. Present to the Front Desk Security officer the printed GCAT form and get the temp Queue number<br>";
+                        $mail->Body .="2. After that, present the temp Queue Number to the Internal Security Officer to exchange it for the GC REGISTRAR'S QUEUE NUMBER (GCRQN)<br>";
+                        $mail->Body .="3. Wait for the GCRQN to be called or displayed in the monitor located at the GC REGISTRAR'S OFFICE<br>";
+                        $mail->Body .="4. Once called, present the requirements to the Registrar's personnel for validation.<br>";
+                        $mail->Body .="5. If all requirements are complete and complied, you will be given a schedule when you will take the GCAT.<br>";
+                        $mail->Body .="6. End of GCAT APPLICATION VALIDATION.<br><br>";
+                        $mail->Body .="Make sure to follow the said DATE of Submission. Your application will not be accommodated if you failed to follow the said DATE OF SUBMISSION.<br><br>";
+                        $mail->Body .="This is your temporary id number: <b>{$id}</b>.<br><br>";
+                        $mail->Body .="Please visit this link for your printable Form SR01(TO BE PRINTED ON A4 SIZE BOND PAPER):<br>";
+                        // $mail->Body .="<b>http://localhost/gordoncollegeweb/print/sis.php?id={$id}&key={$key}</b><br><br>";
+                        $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/print/sis.php?id={$id}&key={$key}</a></b><br><br>";
+                        $mail->Body .="If you need to edit your data, you can visit the link below:<br>";
+                        $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}'>https://gordoncollegeccs.edu.ph/gc/home/#/edit/{$id}/{$key}</a></b><br><br>";
+                        $mail->Body .="Kindly acknowledge receipt of this email by clicking on this link: <br>";
+                        $mail->Body .="<b><a href='https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}'>https://gordoncollegeccs.edu.ph/gc/api/confirmation/confirmation.php?id={$id}&key={$key}</a></b><br><br>";
+                        $mail->Body .="Sincerely,<br>";
+                        $mail->Body .="Gordon College Olongapo";
+                        if ($mail->send()) {
+                            return $this->info = array(
+                                'status'=>array(
+                                    'remarks'=>true,
+                                    'message'=>'Query without data success.'
+                                ),
+                                'data' =>$this->data,
+                                'timestamp'=>date_create(),
+                                'prepared_by'=>'F-Society'
+                            );
+                        } else {
+                            return 'Email Failed';
+                        }
+                    } else{
+                        $valid[0]='error';
+                        $valid[1]=$this->conn->error;
+                        $valid[2]=$this->conn->error;
+                        return $valid;
+                    }
+                } else {
+                    $valid[0]='error';
+                    $valid[1]=$this->conn->error;
+                    $valid[2]=$this->conn->error;
+                    return $valid;
+                }
+                
             }
 
 

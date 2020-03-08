@@ -26,7 +26,7 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   fullscreen = false;
   applicantCount = 0;
   searchValue = "";
-  order = 'DESC';
+  order = 'ASC';
   sort = 'gc.gc_idnumber ' + this.order;
   sortValue = 'id';
   scheds: any;
@@ -159,19 +159,24 @@ export class ApplicantsforsubmissionComponent implements OnInit {
       let promise = this.ds.sendRequest("getSubScheduleCount", this.schedule).toPromise()
       promise.then(res =>{
         if(res.data[0].sub_count>=300){
+        this.spinner.hide()
           Swal.fire({
             title: `ERROR`, 
-            html: `<strong>Applicant count cannot exceed 40!</strong>`, 
+            html: `<strong>Applicant count cannot exceed 300!</strong>`, 
             icon: "error"})
             .then(() => {
               this.getUnscheduledApplicants();
               this.getAvailableSchedules();
             })
         } else{
-          this.schedule.idNumber = applicant.gc_idnumber;
+          this.schedule.gc_idnumber = applicant.gc_idnumber;
+          this.schedule.gc_key = applicant.gc_key
+          this.schedule.si_fullname = applicant.si_fullname
+          this.schedule.si_email = applicant.si_email
           let selectedsched = this.scheds.filter(s => {
             return s.sub_recno == this.schedTime
           })
+          this.schedule.date = formatDate(selectedsched[0].sub_date, 'MMMM dd, y', 'en-US' )
           let promise2 = this.ds.sendRequest("addSubScheduleForApplicant", this.schedule).toPromise()
             promise2.then(async res => {
               if (res.status.remarks) {
@@ -180,12 +185,12 @@ export class ApplicantsforsubmissionComponent implements OnInit {
                 this.spinner
                   Swal.fire({
                     title: `${applicant.si_fullname}`, 
-                    html: `has been scheduled for <br><br><strong>${formatDate(selectedsched[0].sub_date, 'MMMM dd, y', 'en-US' )}<br></strong>Slots Remaining: <strong>${40 - selectedsched[0].sub_count-1}</strong>`, 
+                    html: `has been scheduled for submission of requirements on <br><br><strong>${formatDate(selectedsched[0].sub_date, 'MMMM dd, y', 'en-US' )}<br></strong>Slots Remaining: <strong>${300 - selectedsched[0].sub_count-1}</strong>`, 
                     icon: "success"})
                   .then(() => {
                     this.fullscreen = false;
                     this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
-                    this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for examination on ${formatDate(selectedsched[0].sub_date, 'MMMM dd, y', 'en-US' )}.`
+                    this.log.activity = `Scheduled applicant ${applicant.si_fullname} - ID Number: ${applicant.gc_idnumber} for submission of requirements on ${formatDate(selectedsched[0].sub_date, 'MMMM dd, y', 'en-US' )}.`
                     this.log.idnumber = this.credentials.data[0].fa_empnumber
                     this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
                     this.log.department = this.credentials.data[0].fa_department
@@ -232,7 +237,7 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   getAllSchedules() {
     this.ds.sendRequest("getAllSubSchedules", null).subscribe(res => {
       if (res.status.remarks) {
-        this.schedules = res.data;
+        this.schedules = res.data
       } else {
         this.schedules = [];
       }
@@ -266,13 +271,19 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   }
 
   getAvailableSchedules() {
-    this.ds.sendRequest("getAvailableSubSchedules", null).subscribe(res => {
+    this.ds.sendRequest("getAllSubSchedules", null).subscribe(res => {
       if (res.status.remarks) {
-        this.scheds = res.data;
+      let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US').toString()
+      this.scheds = res.data
+        let schednow = res.data.filter(r => {
+          return r.sub_date.includes(datenow)
+        })
         this.schedTime = ""
         this.schedule.time = ""
-        if(this.schedTime == ""){
-          this.schedTime = res.data[0].sub_recno
+        if(schednow.length != 0){
+          this.schedTime = schednow[0].sub_recno
+        } else{
+          this.schedTime = ""
         }
       } else {
         this.scheds = [];

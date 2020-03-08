@@ -7,11 +7,31 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-success">
-            <h4 class="card-title ">
-              List of Confirmed Applicants - Total Count:
-              <strong>{{applicantSubCount}}/{{ applicantCount }}</strong>
-            </h4>
-            <p class="card-category">For GCAT Schedule</p>
+            <div class="row">
+              <div class="col-md-8">
+              <h4 class="card-title ">
+                List of Confirmed Applicants - Total Count:
+                <strong>{{applicantSubCount}}/{{presentsched.sub_count}} of {{ applicantCount }}</strong>
+              </h4>
+              <p class="card-category">For GCAT Schedule</p>
+              </div>
+              <div class="col-md-3 " style="border: 1px solid white; border-radius: 15px;margin-right: 5px;" *ngIf="credentials.data[0].fa_accounttype=='1'">
+                <label for="time" class="p-0 m-0"  style="color: white;">Scheduled Date of Submission</label>
+                <select class="form-control" name="time" [(ngModel)]="schedSub" (change)="filterBySubmitDate()" style="color:white">
+                  <option value="">SELECT TIME</option>
+                  <option *ngFor="let scheds of schedules" value="{{ scheds.sub_recno }}" style="color: black;">
+                    {{ scheds.sub_date | date : "MMMM dd, y"  }} | <strong>Count:</strong>({{scheds.sub_count}})
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 " style="border: 1px solid white; border-radius: 15px;margin-right: 5px;" *ngIf="credentials.data[0].fa_accounttype=='0'">
+                <label for="time" class="p-0 m-0"  style="color: white;">Scheduled Date of Submission</label>
+
+                  <h4 style="color: black;">
+                    {{ presentsched.sub_date | date : "MMMM dd, y"  }} | <strong>Count:</strong>({{presentsched.sub_count}})
+                  </h4>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="row">
@@ -46,16 +66,7 @@
                 </form>
               </div>
               <div class="col-md-3 ">
-                <label for="time" class="p-0 m-0">Schedule Time For Submission</label>
-                <select class="form-control" name="time" [(ngModel)]="schedSub" (change)="filterBySubmitDate()">
-                  <option value="">SELECT TIME</option>
-                  <option *ngFor="let scheds of schedules" value="{{ scheds.sub_recno }}">
-                    {{ scheds.sub_date | date : "MMMM dd, y"  }} | <strong>Count:</strong>({{scheds.sub_count}})
-                  </option>
-                </select>
-              </div>
-              <div class="col-md-3 ">
-                <label for="time" class="p-0 m-0">Schedule Time</label>
+                <label for="time" class="p-0 m-0">Schedule Date for Exam</label>
                 <select class="form-control" name="time" [(ngModel)]="schedTime">
                   <option value="">SELECT TIME</option>
                   <option *ngFor="let sched of scheds" value="{{ sched.sched_recno }}">
@@ -76,7 +87,7 @@
                   <th>Email</th>
                   <th>Program</th>
                   <th>GPA</th>
-                  <th>Registration Time</th>
+                  <th>Submission Schedule</th>
                   <th>Action</th>
                 </thead>
                 <tbody>
@@ -91,7 +102,7 @@
                     <td>{{ applicant.si_email }}</td>
                     <td>{{ applicant.gc_course }}</td>
                     <td>{{ applicant.gc_gpa }}</td>
-                    <td>{{ applicant.gc_regtime }}</td>
+                    <td>{{ schedules[applicant.gc_subdate-1].sub_date | date : "MMMM dd, y" }}</td>
                     <td>
                       <button matTooltip="Add Schedule" matTooltipPosition="above" class="btn btn-sm btn-success"
                         (click)="addScheduleForApplicant(applicant)">
@@ -117,8 +128,8 @@
                           </i>
                         </button>
                       </a>
-                      <button matTooltip="Undo Confirmation" matTooltipPosition="above" class="btn btn-sm btn-danger"
-                        (click)="unconfirmApplicant(applicant)">
+                      <button matTooltip="Unschedule for Submission" matTooltipPosition="above" class="btn btn-sm btn-danger"
+                        (click)="unscheduleSubApplicant(applicant)" *ngIf="credentials.data[0].fa_accounttype=='1'">
                         <i class="material-icons">
                           undo
                         </i>

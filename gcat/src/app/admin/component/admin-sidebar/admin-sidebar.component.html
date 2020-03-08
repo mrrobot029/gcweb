@@ -22,9 +22,9 @@
         <p>Unconfirmed Applicants</p>
       </a>
     </li>
-    <li routerLinkActive="active" class="nav-item">
+    <li routerLinkActive="active" class="nav-item" *ngIf="credentials.data[0].fa_accounttype=='1'">
       <a class=" nav-link" [routerLink]="['unscheduled']">
-        <i class="material-icons">group_add</i><span class="badge badge-info">{{confirmedCount}} - Requirement Submission</span>
+        <i class="material-icons">group_add</i><span class="badge badge-info">{{unscheduledSubCount}} - Requirement Submission</span>
         <p>Unscheduled Applicants</p>
       </a>
     </li>
@@ -39,7 +39,7 @@
         <i class="material-icons">
           how_to_reg
         </i><span class="badge badge-info">{{scheduledCount}}</span>
-        <p>Scheduled Applicants(For Exam)</p>
+        <p>Scheduled Applicants</p>
       </a>
     </li>
     <li routerLinkActive="active" class="nav-item" *ngIf="credType=='CCS' 

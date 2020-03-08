@@ -27,6 +27,8 @@ export class AdminHeaderComponent implements OnInit {
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
+  scheds: any;
+  schedTime: string;
 
   constructor(private router: Router, private element: ElementRef, private ds: DataService, private auth: AuthService, private spinner: NgxSpinnerService, private dialog: MatDialog) {
     this.sidebarVisible = false;
@@ -57,6 +59,7 @@ export class AdminHeaderComponent implements OnInit {
     this.credAdmin = JSON.parse(localStorage.getItem('gcweb_GCAT'));
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+    this.getAvailableSchedules()
   }
 
   getDuplicates() {
@@ -229,5 +232,24 @@ export class AdminHeaderComponent implements OnInit {
       height: '90vh',
     });
   }
+
+  getAvailableSchedules() {
+    this.ds.sendRequest("getAvailableSubSchedules", null).subscribe(res => {
+      if (res.status.remarks) {
+      let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US')
+        this.scheds = res.data.filter(r => {
+          return r.sub_date >= datenow
+        })
+        this.schedTime = ""
+        if(this.schedTime == ""){
+          this.schedTime = this.scheds[0].sub_recno
+        }
+      } else {
+        this.scheds = [];
+        this.schedTime = ""
+      }
+    });
+  }
+
 
 }

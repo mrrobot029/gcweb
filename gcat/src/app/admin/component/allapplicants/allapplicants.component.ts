@@ -114,7 +114,6 @@ export class AllapplicantsComponent implements OnInit {
   }
 
   searchApplicantStatus(e) {
-    console.log(e)
     e.preventDefault();
     this.applicants = this.applicantsConst.filter(a =>{
       return a.gc_status.includes(e.target.value)

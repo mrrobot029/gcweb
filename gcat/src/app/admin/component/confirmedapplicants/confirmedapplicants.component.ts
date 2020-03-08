@@ -14,6 +14,8 @@ export class ConfirmedapplicantsComponent implements OnInit {
   now = new Date();
   credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
   schedules: any;
+  schednow: any;
+  presentsched:any;
   constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
   schedTime: any = "";
@@ -33,16 +35,15 @@ export class ConfirmedapplicantsComponent implements OnInit {
   scheds: any;
   schedSub: any;
   async ngOnInit() {
-    // console.log(formatDate(this.now, 'yyyy-dd-mm', 'en-US'))
     this.search.sort = this.sort;
     if (this.applicants.length == null) {
       this.noapplicants = true;
       this.applicantCount = 0;
     }
+    await this.getAvailableSchedules();
     await this.getAllSchedules()
     await this.getUnscheduledApplicants();
     await this.filterBySubmitDate()
-    await this.getAvailableSchedules();
   }
 
   setSort(e) {
@@ -112,7 +113,7 @@ export class ConfirmedapplicantsComponent implements OnInit {
     this.p = 1;
   }
 
-  unconfirmApplicant(a) {
+  unscheduleSubApplicant(a) {
     Swal.fire({
       title: `Undo confirmation for <br>${a.si_fullname}<br>`,
       icon: "warning",
@@ -125,18 +126,18 @@ export class ConfirmedapplicantsComponent implements OnInit {
         this.fullscreen = true;
         this.spinner.show();
         let promise = this.ds
-          .sendRequest("unconfirmApplication", a)
+          .sendRequest("unscheduleSubApplicant", a)
           .toPromise();
         promise.then(res => {
           this.spinner.hide();
           if (res.status.remarks) {
             Swal.fire(
               "Success!",
-              "The application is now unconfirmed.",
+              "The applicant is now unscheduled for submission of requirements.",
               "success"
             ).then(() => {
               this.log.date = formatDate(this.now, 'MMMM dd, y hh:mm:ss a', 'en-US' );
-              this.log.activity = `Undid application confirmation for ${a.si_fullname} - ID Number: ${a.gc_idnumber}.`
+              this.log.activity = `Unschedule ${a.si_fullname} - ID Number: ${a.gc_idnumber} for submission of requirements.`
               this.log.idnumber = this.credentials.data[0].fa_empnumber
               this.log.name = `${this.credentials.data[0].fa_lname}, ${this.credentials.data[0].fa_fname}`
               this.log.department = this.credentials.data[0].fa_department
@@ -231,11 +232,14 @@ export class ConfirmedapplicantsComponent implements OnInit {
       if (res.status.remarks) {
         this.schedules = res.data;
         let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US').toString()
-        let schednow = this.schedules.filter(s => {
+        this.schednow = this.schedules.filter(s => {
           return s.sub_date.includes(datenow)
         })
-        console.log(schednow[0].sub_recno)
-        this.schedSub = schednow[0].sub_recno
+        if(this.schednow.length != 0){
+          this.schedSub = this.schednow[0].sub_recno
+        } else{
+          this.schedSub = ""
+        }
         this.filterBySubmitDate()
           } else {
         this.schedules = [];
@@ -243,11 +247,14 @@ export class ConfirmedapplicantsComponent implements OnInit {
     });
   }
 
-  filterBySubmitDate(){
-    this.applicants = this.applicantsConst.filter(a =>{
+  async filterBySubmitDate(){
+    this.spinner.show()
+    this.applicants = await this.applicantsConst.filter(a =>{
       return a.gc_subdate.includes(this.schedSub)
     })
+    this.spinner.hide()
     this.applicantSubCount = this.applicants.length
     this.p = 1;
+    this.presentsched = this.schedules[this.schedSub-1]
   }
 }

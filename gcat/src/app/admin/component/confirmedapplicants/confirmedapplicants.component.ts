@@ -13,6 +13,7 @@ export class ConfirmedapplicantsComponent implements OnInit {
   log:any = {}
   now = new Date();
   credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
+  schedules: any;
   constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
   schedDate: any;
   schedTime: any = "";
@@ -24,18 +25,23 @@ export class ConfirmedapplicantsComponent implements OnInit {
   schedule: any = {};
   fullscreen = false;
   applicantCount = 0;
+  applicantSubCount = 0;
   searchValue = "";
   order = 'DESC';
   sort = 'gc.gc_idnumber ' + this.order;
   sortValue = 'id';
   scheds: any;
+  schedSub: any;
   async ngOnInit() {
+    // console.log(formatDate(this.now, 'yyyy-dd-mm', 'en-US'))
     this.search.sort = this.sort;
     if (this.applicants.length == null) {
       this.noapplicants = true;
       this.applicantCount = 0;
     }
+    await this.getAllSchedules()
     await this.getUnscheduledApplicants();
+    await this.filterBySubmitDate()
     await this.getAvailableSchedules();
   }
 
@@ -87,8 +93,8 @@ export class ConfirmedapplicantsComponent implements OnInit {
     promise.then(res => {
       if (res.status.remarks) {
         this.applicantsConst = res.data;
-        this.applicants = this.applicantsConst
-        this.applicantCount = this.applicants.length;
+        this.filterBySubmitDate()
+        this.applicantCount = this.applicantsConst.length;
         this.noapplicants = false;
       } else {
         this.noapplicants = true;
@@ -218,5 +224,30 @@ export class ConfirmedapplicantsComponent implements OnInit {
         this.schedule.time = ""
       }
     });
+  }
+
+  getAllSchedules() {
+    this.ds.sendRequest("getAllSubSchedules", null).subscribe(res => {
+      if (res.status.remarks) {
+        this.schedules = res.data;
+        let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US').toString()
+        let schednow = this.schedules.filter(s => {
+          return s.sub_date.includes(datenow)
+        })
+        console.log(schednow[0].sub_recno)
+        this.schedSub = schednow[0].sub_recno
+        this.filterBySubmitDate()
+          } else {
+        this.schedules = [];
+      }
+    });
+  }
+
+  filterBySubmitDate(){
+    this.applicants = this.applicantsConst.filter(a =>{
+      return a.gc_subdate.includes(this.schedSub)
+    })
+    this.applicantSubCount = this.applicants.length
+    this.p = 1;
   }
 }

@@ -9,7 +9,7 @@
           <div class="card-header card-header-success">
             <h4 class="card-title ">
               List of Confirmed Applicants - Total Count:
-              <strong>{{ applicantCount }}</strong>
+              <strong>{{applicantSubCount}}/{{ applicantCount }}</strong>
             </h4>
             <p class="card-category">For GCAT Schedule</p>
           </div>
@@ -45,7 +45,15 @@
                   </select>
                 </form>
               </div>
-              <div class="col-md-1"></div>
+              <div class="col-md-3 ">
+                <label for="time" class="p-0 m-0">Schedule Time For Submission</label>
+                <select class="form-control" name="time" [(ngModel)]="schedSub" (change)="filterBySubmitDate()">
+                  <option value="">SELECT TIME</option>
+                  <option *ngFor="let scheds of schedules" value="{{ scheds.sub_recno }}">
+                    {{ scheds.sub_date | date : "MMMM dd, y"  }} | <strong>Count:</strong>({{scheds.sub_count}})
+                  </option>
+                </select>
+              </div>
               <div class="col-md-3 ">
                 <label for="time" class="p-0 m-0">Schedule Time</label>
                 <select class="form-control" name="time" [(ngModel)]="schedTime">

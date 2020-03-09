@@ -1,5 +1,5 @@
 <?php
-            $report = $_GET['report'];
+            // $report = $_GET['report'];
             $sub_recno = $_GET['sched_recno'];
             require_once "../config/connect.php";
             date_default_timezone_set ('Asia/Manila');
@@ -16,7 +16,7 @@
             $query = mysqli_query($conn,$sql);
             if(mysqli_num_rows($query)>0){
                 while($res = mysqli_fetch_assoc($query)){
-                $es_sem = $res['en_sem'];
+                $es_sem = $res['en_sem'];   
                 $start = $res['en_cystart'];
                 $end = $res['en_cyend'];
                 }
@@ -24,23 +24,23 @@
                 $es_start = explode("-",$start);
                 $es_end = explode("-",$end);
             }
-            $ciphering = "AES-128-CTR"; 
-    $iv_length = openssl_cipher_iv_length($ciphering); 
-    $options = 0; 
-    $id = 'forgcatadminonly!';
-    $key = '';
-    if(isset($_GET['key'])){
-        $key = rawurldecode($_GET['key']);
-    }
-    $decryption_iv = '1234567891011121'; 
+//             $ciphering = "AES-128-CTR"; 
+//     $iv_length = openssl_cipher_iv_length($ciphering); 
+//     $options = 0; 
+//     $id = 'forgcatadminonly!';
+//     $key = '';
+//     if(isset($_GET['key'])){
+//         $key = rawurldecode($_GET['key']);
+//     }
+//     $decryption_iv = '1234567891011121'; 
     
-  // Store the decryption key 
-    $decryption_key = "fsociety"; 
+//   // Store the decryption key 
+//     $decryption_key = "fsociety"; 
     
-  // Use openssl_decrypt() function to decrypt the data 
-    $decryptedkey=openssl_decrypt ($key, $ciphering,  
-                $decryption_key, $options, $decryption_iv); 
-if($id == $decryptedkey){
+//   // Use openssl_decrypt() function to decrypt the data 
+//     $decryptedkey=openssl_decrypt ($key, $ciphering,  
+//                 $decryption_key, $options, $decryption_iv); 
+// if($id == $decryptedkey){
 
 ?>
 <!DOCTYPE html>
@@ -96,6 +96,7 @@ $tbodyPerDept = "";
 $unconfirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 0"));
 $confirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1"));
 $scheduled = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2"));
+$totalapplicants = $unconfirmed + $confirmed + $scheduled;
 $result = $conn->query("SELECT gc_course, count(gc_idnumber) as courseCount FROM tbl_gcat GROUP BY gc_course");
 $unscheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1 and gc_subdate = $sub_recno"));
 $scheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2 and gc_subdate = $sub_recno"));
@@ -109,7 +110,7 @@ foreach($countByCourse as $row){
     <tr>
         <td class='border-thin'>$x</td>
         <td class='border-thin'>$course</td>
-        <td class='border-thin'>$count</td>
+        <td class='border-thin'>$count - <strong>". round(($count/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP) ."%</strong></td>
     </tr>
     ";
     $x++;
@@ -126,7 +127,7 @@ foreach($countByDept as $row){
     <tr>
         <td class='border-thin'>$y</td>
         <td class='border-thin'>$dept</td>
-        <td class='border-thin'>$countdept</td>
+        <td class='border-thin'>$countdept - <strong>". round(($countdept/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP) ."%</strong></td>
     </tr>
     ";
     $y++;
@@ -139,6 +140,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             </tr>
         </tbody>
     </table>
+            <?php  ?>
             <!-- general -->
             <table class="table-body">
                 <thead>
@@ -146,11 +148,11 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
                     <th class="border-thin">Confirmed</th>
                     <th class="border-thin">Scheduled</th>
                 </thead>
-                <tbody>
+                <tbody> 
                 <tr>
-                    <td class="border-thin"><?php echo $unconfirmed; ?></td>
-                    <td class="border-thin"><?php echo $confirmed; ?></td>
-                    <td class="border-thin"><?php echo $scheduled; ?></td>
+                    <td class="border-thin"><?php echo $unconfirmed; ?> - <strong><?php echo round(($unconfirmed/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP); ?>%</strong></td>
+                    <td class="border-thin"><?php echo $confirmed; ?> - <strong><?php echo round(($confirmed/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP); ?>%</strong></td>
+                    <td class="border-thin"><?php echo $scheduled; ?> - <strong><?php echo round(($scheduled/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP); ?>%</strong></td>
                 <tr>
                 <tr>
                     <td colspan="3" class="border-thin" style="text-align: right;">Total: <strong><?php echo $unconfirmed + $confirmed + $scheduled; ?><strong></td>
@@ -224,11 +226,11 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
 </html>
 
 <script src="js/jquery.min.js"></script>
-<script>
+<!-- <script>
     window.print()
-</script>
+</script> -->
 <?php
-}else{
-    echo '<h1>UNAUTHORIZED!</h1>';
-}
+// }else{
+//     echo '<h1>UNAUTHORIZED!</h1>';
+// }
 ?>

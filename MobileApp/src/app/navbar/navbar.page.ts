@@ -1,6 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -28,11 +29,25 @@ export class NavbarPage implements OnInit {
   }
 
   logout() {
-    this.storage.clear();
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Log Out',
+      icon: 'warning',
+      text:
+        'You are about to leave this portal?',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText:
+        'Proceed',
+      cancelButtonText:
+        'Cancel'
+    }).then((res) => {
+      if (res.value) {
+        this.storage.clear();
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
-  
 
   sidebarOpen() {
     const toggleButton = this.toggleButton;

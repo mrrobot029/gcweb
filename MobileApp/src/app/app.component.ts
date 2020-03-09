@@ -31,8 +31,6 @@ export class AppComponent {
 
 
     this.initializeApp();
-
-    console.log(this.router.url);
   }
 
   

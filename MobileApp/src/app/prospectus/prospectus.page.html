@@ -1,6 +1,6 @@
 <ion-row>
   <ion-col size="3">
-    <ion-button expand="full" (click)="yearlvl(1)">1st Year</ion-button>
+    <ion-button expand="full" (click)="yearlvl(1)" active>1st Year</ion-button>
   </ion-col>
   <ion-col size="3">
     <ion-button expand="full" (click)="yearlvl(2)">2nd Year</ion-button>
@@ -15,7 +15,7 @@
 <ion-content>
   <ion-list>
     <ion-list-header>
-      <h4>First Semester</h4>
+      <h4>{{ yearlv }} First Semester</h4>
     </ion-list-header>
     <ng-container *ngFor="let subj of prospectus.data">
       <ion-item *ngIf="subj.su_sem == 1">
@@ -32,7 +32,7 @@
   </ion-list>
   <ion-list>
     <ion-list-header>
-      <h4>Second Semester</h4>
+      <h4>{{ yearlv }} Second Semester</h4>
     </ion-list-header>
     <ng-container *ngFor="let subj of prospectus.data">
       <ion-item *ngIf="subj.su_sem == 2">
@@ -49,7 +49,7 @@
   </ion-list>
   <ion-list>
     <ion-list-header>
-      <h4>Midyear</h4>
+      <h4>{{ yearlv }} Midyear</h4>
     </ion-list-header>
     <ng-container *ngFor="let subj of prospectus.data">
       <ion-item *ngIf="subj.su_sem == 3">

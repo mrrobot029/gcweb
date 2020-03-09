@@ -18,11 +18,7 @@ export class ProfilePage implements OnInit {
     this.storage.get('studentInfo').then((val) => {
       this.credStud = val;
       this.computeAge(val.si_bday);
-      console.log(this.age)
     })
-    
-    
-    
   }
 
   computeAge(e){

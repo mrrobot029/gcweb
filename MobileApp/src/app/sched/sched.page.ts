@@ -16,13 +16,11 @@ export class SchedPage implements OnInit {
 
   ngOnInit() {
     this.storage.get('studentInfo').then((res) => {
-      console.log(res.si_idnumber);
 
       this.studentInfo.si_idnumber  = res.si_idnumber;
 
       this.ds.sendrequest('getStudentSchedule', this.studentInfo).subscribe((res1) => {
         this.scheds = res1;
-        console.log(this.scheds);
       });
     });
   }

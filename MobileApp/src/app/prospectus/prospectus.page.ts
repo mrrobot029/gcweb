@@ -17,19 +17,21 @@ export class ProspectusPage implements OnInit {
     studentInfo: any = {};
     studGrades: any = {};
     prospectus: any = {};
+    yearlvn: number;
+    yearlv: string;
   
 
   ngOnInit() {
     this.yearlvl(1);
+    
   }
   
 
-  yearlvl(e:number){
+  yearlvl(e){
     this.ds.year = e;
-    console.log(this.ds.year)
+    this.yearlvn = e;
+    
     this.storage.get('studentInfo').then((val) => {
-      console.log(val.si_idnumber);
-
       this.studentInfo.si_idnumber  = val.si_idnumber;
       this.studentInfo.si_course = val.si_course;
       this.studentInfo.si_cy = val.si_cy;
@@ -37,12 +39,27 @@ export class ProspectusPage implements OnInit {
 
       this.ds.sendrequest('getProspectusByYr', this.studentInfo).subscribe((res) => {
         this.prospectus = res;
-        console.log(this.prospectus);
       });
       this.ds.sendrequest('getGrades', this.studentInfo).subscribe((res) => {
         this.studGrades = res;
-        console.log(this.studGrades);
       });
     });
-  } 
+
+    this.findyear(this.yearlvn);
+  }
+
+  findyear(e){
+    if (e == 1) {
+      this.yearlv = "First Year";
+    }
+    else if (e == 2){
+      this.yearlv = "Second Year";
+    }
+    else if (e == 3){
+      this.yearlv = "Third Year";
+    }
+    else if (e == 4){
+      this.yearlv = "Fourth Year";
+    }
+  }
 }

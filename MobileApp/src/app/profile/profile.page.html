@@ -4,7 +4,12 @@
 <ion-content>
   <ion-card>
     <ion-avatar class="avatar">
-      <img [src]="credStud.si_picture" alt="profile">
+      <ng-container *ngIf="credStud.si_picture != ''; else elseTemplate">
+        <img [src]="credStud.si_picture" alt="profile">
+      </ng-container>
+      <ng-template #elseTemplate>
+        <img src="../../assets/img/gc-log.png" alt="profile">
+      </ng-template>
     </ion-avatar>
     <ion-card-header>
       <ion-card-title class="profile bold">{{ credStud.si_firstname + ' ' + credStud.si_midname + ' ' + credStud.si_lastname + ' ' + credStud.si_extname}}</ion-card-title>
@@ -34,41 +39,43 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
-  <ion-list class="list">
-    <h4 class="bold header">Personal Info</h4>
-    <ion-row>
-      <ion-col size="12">
-        <h5 class="margin">Name</h5>
-        <p class="margin">{{ credStud.si_firstname + ' ' + credStud.si_midname + ' ' + credStud.si_lastname + ' ' + credStud.si_extname}}</p>
-      </ion-col>
-      <ion-col size="8">
-        <h5 class="margin">Address</h5>
-        <p class="margin">{{ credStud.si_address }}</p>
-      </ion-col>
-      <ion-col size="4">
-        <h5 class="margin">Zip Code</h5>
-        <p class="margin">{{ credStud.si_zipcode }}</p>
-      </ion-col>
-      <ion-col size="4">
-        <h5 class="margin">Gender</h5>
-        <p class="margin">{{ credStud.si_gender }}</p>
-      </ion-col>
-      <ion-col size="4">
-        <h5 class="margin">Birthdate</h5>
-        <p class="margin">{{ credStud.si_bday }}</p>
-      </ion-col>
-      <ion-col size="4">
-        <h5 class="margin">Age</h5>
-        <p class="margin">{{ age }}</p>
-      </ion-col>
-      <ion-col size="12">
-        <h5 class="margin">Email</h5>
-        <p class="margin">{{ credStud.si_email }}</p>
-      </ion-col>
-      <ion-col size="5">
-        <h5 class="margin">Mobile</h5>
-        <p class="">{{ credStud.si_mobile }}</p>
-      </ion-col>
-    </ion-row>
-  </ion-list>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Personal Info</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list class="list">
+        <ion-row>
+          <ion-col size="8">
+            <h5 class="margin">Address</h5>
+            <p class="margin">{{ credStud.si_address }}</p>
+          </ion-col>
+          <ion-col size="4">
+            <h5 class="margin">Zip Code</h5>
+            <p class="margin">{{ credStud.si_zipcode }}</p>
+          </ion-col>
+          <ion-col size="4">
+            <h5 class="margin">Gender</h5>
+            <p class="margin">{{ credStud.si_gender }}</p>
+          </ion-col>
+          <ion-col size="4">
+            <h5 class="margin">Birthdate</h5>
+            <p class="margin">{{ credStud.si_bday }}</p>
+          </ion-col>
+          <ion-col size="4">
+            <h5 class="margin">Age</h5>
+            <p class="margin">{{ age }}</p>
+          </ion-col>
+          <ion-col size="12">
+            <h5 class="margin">Email</h5>
+            <p class="margin">{{ credStud.si_email }}</p>
+          </ion-col>
+          <ion-col size="5">
+            <h5 class="margin">Mobile</h5>
+            <p class="">{{ credStud.si_mobile }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

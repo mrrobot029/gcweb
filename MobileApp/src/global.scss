@@ -27,7 +27,7 @@
 
 
 ion-list-header{
-    --background: #10DC60;
+    --background: #4caf50;
     --color: white;
     height: 45px;
     h4{
@@ -36,6 +36,10 @@ ion-list-header{
     h3{
         margin-top: 10px;
     }
+}
+
+ion-button{
+    --background: #4caf50;
 }
 
 .logo-img{

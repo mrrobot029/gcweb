@@ -1094,7 +1094,8 @@
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                     $mail->Port       = 587;          
                     $mail->setFrom('gcat@gordoncollegeccs.edu.ph', 'Gordon College');
-                    $mail->isHTML(true);        
+                    $mail->isHTML(true);     
+                    $today = date("Y-m-d H:i:s"); 
 
                     if($this->conn->query($insertNewStudent)){
                         $insertid = $this->conn->insert_id;
@@ -1112,7 +1113,7 @@
                                         $encryption_key, $options, $encryption_iv); 
                             $key = rawurlencode($encryption);
                             $sqlgcat = "INSERT INTO tbl_gcat(gc_idnumber, gc_key, gc_course, gc_gpa, gc_english, gc_math, gc_science, gc_regtime) 
-                                        VALUES('$tempid', '$key', '$course', '$highschoolgpa', '$english', '$math', '$science', now())";
+                                        VALUES('$tempid', '$key', '$course', '$highschoolgpa', '$english', '$math', '$science', '$today')";
                                         if($this->conn->query($sqlgcat)){
                                             // email
                                             $mail->addAddress($email);

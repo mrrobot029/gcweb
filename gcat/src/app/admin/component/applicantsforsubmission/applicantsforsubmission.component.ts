@@ -3,6 +3,10 @@ import { DataService } from "src/app/services/data.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { GcatreportsComponent } from '../../dialogs/gcatreports/gcatreports.component';
+import { GcatattendanceComponent } from '../../dialogs/gcatattendance/gcatattendance.component';
+
 
 
 @Component({
@@ -14,7 +18,7 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   log:any = {}
   now = new Date();
   credentials = JSON.parse(localStorage.getItem('gcweb_GCAT'));
-  constructor(private ds: DataService, private spinner: NgxSpinnerService) { }
+  constructor(private ds: DataService, private spinner: NgxSpinnerService, private dialog: MatDialog) { }
   schedDate: any;
   schedTime: any = "";
   p = 1;
@@ -27,8 +31,8 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   applicantCount = 0;
   searchValue = "";
   order = 'ASC';
-  sort = 'gc.gc_idnumber ' + this.order;
-  sortValue = 'id';
+  sort = `gc.gc_confirmdate ${this.order},si.si_idnumber ${this.order}`
+  sortValue = 'confirmtime';
   scheds: any;
   schedules: any;
   async ngOnInit() {
@@ -58,6 +62,10 @@ export class ApplicantsforsubmissionComponent implements OnInit {
         break
       case 'program':
         this.sort = `gc.gc_course ${this.order},si.si_lastname ASC`
+        this.ngOnInit()
+        break
+      case 'confirmtime':
+        this.sort = `gc.gc_confirmdate ${this.order},si.si_idnumber ${this.order}`
         this.ngOnInit()
         break
       default:
@@ -271,17 +279,23 @@ export class ApplicantsforsubmissionComponent implements OnInit {
   }
 
   getAvailableSchedules() {
-    this.ds.sendRequest("getAllSubSchedules", null).subscribe(res => {
+    this.ds.sendRequest("getAvailableSubSchedules", null).subscribe(res => {
       if (res.status.remarks) {
       let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US').toString()
-      this.scheds = res.data
-        let schednow = res.data.filter(r => {
-          return r.sub_date.includes(datenow)
+      this.scheds = res.data.filter(r => {
+        return r.sub_date >= datenow
+      })
+        let schednow = this.scheds.map(r => {
+          return r
         })
         this.schedTime = ""
         this.schedule.time = ""
         if(schednow.length != 0){
-          this.schedTime = schednow[0].sub_recno
+          if(schednow[0].sub_date!=datenow){
+            this.schedTime = schednow[0].sub_recno
+          } else{
+            this.schedTime = schednow[1].sub_recno
+          }
         } else{
           this.schedTime = ""
         }
@@ -290,6 +304,22 @@ export class ApplicantsforsubmissionComponent implements OnInit {
         this.schedTime = ""
         this.schedule.time = ""
       }
+    });
+  }
+
+  attendance(){
+    const dialogRef = this.dialog.open(GcatattendanceComponent, {
+      width: '80vw',
+      height: '90vh',
+      data: this.schedules
+    });
+  }
+
+  reports(){
+    const dialogRef = this.dialog.open(GcatreportsComponent, {
+      width: '80vw',
+      height: '90vh',
+      data: this.schedules
     });
   }
 }

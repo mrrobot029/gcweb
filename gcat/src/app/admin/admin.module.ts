@@ -17,6 +17,8 @@ import { StatisticsComponent } from './dialogs/statistics/statistics.component';
 import { AllapplicantsComponent } from './component/allapplicants/allapplicants.component';
 import { EditemailComponent } from './dialogs/editemail/editemail.component';
 import { ApplicantsforsubmissionComponent } from './component/applicantsforsubmission/applicantsforsubmission.component';
+import { GcatreportsComponent } from './dialogs/gcatreports/gcatreports.component';
+import { GcatattendanceComponent } from './dialogs/gcatattendance/gcatattendance.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { ApplicantsforsubmissionComponent } from './component/applicantsforsubmi
     AllapplicantsComponent,
     EditemailComponent,
     ApplicantsforsubmissionComponent,
+    GcatreportsComponent,
+    GcatattendanceComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +47,6 @@ import { ApplicantsforsubmissionComponent } from './component/applicantsforsubmi
     EventEmitterService,
     AdminSidebarComponent
   ],
-  entryComponents: [ StatisticsComponent, EditemailComponent ]
+  entryComponents: [ StatisticsComponent, EditemailComponent, GcatreportsComponent, GcatattendanceComponent ]
 })
 export class AdminModule { }

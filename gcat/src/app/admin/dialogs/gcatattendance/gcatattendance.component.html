@@ -1,0 +1,57 @@
+<pagination-controls
+id="pagination2"
+class="pull-right"
+(pageChange)="p = $event"
+></pagination-controls>
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead class=" text-primary">
+    <th>No.</th>
+    <th>Date&Time</th>
+    <th>Count</th>
+    <th>Action</th>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let sched of schedules
+          | paginate
+            : { id: 'pagination2', itemsPerPage: 8, currentPage: p };
+        let i = index
+      "
+    >
+      <td>{{ i + 1 }}</td>
+      <td>
+        {{ sched.sub_date | date: "MMMM dd, y" }}
+      </td>
+      <td>{{ sched.sub_count }}</td>
+
+      <td>
+        <a
+            style="align-self: flex-start; margin-left: auto;"
+            class="btn btn-sm btn-success"
+            matTooltip="Print Attendance Form"
+            matTooltipPosition="above"
+            href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatsubmissionattendance.php?sub_recno={{sched.sub_recno}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+            target="_blank"
+        >
+            <i class="material-icons">
+            print
+            </i>
+        </a>
+        <a
+          style="align-self: flex-start; margin-left: 10%;"
+          class="btn btn-sm btn-success"
+          matTooltip="Download Attendance Form (Excel)"
+          matTooltipPosition="above"
+          href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatsubmissionattendanceexcel.php?sub_recno={{sched.sub_recno}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+          target="_blank"
+        >
+          <i class="material-icons">
+            cloud_download
+          </i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -10,7 +10,7 @@
 body{
 	font-family: Segoe, 'Segoe UI'; 
 	display: flex;
-	min-height: 90vh;
+	min-height: 100vh;
 	flex-direction: column;
 	background:#ffffff;  
 	color:#000000;
@@ -82,8 +82,7 @@ font-size: 0.4375rem;
 
 @media print{
 	html, body{
-		width: 8.5in!important;
-		height: 11in!important;
+		height: 100%;
 		margin: 0 !important;
 		padding: 0 !important;
 		overflow: hidden;

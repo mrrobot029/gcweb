@@ -75,7 +75,7 @@ if($id == $decryptedkey){
         <tbody>
             <tr>
                 <td class="center" colspan="3">
-                    <h2>GCAT Examinees A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
+                    <h2>GCAT Applicants A.Y. <?php  echo $es_start[0]."-".$es_end[0]; ?> - <?php 
 
 if($es_sem == '1'){
   echo "1st";

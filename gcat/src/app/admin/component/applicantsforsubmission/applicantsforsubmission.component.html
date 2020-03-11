@@ -32,6 +32,7 @@
                       <option value="name">NAME</option>
                       <option value="email">EMAIL</option>
                       <option value="program">PROGRAM</option>
+                      <option value="confirmtime">CONFIRMATION TIME</option>
                     </select>
                   </form>
                 </div>
@@ -59,43 +60,24 @@
               </div>
               <br>
               <div class="row">
+                <div class="col-md-3"></div>
                 <div class="col-md-3">
-                    <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
-                </div>
-                <!-- href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatsubmissionattendance.php?sub_recno={{schedTime}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D" -->
-                <div class="col-md-3">
-                  <a
-                    *ngIf="schedTime"
-                    href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatsubmissionattendance.php?sub_recno={{schedTime}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+                  <button
                     target="_blank"
                     class="btn btn-sm btn-block btn-success"
+                    (click)="attendance()"
                   >
-                    Print Attendance
-                  </a>
-                  <a
-                    *ngIf="!schedTime"
-                    href="javascript:void(0)"
-                    class="btn btn-sm btn-block btn-disabled"
-                  >
-                    Select schedule date first!
-                  </a>
+                    Attendance
+                </button>
                 </div>
                 <div class="col-md-3">
-                  <a
-                    *ngIf="schedTime"
-                    href="https://gordoncollegeccs.edu.ph/gc/api/print/gcatsubmissionreport.php?sub_recno={{schedTime}}&key=MxDIkfKfLBUsfB39Abqf%2BjA%3D"
+                  <button
                     target="_blank"
                     class="btn btn-sm btn-block btn-warning"
+                    (click)="reports()"
                   >
-                    Print Report
-                  </a>
-                  <a
-                    *ngIf="!schedTime"
-                    href="javascript:void(0)"
-                    class="btn btn-sm btn-block btn-disabled"
-                  >
-                    Select schedule date first!
-                  </a>
+                    Report
+                </button>
                 </div>
                 <div class="col-md-3">
                     <button
@@ -107,6 +89,11 @@
                     </button>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <pagination-controls (pageChange)="p = $event" maxSize="15"></pagination-controls>
+              </div>
+              </div>
             
               <div class="table-responsive" *ngIf="!noapplicants">
                 <table class="table table-striped">
@@ -117,7 +104,7 @@
                     <th>Email</th>
                     <th>Program</th>
                     <th>GPA</th>
-                    <th>Registration Time</th>
+                    <th>Confirmation Time</th>
                     <th>Action</th>
                   </thead>
                   <tbody>
@@ -132,7 +119,7 @@
                       <td>{{ applicant.si_email }}</td>
                       <td>{{ applicant.gc_course }}</td>
                       <td>{{ applicant.gc_gpa }}</td>
-                      <td>{{ applicant.gc_regtime }}</td>
+                      <td>{{ applicant.gc_confirmdate }}</td>
                       <td>
                         <button matTooltip="Schedule for Submission" matTooltipPosition="above" class="btn btn-sm btn-success"
                           (click)="addScheduleForApplicant(applicant)">

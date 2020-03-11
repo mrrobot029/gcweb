@@ -24,23 +24,23 @@
                 $es_start = explode("-",$start);
                 $es_end = explode("-",$end);
             }
-//             $ciphering = "AES-128-CTR"; 
-//     $iv_length = openssl_cipher_iv_length($ciphering); 
-//     $options = 0; 
-//     $id = 'forgcatadminonly!';
-//     $key = '';
-//     if(isset($_GET['key'])){
-//         $key = rawurldecode($_GET['key']);
-//     }
-//     $decryption_iv = '1234567891011121'; 
+            $ciphering = "AES-128-CTR"; 
+    $iv_length = openssl_cipher_iv_length($ciphering); 
+    $options = 0; 
+    $id = 'forgcatadminonly!';
+    $key = '';
+    if(isset($_GET['key'])){
+        $key = rawurldecode($_GET['key']);
+    }
+    $decryption_iv = '1234567891011121'; 
     
-//   // Store the decryption key 
-//     $decryption_key = "fsociety"; 
+  // Store the decryption key 
+    $decryption_key = "fsociety"; 
     
-//   // Use openssl_decrypt() function to decrypt the data 
-//     $decryptedkey=openssl_decrypt ($key, $ciphering,  
-//                 $decryption_key, $options, $decryption_iv); 
-// if($id == $decryptedkey){
+  // Use openssl_decrypt() function to decrypt the data 
+    $decryptedkey=openssl_decrypt ($key, $ciphering,  
+                $decryption_key, $options, $decryption_iv); 
+if($id == $decryptedkey){
 
 ?>
 <!DOCTYPE html>
@@ -97,7 +97,7 @@ $unconfirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_
 $confirmed = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1"));
 $scheduled = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2"));
 $totalapplicants = $unconfirmed + $confirmed + $scheduled;
-$result = $conn->query("SELECT gc_course, count(gc_idnumber) as courseCount FROM tbl_gcat GROUP BY gc_course");
+$result = $conn->query("SELECT co.co_description, gc.gc_course, count(gc.gc_idnumber) as courseCount FROM tbl_gcat gc INNER JOIN tbl_courses co ON gc.gc_course = co.co_name GROUP BY gc_course ORDER BY courseCount DESC");
 $unscheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 1 and gc_subdate = $sub_recno"));
 $scheduledDaily = mysqli_num_rows(mysqli_query($conn, "SELECT gc_idnumber FROM tbl_gcat WHERE gc_status = 2 and gc_subdate = $sub_recno"));
 while($res = $result->fetch_array()){
@@ -105,18 +105,19 @@ while($res = $result->fetch_array()){
 }
 foreach($countByCourse as $row){
     $course = $row['gc_course'];
+    $description = $row['co_description'];
     $count = $row['courseCount'];
     $tbodyPerCourse .="
     <tr>
-        <td class='border-thin'>$x</td>
-        <td class='border-thin'>$course</td>
-        <td class='border-thin'>$count - <strong>". round(($count/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP) ."%</strong></td>
+        <td class='border-thin' style='text-align: center'>$x</td>
+        <td class='border-thin' style='text-align: center'>($course) $description</td>
+        <td class='border-thin' style='text-align: center'>$count - <strong>". round(($count/$totalapplicants)*100, 2, PHP_ROUND_HALF_UP) ."%</strong></td>
     </tr>
     ";
     $x++;
 }
 
-$resultDepartment = $conn->query("SELECT co.co_dept as department, count(gc.gc_idnumber) as departmentCount FROM tbl_gcat as gc INNER JOIN tbl_courses as co ON gc.gc_course = co.co_name GROUP BY co.co_dept");
+$resultDepartment = $conn->query("SELECT co.co_dept as department, count(gc.gc_idnumber) as departmentCount FROM tbl_gcat as gc INNER JOIN tbl_courses as co ON gc.gc_course = co.co_name GROUP BY co.co_dept ORDER BY departmentCount DESC");
 while($res = $resultDepartment->fetch_array()){
   $countByDept[] = $res;
 }
@@ -144,9 +145,9 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             <!-- general -->
             <table class="table-body">
                 <thead>
-                    <th class="border-thin">Unconfirmed</th>
-                    <th class="border-thin">Confirmed</th>
-                    <th class="border-thin">Scheduled</th>
+                    <th class="border-thin">Unconfirmed (Count & Percentage)</th>
+                    <th class="border-thin">Confirmed (Count & Percentage)</th>
+                    <th class="border-thin">Scheduled (Count & Percentage)</th>
                 </thead>
                 <tbody> 
                 <tr>
@@ -184,7 +185,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             <tbody>
                 <tr>
                     <td class="center" colspan="3">
-                        <h3>Count of Registered Students per Course</h3>
+                        <h3>Count of Registered Applicants per Desired Program(1st Choice)</h3>
                     </td>
                 </tr>
             </tbody>
@@ -193,8 +194,8 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             <table class="table-body">
                 <thead>
                     <th class="border-thin">No.</th>
-                    <th class="border-thin">Course</th>
-                    <th class="border-thin">Count</th>
+                    <th class="border-thin">Desired Program(1st Choice)</th>
+                    <th class="border-thin">Count & Percentage</th>
                 </thead>
                 <tbody>
                     <?php echo $tbodyPerCourse; ?>
@@ -206,7 +207,7 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             <tbody>
                 <tr>
                     <td class="center" colspan="3">
-                        <h3>Count of Registered Students per Department</h3>
+                        <h3>Count of Registered Applicants per College(Based on 1st Choice Desired Program)</h3>
                     </td>
                 </tr>
             </tbody>
@@ -214,8 +215,8 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
             <table class="table-body">
                 <thead>
                     <th class="border-thin">No.</th>
-                    <th class="border-thin">Department</th>
-                    <th class="border-thin">Count</th>
+                    <th class="border-thin">Colleges</th>
+                    <th class="border-thin">Count & Percentage</th>
                 </thead>
                 <tbody>
                     <?php echo $tbodyPerDept; ?>
@@ -226,11 +227,11 @@ $title = "Statistics Report as of ".date("F d, Y, h:i a");
 </html>
 
 <script src="js/jquery.min.js"></script>
-<!-- <script>
+<script>
     window.print()
-</script> -->
+</script>
 <?php
-// }else{
-//     echo '<h1>UNAUTHORIZED!</h1>';
-// }
+}else{
+    echo '<h1>UNAUTHORIZED!</h1>';
+}
 ?>

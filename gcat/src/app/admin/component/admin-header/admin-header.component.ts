@@ -234,7 +234,7 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   getAvailableSchedules() {
-    this.ds.sendRequest("getAvailableSubSchedules", null).subscribe(res => {
+    this.ds.sendRequest("getAllSubSchedules", null).subscribe(res => {
       if (res.status.remarks) {
       let datenow = formatDate(this.now, 'yyyy-MM-dd', 'en-US')
         this.scheds = res.data.filter(r => {

@@ -35,7 +35,7 @@
     "cordova-android": "8.1.0",
     "cordova-plugin-cleartext": "^1.0.0",
     "core-js": "^2.5.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.0",
     "rxjs": "~6.5.1",
     "sweetalert2": "^9.4.0",
